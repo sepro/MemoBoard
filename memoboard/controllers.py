@@ -51,7 +51,7 @@ def get_list_items(list_id):
 
 @api.route('/lists/<int:list_id>/items/', methods=['POST'])
 @jsonify
-def create_list_items(list_id):
+def create_list_item(list_id):
     current_list = MemoList.query.get_or_404(list_id)
 
     new_item = current_list.add_item(MemoItem('test content'))
