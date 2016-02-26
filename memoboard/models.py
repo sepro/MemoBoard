@@ -21,7 +21,7 @@ class MemoList(db.Model):
     def to_json(self):
         json_out = {'id': self.id,
                     'name': self.name,
-                    'created': self.created,
+                    'created': self.created.isoformat(),
                     'uri': url_for('api.get_list', list_id=self.id)}
 
         return json_out

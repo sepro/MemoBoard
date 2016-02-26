@@ -29,7 +29,7 @@ def create_list():
     db.session.add(new_list)
     db.session.commit()
 
-    return new_list.to_json()
+    return {'status': 'success'}
 
 
 @api.route('/lists/<int:list_id>', methods=['GET'])
