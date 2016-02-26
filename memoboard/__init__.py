@@ -34,4 +34,6 @@ def create_app(config):
     # Enable HTMLMIN
     htmlmin.init_app(app)
 
+    from memoboard.models import MemoList, MemoItem
+
     return app
