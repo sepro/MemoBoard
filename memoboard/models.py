@@ -10,7 +10,9 @@ class MemoList(db.Model):
     name = db.Column(db.Text)
     created = db.Column(db.DateTime, default=datetime.utcnow)
 
-    items = db.relationship('MemoItem', backref=db.backref('list', lazy='joined'), lazy='dynamic')
+    items = db.relationship('MemoItem', backref=db.backref('list',
+                                                           lazy='joined',
+                                                           cascade="all, delete-orphan"), lazy='dynamic')
 
     def __init__(self, name):
         self.name = name
