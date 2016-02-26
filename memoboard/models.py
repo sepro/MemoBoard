@@ -22,6 +22,7 @@ class MemoList(db.Model):
         json_out = {'id': self.id,
                     'name': self.name,
                     'created': self.created.isoformat(),
+                    'items': [i.to_json() for i in self.items],
                     'uri': url_for('api.get_list', list_id=self.id)}
 
         return json_out
@@ -40,4 +41,13 @@ class MemoItem(db.Model):
 
     def __repr__(self):
         return '<MemoItem %d>' % self.id
+
+    def to_json(self):
+        json_out = {'id': self.id,
+                    'content': self.content,
+                    'created': self.created.isoformat(),
+                    'list_id': self.list_id,
+                    'list_uri': url_for('api.get_list', list_id=self.id)}
+
+        return json_out
 
