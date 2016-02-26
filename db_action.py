@@ -21,6 +21,10 @@ def create():
     """
     function to create the initial database and migration information
     """
+    if SQLALCHEMY_DATABASE_URI.startswith('sqlite:///'):
+        path = os.path.dirname(os.path.realpath(SQLALCHEMY_DATABASE_URI.replace('sqlite:///', '')))
+        if not os.path.exists(path):
+            os.makedirs(path)
 
     db.create_all(app=app)
 
