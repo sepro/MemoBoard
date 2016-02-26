@@ -12,7 +12,8 @@ class MemoList(db.Model):
 
     items = db.relationship('MemoItem', backref=db.backref('list',
                                                            lazy='joined',
-                                                           cascade="all, delete-orphan"), lazy='dynamic')
+                                                           cascade="all, delete-orphan",
+                                                           single_parent=True), lazy='dynamic')
 
     def __init__(self, name):
         self.name = name
