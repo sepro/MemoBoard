@@ -58,3 +58,19 @@ def create_list_items(list_id):
 
     return new_item.to_json()
 
+
+@api.route('/items/<int:item_id>', methods=['GET'])
+@jsonify
+def get_item(item_id):
+    current_item = MemoItem.query.get_or_404(item_id)
+
+    return current_item.to_json()
+
+
+@api.route('/items/<int:item_id>', methods=['DELETE'])
+@jsonify
+def delete_item(item_id):
+    current_item = MemoItem.query.get_or_404(item_id)
+    current_item.delete()
+
+    return {'status': 'success'}

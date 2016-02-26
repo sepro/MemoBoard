@@ -47,10 +47,15 @@ class MemoItem(db.Model):
     def __repr__(self):
         return '<MemoItem %d>' % self.id
 
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
     def to_json(self):
         json_out = {'id': self.id,
                     'content': self.content,
                     'created': self.created.isoformat(),
+                    'uri': url_for('api.get_item', item_id=self.id),
                     'list_id': self.list_id,
                     'list_uri': url_for('api.get_list', list_id=self.list_id)}
 
