@@ -40,6 +40,15 @@ def get_list(list_id):
     return current_list.to_json()
 
 
+@api.route('/lists/<int:list_id>', methods=['DELETE'])
+@jsonify
+def delete_list(list_id):
+    current_list = MemoList.query.get_or_404(list_id)
+    current_list.delete()
+
+    return {'status': 'success'}
+
+
 @api.route('/lists/<int:list_id>/items/', methods=['GET'])
 @jsonify
 def get_list_items(list_id):

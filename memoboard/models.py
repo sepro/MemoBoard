@@ -25,6 +25,10 @@ class MemoList(db.Model):
         db.session.commit()
         return item
 
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
     def to_json(self):
         json_out = {'id': self.id,
                     'name': self.name,
