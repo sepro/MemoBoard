@@ -36,4 +36,9 @@ def create_app(config):
 
     from memoboard.models import MemoList, MemoItem
 
+    from memoboard.controllers import main, api
+
+    app.register_blueprint(main)
+    app.register_blueprint(api, url_prefix='/api')
+
     return app
