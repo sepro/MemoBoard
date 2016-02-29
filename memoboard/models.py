@@ -1,4 +1,4 @@
-from flask import url_for
+from flask.ext.restless import url_for
 
 from memoboard import db
 from datetime import datetime
@@ -19,23 +19,8 @@ class MemoList(db.Model):
     def __repr__(self):
         return '<MemoList %d>' % self.id
 
-    def add_item(self, item):
-        self.items.append(item)
-        db.session.commit()
-        return item
-
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()
-
-    def to_json(self):
-        json_out = {'id': self.id,
-                    'name': self.name,
-                    'created': self.created.isoformat(),
-                    'items': [i.to_json() for i in self.items],
-                    'uri': url_for('api.get_list', list_id=self.id)}
-
-        return json_out
+    def uri(self):
+        return url_for(MemoList, resource_id=self.id)
 
 
 class MemoItem(db.Model):
@@ -52,18 +37,5 @@ class MemoItem(db.Model):
     def __repr__(self):
         return '<MemoItem %d>' % self.id
 
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()
-
-    def to_json(self):
-        json_out = {'id': self.id,
-                    'content': self.content,
-                    'created': self.created.isoformat(),
-                    'uri': url_for('api.get_item', item_id=self.id),
-                    'list_id': self.list_id,
-                    'list_uri': url_for('api.get_list', list_id=self.list_id)
-        }
-
-        return json_out
-
+    def uri(self):
+        return url_for(MemoItem, resource_id=self.id)

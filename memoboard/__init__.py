@@ -13,6 +13,7 @@ Everything that needs to be set up to get flask running is initialized in this f
 """
 from flask import Flask, render_template, g
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.restless import APIManager
 
 from flask_htmlmin import HTMLMIN
 
@@ -29,6 +30,7 @@ def create_app(config):
 
     app.config.from_object(config)
 
+    db.app = app
     db.init_app(app)
 
     # Enable HTMLMIN
@@ -39,6 +41,14 @@ def create_app(config):
     from memoboard.controllers import main, api
 
     app.register_blueprint(main)
-    app.register_blueprint(api, url_prefix='/api')
+
+    # Create the Flask-Restless API manager.
+    manager = APIManager(app, flask_sqlalchemy_db=db)
+
+    # Create API endpoints, which will be available at /api/<tablename> by
+    # default. Allowed HTTP methods can be specified as well.
+    manager.create_api(MemoList, methods=['GET', 'POST', 'PUT', 'DELETE'], include_methods=['uri'])
+    manager.create_api(MemoItem, methods=['GET', 'POST', 'PUT', 'DELETE'], include_methods=['uri'])
+
 
     return app
