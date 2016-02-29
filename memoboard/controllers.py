@@ -18,7 +18,7 @@ def index():
 def get_lists():
     lists = MemoList.query.all()
 
-    return [l.to_json() for l in lists]
+    return {'lists': [l.to_json() for l in lists]}
 
 
 @api.route('/lists/', methods=['POST'])
@@ -66,6 +66,14 @@ def create_list_item(list_id):
     new_item = current_list.add_item(MemoItem('test content'))
 
     return new_item.to_json()
+
+
+@api.route('/items/', methods=['GET'])
+@jsonify
+def get_items():
+    items = MemoItem.query.all()
+
+    return {'items': [i.to_json() for i in items]}
 
 
 @api.route('/items/<int:item_id>', methods=['GET'])
