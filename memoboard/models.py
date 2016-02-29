@@ -31,8 +31,9 @@ class MemoItem(db.Model):
 
     list_id = db.Column(db.Integer, db.ForeignKey('lists.id'), index=True)
 
-    def __init__(self, content):
+    def __init__(self, content, list_id=None):
         self.content = content
+        self.list_id = list_id
 
     def __repr__(self):
         return '<MemoItem %d>' % self.id
