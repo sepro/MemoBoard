@@ -38,7 +38,7 @@ def create_app(config):
 
     from memoboard.models import MemoList, MemoItem
 
-    from memoboard.controllers import main, api
+    from memoboard.controllers import main
 
     app.register_blueprint(main)
 
@@ -47,7 +47,7 @@ def create_app(config):
 
     # Create API endpoints, which will be available at /api/<tablename> by
     # default. Allowed HTTP methods can be specified as well.
-    manager.create_api(MemoList, methods=['GET', 'POST', 'PUT', 'DELETE'], include_methods=['uri'])
+    manager.create_api(MemoList, methods=['GET', 'POST', 'PUT', 'DELETE'], include_methods=['uri', 'items.uri'])
     manager.create_api(MemoItem, methods=['GET', 'POST', 'PUT', 'DELETE'], include_methods=['uri'])
 
 

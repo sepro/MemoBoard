@@ -20,7 +20,7 @@ class MemoList(db.Model):
         return '<MemoList %d>' % self.id
 
     def uri(self):
-        return url_for(MemoList, resource_id=self.id)
+        return url_for(MemoList, instid=self.id)
 
 
 class MemoItem(db.Model):
@@ -38,4 +38,4 @@ class MemoItem(db.Model):
         return '<MemoItem %d>' % self.id
 
     def uri(self):
-        return url_for(MemoItem, resource_id=self.id)
+        return url_for(MemoItem, instid=self.id)
