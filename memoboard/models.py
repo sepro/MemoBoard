@@ -11,9 +11,7 @@ class MemoList(db.Model):
     created = db.Column(db.DateTime, default=datetime.utcnow)
 
     items = db.relationship('MemoItem', backref=db.backref('list',
-                                                           lazy='joined',
-                                                           cascade="all, delete-orphan",
-                                                           single_parent=True), lazy='dynamic')
+                                                           lazy='joined'), cascade="all,delete", lazy='dynamic')
 
     def __init__(self, name):
         self.name = name
@@ -64,7 +62,8 @@ class MemoItem(db.Model):
                     'created': self.created.isoformat(),
                     'uri': url_for('api.get_item', item_id=self.id),
                     'list_id': self.list_id,
-                    'list_uri': url_for('api.get_list', list_id=self.list_id)}
+                    'list_uri': url_for('api.get_list', list_id=self.list_id)
+        }
 
         return json_out
 
