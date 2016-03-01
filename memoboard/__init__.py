@@ -40,15 +40,18 @@ def create_app(config):
 
     from memoboard.controllers import main
 
-    app.register_blueprint(main)
-
-    from memoboard.api_resources import MemoListResource
+    # Flask-Restful api
+    from memoboard.api_resources import MemoListsResource, MemoListResource
 
     api_bp = Blueprint('api', __name__)
     api = Api(api_bp)
 
-    api.add_resource(MemoListResource, '/lists')
+    api.add_resource(MemoListsResource, '/lists')
+    api.add_resource(MemoListResource, '/lists/<int:list_id>')
 
+
+    # Register Blueprints
+    app.register_blueprint(main)
     app.register_blueprint(api_bp, url_prefix='/api')
 
     return app
