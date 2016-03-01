@@ -6,32 +6,32 @@ from memoboard import db
 
 from memoboard.api_schemas import item_schema, items_schema, list_schema, lists_schema
 
+from memoboard.utils.mallowfy import mallowfy
+
 
 class MemoListsResource(Resource):
+    @mallowfy(lists_schema)
     def get(self):
         lists = MemoList.query.all()
 
-        result = lists_schema.dump(lists)
+        return lists
 
-        return result.data
-
+    @mallowfy(list_schema)
     def post(self):
         new_list = MemoList(name=request.form['name'])
 
         db.session.add(new_list)
         db.session.commit()
 
-        result = list_schema.dump(new_list)
-        return result.data
+        return new_list
 
 
 class MemoListResource(Resource):
+    @mallowfy(list_schema)
     def get(self, list_id):
         list = MemoList.query.get_or_404(list_id)
 
-        result = list_schema.dump(list)
-
-        return result.data
+        return list
 
     def delete(self, list_id):
         list = MemoList.query.get_or_404(list_id)
@@ -41,39 +41,39 @@ class MemoListResource(Resource):
 
         return {}
 
+    @mallowfy(list_schema)
     def put(self, list_id):
         list = MemoList.query.get_or_404(list_id)
 
         list.name = request.form['name']
         db.session.commit()
 
-        result = list_schema.dump(list)
-
-        return result.data
+        return list
 
 
 class MemoListItemsResource(Resource):
+    @mallowfy(items_schema)
     def get(self, list_id):
         list = MemoList.query.get_or_404(list_id)
 
-        result = items_schema.dump(list.items)
-        return result.data
+        return list.items
 
+    @mallowfy(item_schema)
     def post(self, list_id):
         new_item = MemoItem(content=request.form['content'], list_id=list_id)
 
         db.session.add(new_item)
         db.session.commit()
 
-        result = item_schema.dump(new_item)
-        return result.data
+        return new_item
 
 
 class MemoListItemResource(Resource):
+    @mallowfy(item_schema)
     def get(self, list_id, item_id):
         item = MemoItem.query.filter_by(id=item_id, list_id=list_id).first_or_404()
-        result = item_schema.dump(item)
-        return result.data
+
+        return item
 
     def delete(self, list_id, item_id):
         item = MemoItem.query.filter_by(id=item_id, list_id=list_id).first_or_404()
@@ -83,6 +83,7 @@ class MemoListItemResource(Resource):
 
         return {}
 
+    @mallowfy(item_schema)
     def put(self, list_id, item_id):
         item = MemoItem.query.filter_by(id=item_id, list_id=list_id).first_or_404()
 
@@ -91,5 +92,4 @@ class MemoListItemResource(Resource):
 
         db.session.commit()
 
-        result = item_schema.dump(item)
-        return result.data
+        return item

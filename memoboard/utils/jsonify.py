@@ -5,7 +5,7 @@ import json
 
 def jsonify(method):
     """
-    Benchmark decorator, a quick and convenient way to time a function
+    Export dict or list as jsonified response
     :param method: function it wraps
     :return: decorated function
     """
