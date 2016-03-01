@@ -18,10 +18,7 @@ class MemoListsResource(Resource):
 
     @mallowfy(ListSchema())
     def post(self):
-        new_list = MemoList(name=request.form['name'])
-
-        db.session.add(new_list)
-        db.session.commit()
+        new_list = MemoList.add(name=request.form['name'])
 
         return new_list
 
@@ -34,10 +31,7 @@ class MemoListResource(Resource):
         return list
 
     def delete(self, list_id):
-        list = MemoList.query.get_or_404(list_id)
-
-        db.session.delete(list)
-        db.session.commit()
+        MemoList.delete(list_id)
 
         return {}
 
@@ -60,10 +54,7 @@ class MemoListItemsResource(Resource):
 
     @mallowfy(ItemSchema())
     def post(self, list_id):
-        new_item = MemoItem(content=request.form['content'], list_id=list_id)
-
-        db.session.add(new_item)
-        db.session.commit()
+        new_item = MemoItem.add(content=request.form['content'], list_id=list_id)
 
         return new_item
 
@@ -76,10 +67,7 @@ class MemoListItemResource(Resource):
         return item
 
     def delete(self, list_id, item_id):
-        item = MemoItem.query.filter_by(id=item_id, list_id=list_id).first_or_404()
-
-        db.session.delete(item)
-        db.session.commit()
+        MemoItem.delete(item_id, list_id)
 
         return {}
 
