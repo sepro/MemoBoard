@@ -1,4 +1,4 @@
-from flask.ext.restless import url_for
+from flask.ext.restless import url_for as api_url
 
 from memoboard import db
 from datetime import datetime
@@ -10,33 +10,24 @@ class MemoList(db.Model):
     name = db.Column(db.Text)
     created = db.Column(db.DateTime, default=datetime.utcnow)
 
-    items = db.relationship('MemoItem', backref=db.backref('list',
-                                                           lazy='joined'), cascade="all,delete", lazy='dynamic')
-
-    def __init__(self, name):
-        self.name = name
-
     def __repr__(self):
         return '<MemoList %d>' % self.id
 
     def uri(self):
-        return url_for(MemoList, instid=self.id)
+        return api_url(MemoList, instid=self.id)
 
 
 class MemoItem(db.Model):
-    __tablename__ = 'list_items'
+    __tablename__ = 'items'
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text)
     created = db.Column(db.DateTime, default=datetime.utcnow)
 
     list_id = db.Column(db.Integer, db.ForeignKey('lists.id'), index=True)
-
-    def __init__(self, content, list_id=None):
-        self.content = content
-        self.list_id = list_id
+    list = db.relationship('MemoList', backref=db.backref('items'))
 
     def __repr__(self):
         return '<MemoItem %d>' % self.id
 
     def uri(self):
-        return url_for(MemoItem, instid=self.id)
+        return api_url(MemoItem, instid=self.id)

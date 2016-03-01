@@ -13,7 +13,7 @@ Everything that needs to be set up to get flask running is initialized in this f
 """
 from flask import Flask, render_template, g
 from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.restless import APIManager
+from flask_restless import APIManager
 
 from flask_htmlmin import HTMLMIN
 
@@ -47,8 +47,11 @@ def create_app(config):
 
     # Create API endpoints, which will be available at /api/<tablename> by
     # default. Allowed HTTP methods can be specified as well.
-    manager.create_api(MemoList, methods=['GET', 'POST', 'PUT', 'DELETE'], include_methods=['uri', 'items.uri'])
-    manager.create_api(MemoItem, methods=['GET', 'POST', 'PUT', 'DELETE'], include_methods=['uri'])
-
+    manager.create_api(MemoList,
+                       methods=['GET', 'POST', 'PUT', 'DELETE'],
+                       include_methods=['uri', 'items.uri'], allow_delete_many=True, allow_patch_many=True)
+    manager.create_api(MemoItem,
+                       methods=['GET', 'POST', 'PUT', 'DELETE'],
+                       include_methods=['uri'])
 
     return app
