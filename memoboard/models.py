@@ -10,9 +10,6 @@ class MemoList(db.Model):
     name = db.Column(db.Text)
     created = db.Column(db.DateTime, default=datetime.utcnow)
 
-    items = db.relationship('MemoItem', backref=db.backref('list',
-                                                           lazy='joined'), cascade="all,delete", lazy='dynamic')
-
     def __repr__(self):
         return '<MemoList %d>' % self.id
 
@@ -27,6 +24,7 @@ class MemoItem(db.Model):
     created = db.Column(db.DateTime, default=datetime.utcnow)
 
     list_id = db.Column(db.Integer, db.ForeignKey('lists.id'), index=True)
+    list = db.relationship('MemoList', backref=db.backref('items'))
 
     def __repr__(self):
         return '<MemoItem %d>' % self.id

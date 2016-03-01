@@ -48,10 +48,10 @@ def create_app(config):
     # Create API endpoints, which will be available at /api/<tablename> by
     # default. Allowed HTTP methods can be specified as well.
     manager.create_api(MemoList,
-                       methods=['GET', 'POST', 'PUT', 'DELETE'],
-                       include_methods=['uri', 'items.uri'])
+                       methods=['GET', 'POST', 'PATCH', 'DELETE'],
+                       include_methods=['uri', 'items.uri'], allow_delete_many=True, allow_patch_many=True)
     manager.create_api(MemoItem,
-                       methods=['GET', 'POST', 'PUT', 'DELETE'],
+                       methods=['GET', 'POST', 'PATCH', 'DELETE'],
                        include_methods=['uri'])
 
     return app
