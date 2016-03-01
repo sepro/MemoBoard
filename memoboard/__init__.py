@@ -11,15 +11,15 @@ Everything that needs to be set up to get flask running is initialized in this f
 
   * set up global things like the search form and custom 403/404 error messages
 """
-from flask import Flask, render_template, g
+from flask import Flask, Blueprint
 from flask.ext.sqlalchemy import SQLAlchemy
-from flask_restless import APIManager
 
 from flask_htmlmin import HTMLMIN
-
+from flask_restful import Api
 
 db = SQLAlchemy()
 htmlmin = HTMLMIN()
+api = Api()
 
 
 def create_app(config):
@@ -42,16 +42,13 @@ def create_app(config):
 
     app.register_blueprint(main)
 
-    # Create the Flask-Restless API manager.
-    manager = APIManager(app, flask_sqlalchemy_db=db)
+    from memoboard.api_resources import MemoListResource
 
-    # Create API endpoints, which will be available at /api/<tablename> by
-    # default. Allowed HTTP methods can be specified as well.
-    manager.create_api(MemoList,
-                       methods=['GET', 'POST', 'PUT', 'DELETE'],
-                       include_methods=['uri', 'items.uri'], allow_delete_many=True, allow_patch_many=True)
-    manager.create_api(MemoItem,
-                       methods=['GET', 'POST', 'PUT', 'DELETE'],
-                       include_methods=['uri'])
+    api_bp = Blueprint('api', __name__)
+    api = Api(api_bp)
+
+    api.add_resource(MemoListResource, '/lists')
+
+    app.register_blueprint(api_bp, url_prefix='/api')
 
     return app
