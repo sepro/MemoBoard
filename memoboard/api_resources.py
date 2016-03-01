@@ -71,12 +71,12 @@ class MemoListItemsResource(Resource):
 
 class MemoListItemResource(Resource):
     def get(self, list_id, item_id):
-        item = MemoItem.query.filter_by(list_id=list_id).filter_by(id=item_id).first_or_404()
+        item = MemoItem.query.filter_by(id=item_id, list_id=list_id).first_or_404()
         result = item_schema.dump(item)
         return result.data
 
     def delete(self, list_id, item_id):
-        item = MemoItem.query.filter_by(list_id=list_id).filter_by(id=item_id).first_or_404()
+        item = MemoItem.query.filter_by(id=item_id, list_id=list_id).first_or_404()
 
         db.session.delete(item)
         db.session.commit()
@@ -84,7 +84,7 @@ class MemoListItemResource(Resource):
         return {}
 
     def put(self, list_id, item_id):
-        item = MemoItem.query.filter_by(list_id=list_id).filter_by(id=item_id).first_or_404()
+        item = MemoItem.query.filter_by(id=item_id, list_id=list_id).first_or_404()
 
         if 'content' in request.form.keys():
             item.content = request.form['content']
