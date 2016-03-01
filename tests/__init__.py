@@ -35,3 +35,10 @@ class MyTest(TestCase):
         url = url_for('api.lists')
         response = self.client.get(url)
         self.assert200(response)
+
+        response = self.client.post(url, data=dict(name="New List"), follow_redirects=True)
+        self.assert200(response)
+
+        url = url_for('api.list', list_id=1)
+        response = self.client.put(url, data=dict(name="New List, New Name"), follow_redirects=True)
+        self.assert200(response)
