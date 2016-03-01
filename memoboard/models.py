@@ -1,4 +1,4 @@
-from flask.ext.restless import url_for
+from flask.ext.restless import url_for as api_url
 
 from memoboard import db
 from datetime import datetime
@@ -14,7 +14,7 @@ class MemoList(db.Model):
         return '<MemoList %d>' % self.id
 
     def uri(self):
-        return url_for(MemoList, instid=self.id)
+        return api_url(MemoList, instid=self.id)
 
 
 class MemoItem(db.Model):
@@ -30,4 +30,4 @@ class MemoItem(db.Model):
         return '<MemoItem %d>' % self.id
 
     def uri(self):
-        return url_for(MemoItem, instid=self.id)
+        return api_url(MemoItem, instid=self.id)
