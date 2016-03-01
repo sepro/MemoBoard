@@ -25,6 +25,14 @@ class MemoListResource(Resource):
 
         return list.to_json()
 
+    def delete(self, list_id):
+        list = MemoList.query.get_or_404(list_id)
+
+        db.session.delete(list)
+        db.session.commit()
+
+        return {}
+
 
 class MemoListItemsResource(Resource):
     def get(self, list_id):
@@ -45,3 +53,11 @@ class MemoListItemResource(Resource):
     def get(self, list_id, item_id):
         item = MemoItem.query.filter_by(list_id=list_id).filter_by(id=item_id).first_or_404()
         return item.to_json()
+
+    def delete(self, list_id, item_id):
+        item = MemoItem.query.filter_by(list_id=list_id).filter_by(id=item_id).first_or_404()
+
+        db.session.delete(item)
+        db.session.commit()
+
+        return {}

@@ -40,7 +40,7 @@ class MemoItem(db.Model):
     created = db.Column(db.DateTime, default=datetime.utcnow)
 
     list_id = db.Column(db.Integer, db.ForeignKey('lists.id'), index=True)
-    list = db.relationship('MemoList', backref=db.backref('items'))
+    list = db.relationship('MemoList', backref=db.backref('items', cascade="all, delete-orphan"))
 
     def __repr__(self):
         return '<MemoItem %d>' % self.id
