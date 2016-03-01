@@ -12,12 +12,14 @@ Everything that needs to be set up to get flask running is initialized in this f
 from flask import Flask, Blueprint
 from flask.ext.sqlalchemy import SQLAlchemy
 
+from flask_marshmallow import Marshmallow
 from flask_htmlmin import HTMLMIN
 from flask_restful import Api
 
 db = SQLAlchemy()
 htmlmin = HTMLMIN()
 api = Api()
+ma = Marshmallow()
 
 
 def create_app(config):
@@ -30,6 +32,8 @@ def create_app(config):
 
     db.app = app
     db.init_app(app)
+
+    ma.init_app(app)
 
     # Enable HTMLMIN
     htmlmin.init_app(app)

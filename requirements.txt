@@ -4,6 +4,7 @@ blinker==1.4
 decorator==4.0.6
 Flask==0.10.1
 Flask-HTMLmin==1.0
+flask-marshmallow==0.6.2
 Flask-RESTful==0.3.5
 Flask-Script==2.0.5
 Flask-SQLAlchemy==2.1
@@ -14,6 +15,8 @@ itsdangerous==0.24
 Jinja2==2.8
 Mako==1.0.3
 MarkupSafe==0.23
+marshmallow==2.6.0
+marshmallow-sqlalchemy==0.8.1
 mimerender==0.6.0
 pbr==1.8.1
 python-dateutil==2.5.0

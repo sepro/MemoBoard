@@ -1,12 +1,14 @@
 from flask import url_for
-from marshmallow import Schema, fields
+from memoboard import ma
+from marshmallow import fields
+
+from memoboard.models import MemoItem, MemoList
 
 
-class ItemSchema(Schema):
-    id = fields.Int(dump_only=True)
-    list_id = fields.Int()
-    content = fields.Str()
-    created = fields.DateTime(dump_only=True)
+class ItemSchema(ma.ModelSchema):
+    class Meta:
+        model = MemoItem
+
     uri = fields.Method("get_uri", dump_only=True)
     list_uri = fields.Method("get_list_uri", dump_only=True)
 
@@ -17,10 +19,10 @@ class ItemSchema(Schema):
         return url_for('api.list', list_id=item.list_id)
 
 
-class ListSchema(Schema):
-    id = fields.Int(dump_only=True)
-    name = fields.Str()
-    created = fields.DateTime(dump_only=True)
+class ListSchema(ma.ModelSchema):
+    class Meta:
+        model = MemoList
+
     uri = fields.Method("get_uri", dump_only=True)
     items_uri = fields.Method("get_items_uri", dump_only=True)
 
