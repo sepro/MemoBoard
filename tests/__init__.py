@@ -1,5 +1,6 @@
 from memoboard import create_app, db
 
+from flask import url_for
 from flask.ext.testing import TestCase
 
 
@@ -27,4 +28,10 @@ class MyTest(TestCase):
         # check if route returns code 200
         response = self.client.get('/')
         self.assert_template_used('index.html')
+        self.assert200(response)
+
+    def test_api(self):
+        # check if route returns code 200
+        url = url_for('api.lists')
+        response = self.client.get(url)
         self.assert200(response)
