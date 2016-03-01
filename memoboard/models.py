@@ -20,19 +20,6 @@ class MemoList(db.Model):
     def uri(self):
         return url_for('api.list', list_id=self.id)
 
-    @property
-    def items_to_json(self):
-        return [i.to_json for i in self.items]
-
-    @property
-    def to_json(self):
-        return {'id': self.id,
-                'name': self.name,
-                'created': self.created.isoformat(),
-                'items': self.items_to_json,
-                'items_uri': self.items_uri,
-                'uri': self.uri}
-
 
 class MemoItem(db.Model):
     __tablename__ = 'items'
@@ -53,12 +40,3 @@ class MemoItem(db.Model):
     @property
     def uri(self):
         return url_for('api.list_item', list_id=self.list_id, item_id=self.id)
-
-    @property
-    def to_json(self):
-        return {'id': self.id,
-                'content': self.content,
-                'created': self.created.isoformat(),
-                'list_id': self.list_id,
-                'list_uri': self.list_uri,
-                'uri': self.uri}
