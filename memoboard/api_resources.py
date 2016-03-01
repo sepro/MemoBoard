@@ -85,7 +85,9 @@ class MemoListItemResource(Resource):
 
     def put(self, list_id, item_id):
         item = MemoItem.query.filter_by(list_id=list_id).filter_by(id=item_id).first_or_404()
-        item.content = request.form['content']
+
+        if 'content' in request.form.keys():
+            item.content = request.form['content']
 
         db.session.commit()
 

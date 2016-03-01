@@ -1,22 +1,36 @@
+from flask import url_for
 from marshmallow import Schema, fields
+
 
 class ItemSchema(Schema):
     id = fields.Int(dump_only=True)
     list_id = fields.Int()
     content = fields.Str()
     created = fields.DateTime(dump_only=True)
-    uri = fields.Str(dump_only=True)
-    list_uri = fields.Str(dump_only=True)
+    uri = fields.Method("get_uri", dump_only=True)
+    list_uri = fields.Method("get_list_uri", dump_only=True)
+
+    def get_uri(self, item):
+        return url_for('api.list_item', list_id=item.list_id, item_id=item.id)
+
+    def get_list_uri(self, item):
+        return url_for('api.list', list_id=item.list_id)
 
 
 class ListSchema(Schema):
     id = fields.Int(dump_only=True)
     name = fields.Str()
     created = fields.DateTime(dump_only=True)
-    uri = fields.Str(dump_only=True)
-    items_uri = fields.Str(dump_only=True)
+    uri = fields.Method("get_uri", dump_only=True)
+    items_uri = fields.Method("get_items_uri", dump_only=True)
 
     items = fields.Nested(ItemSchema, many=True)
+
+    def get_uri(self, list):
+        return url_for('api.list', list_id=list.id)
+
+    def get_items_uri(self, list):
+        return url_for('api.list_items', list_id=list.id)
 
 
 list_schema = ListSchema()
