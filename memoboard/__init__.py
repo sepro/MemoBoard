@@ -3,13 +3,11 @@ Everything that needs to be set up to get flask running is initialized in this f
 
   * set up and configure the app
   * start the database (db)
-  * load LoginManager (for user system)
-  * start Flask Debug Toolbar
   * load all (!) models used (essential to create the database using db_create)
-  * load all (!) controllers and register their blueprints to a subdomain
-  * add admin panel
+  * load all (!) controllers
+  * load api
+  * Set up blueprints
 
-  * set up global things like the search form and custom 403/404 error messages
 """
 from flask import Flask, Blueprint
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -42,13 +40,15 @@ def create_app(config):
 
     # Flask-Restful api
     from memoboard.api_resources import MemoListsResource, MemoListResource
+    from memoboard.api_resources import MemoListItemsResource, MemoListItemResource
 
     api_bp = Blueprint('api', __name__)
-    api = Api(api_bp)
+    api.init_app(api_bp)
 
-    api.add_resource(MemoListsResource, '/lists')
-    api.add_resource(MemoListResource, '/lists/<int:list_id>')
-
+    api.add_resource(MemoListsResource, '/lists', endpoint='lists')
+    api.add_resource(MemoListResource, '/lists/<int:list_id>', endpoint='list')
+    api.add_resource(MemoListItemsResource, '/lists/<int:list_id>/items', endpoint='list_items')
+    api.add_resource(MemoListItemResource, '/lists/<int:list_id>/items/<int:item_id>', endpoint='list_item')
 
     # Register Blueprints
     app.register_blueprint(main)

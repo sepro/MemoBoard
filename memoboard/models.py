@@ -1,5 +1,6 @@
 from memoboard import db
 from datetime import datetime
+from flask import url_for
 
 
 class MemoList(db.Model):
@@ -10,6 +11,14 @@ class MemoList(db.Model):
 
     def __repr__(self):
         return '<MemoList %d>' % self.id
+
+    def to_json(self):
+        return {'id': self.id,
+                'name': self.name,
+                'created': self.created.isoformat(),
+                'items': [i.to_json() for i in self.items],
+                'items_uri': url_for('api.list_items', list_id=self.id),
+                'uri': url_for('api.list', list_id=self.id)}
 
 
 class MemoItem(db.Model):
@@ -23,3 +32,11 @@ class MemoItem(db.Model):
 
     def __repr__(self):
         return '<MemoItem %d>' % self.id
+
+    def to_json(self):
+        return {'id': self.id,
+                'content': self.content,
+                'created': self.created.isoformat(),
+                'list_id': self.list_id,
+                'list_uri': url_for('api.list', list_id=self.list_id),
+                'uri': url_for('api.list_item', list_id=self.list_id, item_id=self.id)}
