@@ -3,6 +3,7 @@ from memoboard import create_app, db
 from flask import url_for
 from flask.ext.testing import TestCase
 
+import json
 
 class MyTest(TestCase):
 
@@ -38,7 +39,10 @@ class MyTest(TestCase):
 
         response = self.client.post(url, data=dict(name="New List"), follow_redirects=True)
         self.assert200(response)
+        data = json.loads(response.data.decode('utf-8'))
+
 
         url = url_for('api.list', list_id=1)
         response = self.client.put(url, data=dict(name="New List, New Name"), follow_redirects=True)
         self.assert200(response)
+        data = json.loads(response.data.decode('utf-8'))
