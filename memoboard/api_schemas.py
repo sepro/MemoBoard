@@ -32,9 +32,3 @@ class ListSchema(ma.ModelSchema):
 
     def get_items_uri(self, list):
         return url_for('api.list_items', list_id=list.id)
-
-
-list_schema = ListSchema()
-lists_schema = ListSchema(many=True)
-item_schema = ItemSchema()
-items_schema = ItemSchema(many=True)

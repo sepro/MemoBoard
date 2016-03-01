@@ -4,19 +4,19 @@ from flask_restful import Resource
 from memoboard.models import MemoList, MemoItem
 from memoboard import db
 
-from memoboard.api_schemas import item_schema, items_schema, list_schema, lists_schema
+from memoboard.api_schemas import ItemSchema, ListSchema
 
 from memoboard.utils.mallowfy import mallowfy
 
 
 class MemoListsResource(Resource):
-    @mallowfy(lists_schema)
+    @mallowfy(ListSchema(many=True))
     def get(self):
         lists = MemoList.query.all()
 
         return lists
 
-    @mallowfy(list_schema)
+    @mallowfy(ListSchema())
     def post(self):
         new_list = MemoList(name=request.form['name'])
 
@@ -27,7 +27,7 @@ class MemoListsResource(Resource):
 
 
 class MemoListResource(Resource):
-    @mallowfy(list_schema)
+    @mallowfy(ListSchema())
     def get(self, list_id):
         list = MemoList.query.get_or_404(list_id)
 
@@ -41,7 +41,7 @@ class MemoListResource(Resource):
 
         return {}
 
-    @mallowfy(list_schema)
+    @mallowfy(ListSchema())
     def put(self, list_id):
         list = MemoList.query.get_or_404(list_id)
 
@@ -52,13 +52,13 @@ class MemoListResource(Resource):
 
 
 class MemoListItemsResource(Resource):
-    @mallowfy(items_schema)
+    @mallowfy(ItemSchema(many=True))
     def get(self, list_id):
         list = MemoList.query.get_or_404(list_id)
 
         return list.items
 
-    @mallowfy(item_schema)
+    @mallowfy(ItemSchema())
     def post(self, list_id):
         new_item = MemoItem(content=request.form['content'], list_id=list_id)
 
@@ -69,7 +69,7 @@ class MemoListItemsResource(Resource):
 
 
 class MemoListItemResource(Resource):
-    @mallowfy(item_schema)
+    @mallowfy(ItemSchema())
     def get(self, list_id, item_id):
         item = MemoItem.query.filter_by(id=item_id, list_id=list_id).first_or_404()
 
@@ -83,7 +83,7 @@ class MemoListItemResource(Resource):
 
         return {}
 
-    @mallowfy(item_schema)
+    @mallowfy(ItemSchema())
     def put(self, list_id, item_id):
         item = MemoItem.query.filter_by(id=item_id, list_id=list_id).first_or_404()
 
