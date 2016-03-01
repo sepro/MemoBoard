@@ -25,5 +25,5 @@ class MemoListItemsResource(Resource):
 
 class MemoListItemResource(Resource):
     def get(self, list_id, item_id):
-        item = MemoItem.query.get_or_404(item_id)
+        item = MemoItem.query.filter_by(list_id=list_id).filter_by(id=item_id).first_or_404()
         return item.to_json()
