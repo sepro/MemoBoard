@@ -1,6 +1,5 @@
 from flask import url_for
 from memoboard import ma
-from marshmallow import fields
 
 from memoboard.models import MemoItem, MemoList
 
@@ -9,8 +8,8 @@ class ItemSchema(ma.ModelSchema):
     class Meta:
         model = MemoItem
 
-    uri = fields.Method("get_uri", dump_only=True)
-    list_uri = fields.Method("get_list_uri", dump_only=True)
+    uri = ma.Method("get_uri", dump_only=True)
+    list_uri = ma.Method("get_list_uri", dump_only=True)
 
     def get_uri(self, item):
         return url_for('api.list_item', list_id=item.list_id, item_id=item.id)
@@ -23,10 +22,10 @@ class ListSchema(ma.ModelSchema):
     class Meta:
         model = MemoList
 
-    uri = fields.Method("get_uri", dump_only=True)
-    items_uri = fields.Method("get_items_uri", dump_only=True)
+    uri = ma.Method("get_uri", dump_only=True)
+    items_uri = ma.Method("get_items_uri", dump_only=True)
 
-    items = fields.Nested(ItemSchema, many=True)
+    items = ma.Nested(ItemSchema, many=True)
 
     def get_uri(self, list):
         return url_for('api.list', list_id=list.id)
