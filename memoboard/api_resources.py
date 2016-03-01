@@ -11,14 +11,19 @@ class MemoListsResource(Resource):
 
 class MemoListResource(Resource):
     def get(self, list_id):
-        return {'hello': 'world', 'list_id': list_id}
+        list = MemoList.query.get_or_404(list_id)
+
+        return list.to_json()
 
 
 class MemoListItemsResource(Resource):
     def get(self, list_id):
-        return {'hello': 'world', 'test': "test"}
+        list = MemoList.query.get_or_404(list_id)
+
+        return list.items_to_json
 
 
 class MemoListItemResource(Resource):
     def get(self, list_id, item_id):
-        return {'hello': 'world', 'item_id': item_id}
+        item = MemoItem.query.get_or_404(item_id)
+        return item.to_json()
