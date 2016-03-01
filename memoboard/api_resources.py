@@ -1,5 +1,7 @@
+from flask import request
 from flask_restful import Resource
 from memoboard.models import MemoList, MemoItem
+from memoboard import db
 
 
 class MemoListsResource(Resource):
@@ -7,6 +9,14 @@ class MemoListsResource(Resource):
         lists = MemoList.query.all()
 
         return [l.to_json() for l in lists]
+
+    def post(self):
+        new_list = MemoList(name=request.form['name'])
+
+        db.session.add(new_list)
+        db.session.commit()
+
+        return new_list.to_json()
 
 
 class MemoListResource(Resource):
@@ -21,6 +31,14 @@ class MemoListItemsResource(Resource):
         list = MemoList.query.get_or_404(list_id)
 
         return list.items_to_json
+
+    def post(self, list_id):
+        new_item = MemoItem(content=request.form['content'], list_id=list_id)
+
+        db.session.add(new_item)
+        db.session.commit()
+
+        return new_item.to_json()
 
 
 class MemoListItemResource(Resource):
