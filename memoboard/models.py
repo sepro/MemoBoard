@@ -22,8 +22,9 @@ class MemoList(db.Model):
 
     @property
     def items_to_json(self):
-        return [i.to_json() for i in self.items]
+        return [i.to_json for i in self.items]
 
+    @property
     def to_json(self):
         return {'id': self.id,
                 'name': self.name,
@@ -53,6 +54,7 @@ class MemoItem(db.Model):
     def uri(self):
         return url_for('api.list_item', list_id=self.list_id, item_id=self.id)
 
+    @property
     def to_json(self):
         return {'id': self.id,
                 'content': self.content,

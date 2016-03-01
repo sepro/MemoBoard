@@ -8,7 +8,7 @@ class MemoListsResource(Resource):
     def get(self):
         lists = MemoList.query.all()
 
-        return [l.to_json() for l in lists]
+        return [l.to_json for l in lists]
 
     def post(self):
         new_list = MemoList(name=request.form['name'])
@@ -16,14 +16,14 @@ class MemoListsResource(Resource):
         db.session.add(new_list)
         db.session.commit()
 
-        return new_list.to_json()
+        return new_list.to_json
 
 
 class MemoListResource(Resource):
     def get(self, list_id):
         list = MemoList.query.get_or_404(list_id)
 
-        return list.to_json()
+        return list.to_json
 
     def delete(self, list_id):
         list = MemoList.query.get_or_404(list_id)
@@ -32,6 +32,14 @@ class MemoListResource(Resource):
         db.session.commit()
 
         return {}
+
+    def put(self, list_id):
+        list = MemoList.query.get_or_404(list_id)
+
+        list.name = request.form['name']
+        db.session.commit()
+
+        return list.to_json
 
 
 class MemoListItemsResource(Resource):
@@ -46,13 +54,13 @@ class MemoListItemsResource(Resource):
         db.session.add(new_item)
         db.session.commit()
 
-        return new_item.to_json()
+        return new_item.to_json
 
 
 class MemoListItemResource(Resource):
     def get(self, list_id, item_id):
         item = MemoItem.query.filter_by(list_id=list_id).filter_by(id=item_id).first_or_404()
-        return item.to_json()
+        return item.to_json
 
     def delete(self, list_id, item_id):
         item = MemoItem.query.filter_by(list_id=list_id).filter_by(id=item_id).first_or_404()
@@ -61,3 +69,11 @@ class MemoListItemResource(Resource):
         db.session.commit()
 
         return {}
+
+    def put(self, list_id, item_id):
+        item = MemoItem.query.filter_by(list_id=list_id).filter_by(id=item_id).first_or_404()
+        item.content = request.form['content']
+
+        db.session.commit()
+
+        return item.to_json
