@@ -19709,6 +19709,7 @@
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Memoboard).call(this, props));
 
 	        _this.state = { data: [] };
+	        _this.reLoad = _this.reLoad.bind(_this);
 	        return _this;
 	    }
 
@@ -29792,12 +29793,13 @@
 	    _createClass(Addlist, [{
 	        key: 'addList',
 	        value: function addList() {
-	            name = { name: this.refs.listname.getDOMNode().value.trim() };
+	            name = { name: "new list" };
 
 	            $.ajax({
 	                type: 'POST',
 	                url: this.props.url,
 	                data: name,
+	                dataType: 'json',
 	                success: function (data) {
 	                    console.log(data);
 	                }.bind(this)

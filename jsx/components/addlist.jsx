@@ -9,12 +9,13 @@ class Addlist extends React.Component{
     }
 
     addList() {
-        name = {name: this.refs.listname.getDOMNode().value.trim()};
+        name = {name: "new list"};
 
         $.ajax({
             type: 'POST',
             url: this.props.url,
             data: name,
+            dataType: 'json',
             success: function(data) {
                 console.log(data);
             }.bind(this)
