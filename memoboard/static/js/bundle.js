@@ -29793,12 +29793,14 @@
 	    _createClass(Addlist, [{
 	        key: 'addList',
 	        value: function addList() {
-	            name = { name: "new list" };
+	            var postdata = { name: "new list" };
+
+	            console.log(name);
 
 	            $.ajax({
 	                type: 'POST',
 	                url: this.props.url,
-	                data: name,
+	                data: postdata,
 	                dataType: 'json',
 	                success: function (data) {
 	                    console.log(data);
