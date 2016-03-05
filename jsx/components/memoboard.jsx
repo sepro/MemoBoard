@@ -2,6 +2,7 @@ var $ = require ('jquery');
 import React from 'react';
 
 import Memolist from './memolist.jsx'
+import Addlist from './addlist.jsx'
 
 class Memoboard extends React.Component{
     constructor(props) {
@@ -26,11 +27,16 @@ class Memoboard extends React.Component{
         this.loadFromServer();
     }
 
+    reLoad() {
+        this.loadFromServer();
+    }
+
     render() {
       return (<div>
               {this.state.data.map(function(memolistData ,i){
                     return <Memolist data={memolistData} url={memolistData.uri} />;
               })}
+              <Addlist url={this.props.url} onAdd={this.reLoad}/>
       </div>);
     }
 }
