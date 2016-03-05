@@ -34,7 +34,7 @@ class Memoboard extends React.Component{
     render() {
       return (<div>
               {this.state.data.map(function(memolistData ,i){
-                    return <Memolist data={memolistData} url={memolistData.uri} />;
+                    return <Memolist key={i} data={memolistData} url={memolistData.uri} />;
               })}
               <Addlist url={this.props.url} onAdd={this.reLoad}/>
       </div>);

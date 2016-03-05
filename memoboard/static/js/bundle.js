@@ -19745,7 +19745,7 @@
 	                'div',
 	                null,
 	                this.state.data.map(function (memolistData, i) {
-	                    return _react2.default.createElement(_memolist2.default, { data: memolistData, url: memolistData.uri });
+	                    return _react2.default.createElement(_memolist2.default, { key: i, data: memolistData, url: memolistData.uri });
 	                }),
 	                _react2.default.createElement(_addlist2.default, { url: this.props.url, onAdd: this.reLoad })
 	            );
@@ -19827,7 +19827,7 @@
 	          this.state.data.name
 	        ),
 	        this.state.data.items.map(function (memoitemData, i) {
-	          return _react2.default.createElement(_memoitem2.default, { data: memoitemData, url: memoitemData.uri });
+	          return _react2.default.createElement(_memoitem2.default, { key: i, data: memoitemData, url: memoitemData.uri });
 	        })
 	      );
 	    }
@@ -29783,16 +29783,37 @@
 	    function Addlist(props) {
 	        _classCallCheck(this, Addlist);
 
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Addlist).call(this, props));
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Addlist).call(this, props));
+
+	        _this.addList = _this.addList.bind(_this);
+	        return _this;
 	    }
 
 	    _createClass(Addlist, [{
+	        key: 'addList',
+	        value: function addList() {
+	            name = { name: this.refs.listname.getDOMNode().value.trim() };
+
+	            $.ajax({
+	                type: 'POST',
+	                url: this.props.url,
+	                data: name,
+	                success: function (data) {
+	                    console.log(data);
+	                }.bind(this)
+	            });
+
+	            this.props.onAdd();
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                'Add List: box button'
+	                'Add List:',
+	                _react2.default.createElement('input', { type: 'text', name: 'listname', ref: 'listname' }),
+	                _react2.default.createElement('input', { type: 'button', onClick: this.addList.bind(this), value: 'add' })
 	            );
 	        }
 	    }]);

@@ -25,7 +25,7 @@ class Memolist extends React.Component{
     render() {
       return (<div><strong>{ this.state.data.name }</strong>
          {this.state.data.items.map(function(memoitemData ,i){
-            return <Memoitem data={memoitemData} url={memoitemData.uri} />;
+            return <Memoitem key={i} data={memoitemData} url={memoitemData.uri} />;
           })}
 
       </div>);
