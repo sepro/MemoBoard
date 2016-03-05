@@ -60,7 +60,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var $ = __webpack_require__(160);
+	var $ = __webpack_require__(162);
 	__webpack_require__(1);
 
 	_reactDom2.default.render(_react2.default.createElement(_memoboard2.default, { url: document.getElementById('memoboard').getAttribute('url') }), document.getElementById('memoboard'));
@@ -19682,6 +19682,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _memolist = __webpack_require__(160);
+
+	var _memolist2 = _interopRequireDefault(_memolist);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19690,7 +19694,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var $ = __webpack_require__(160);
+	var $ = __webpack_require__(162);
 
 	var Memoboard = function (_React$Component) {
 	    _inherits(Memoboard, _React$Component);
@@ -19731,12 +19735,9 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                'data : ',
-	                _react2.default.createElement(
-	                    'strong',
-	                    null,
-	                    this.state.data
-	                )
+	                this.state.data.map(function (memolistData, i) {
+	                    return _react2.default.createElement(_memolist2.default, { data: memolistData, url: memolistData.uri });
+	                })
 	            );
 	        }
 	    }]);
@@ -19748,6 +19749,163 @@
 
 /***/ },
 /* 160 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _memoitem = __webpack_require__(161);
+
+	var _memoitem2 = _interopRequireDefault(_memoitem);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var $ = __webpack_require__(162);
+
+	var Memolist = function (_React$Component) {
+	  _inherits(Memolist, _React$Component);
+
+	  function Memolist(props) {
+	    _classCallCheck(this, Memolist);
+
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Memolist).call(this, props));
+
+	    _this.state = { data: _this.props.data };
+	    return _this;
+	  }
+
+	  _createClass(Memolist, [{
+	    key: 'loadFromServer',
+	    value: function loadFromServer() {
+	      var _this2 = this;
+
+	      $.ajax({
+	        url: this.props.url,
+	        dataType: 'json',
+	        success: function success(data) {
+	          _this2.setState({ data: data });
+	        },
+	        error: function error(xhr, status, err) {
+	          console.error(_this2.props.url, status, err.toString());
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'strong',
+	          null,
+	          this.state.data.name
+	        ),
+	        this.state.data.items.map(function (memoitemData, i) {
+	          return _react2.default.createElement(_memoitem2.default, { data: memoitemData, url: memoitemData.uri });
+	        })
+	      );
+	    }
+	  }]);
+
+	  return Memolist;
+	}(_react2.default.Component);
+
+	exports.default = Memolist;
+
+/***/ },
+/* 161 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var $ = __webpack_require__(162);
+
+	var Memoitem = function (_React$Component) {
+	  _inherits(Memoitem, _React$Component);
+
+	  function Memoitem(props) {
+	    _classCallCheck(this, Memoitem);
+
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Memoitem).call(this, props));
+
+	    _this.state = { data: _this.props.data };
+	    return _this;
+	  }
+
+	  _createClass(Memoitem, [{
+	    key: 'loadFromServer',
+	    value: function loadFromServer() {
+	      var _this2 = this;
+
+	      $.ajax({
+	        url: this.props.url,
+	        dataType: 'json',
+	        success: function success(data) {
+	          _this2.setState({ data: data });
+	        },
+	        error: function error(xhr, status, err) {
+	          console.error(_this2.props.url, status, err.toString());
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.data.content,
+	        ' ',
+	        _react2.default.createElement(
+	          'em',
+	          null,
+	          this.state.data.created
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Memoitem;
+	}(_react2.default.Component);
+
+	exports.default = Memoitem;
+
+/***/ },
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
