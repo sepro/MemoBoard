@@ -19749,7 +19749,7 @@
 	                null,
 	                this.state.data.map(function (memolistData, i) {
 
-	                    return _react2.default.createElement(_memolist2.default, { key: i, data: memolistData, url: memolistData.uri, onChange: this.reLoad });
+	                    return _react2.default.createElement(_memolist2.default, { key: i, url: memolistData.uri, onChange: this.reLoad });
 	                }.bind(this)),
 	                _react2.default.createElement(_addlist2.default, { url: this.props.url, onAdd: this.reLoad })
 	            );
@@ -19807,8 +19807,8 @@
 
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Memolist).call(this, props));
 
-	        _this.state = { data: _this.props.data };
 	        _this.reLoad = _this.reLoad.bind(_this);
+	        _this.state = { data: { items: [] } };
 	        return _this;
 	    }
 
@@ -19827,6 +19827,11 @@
 	                    console.error(_this2.props.url, status, err.toString());
 	                }
 	            });
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.loadFromServer();
 	        }
 	    }, {
 	        key: 'reLoad',
@@ -19849,7 +19854,7 @@
 	                ' ',
 	                _react2.default.createElement(_deletebutton2.default, { onDelete: this.props.onChange, url: this.state.data.uri }),
 	                this.state.data.items.map(function (memoitemData, i) {
-	                    return _react2.default.createElement(_memoitem2.default, { key: i, data: memoitemData, url: memoitemData.uri, onChange: this.reLoad });
+	                    return _react2.default.createElement(_memoitem2.default, { key: i, url: memoitemData.uri, onChange: this.reLoad });
 	                }.bind(this)),
 	                _react2.default.createElement(_additem2.default, { url: this.state.data.items_uri, onAdd: this.reLoad })
 	            );
@@ -19868,7 +19873,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -19892,50 +19897,57 @@
 	var $ = __webpack_require__(163);
 
 	var Memoitem = function (_React$Component) {
-	  _inherits(Memoitem, _React$Component);
+	    _inherits(Memoitem, _React$Component);
 
-	  function Memoitem(props) {
-	    _classCallCheck(this, Memoitem);
+	    function Memoitem(props) {
+	        _classCallCheck(this, Memoitem);
 
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Memoitem).call(this, props));
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Memoitem).call(this, props));
 
-	    _this.state = { data: _this.props.data };
-	    return _this;
-	  }
+	        _this.state = { data: { content: '', created: '' } };
+	        return _this;
+	    }
 
-	  _createClass(Memoitem, [{
-	    key: 'loadFromServer',
-	    value: function loadFromServer() {
-	      $.ajax({
-	        url: this.props.url,
-	        dataType: 'json',
-	        success: function success(data) {
-	          this.setState({ data: data });
-	        },
-	        error: function error(xhr, status, err) {
-	          console.error(this.props.url, status, err.toString());
+	    _createClass(Memoitem, [{
+	        key: 'loadFromServer',
+	        value: function loadFromServer() {
+	            var _this2 = this;
+
+	            $.ajax({
+	                url: this.props.url,
+	                dataType: 'json',
+	                success: function success(data) {
+	                    _this2.setState({ data: data });
+	                },
+	                error: function error(xhr, status, err) {
+	                    console.error(_this2.props.url, status, err.toString());
+	                }
+	            });
 	        }
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        this.state.data.content,
-	        ' ',
-	        _react2.default.createElement(
-	          'em',
-	          null,
-	          this.state.data.created
-	        ),
-	        _react2.default.createElement(_deletebutton2.default, { onDelete: this.props.onChange, url: this.state.data.uri })
-	      );
-	    }
-	  }]);
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.loadFromServer();
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                this.state.data.content,
+	                ' ',
+	                _react2.default.createElement(
+	                    'em',
+	                    null,
+	                    this.state.data.created
+	                ),
+	                _react2.default.createElement(_deletebutton2.default, { onDelete: this.props.onChange, url: this.state.data.uri })
+	            );
+	        }
+	    }]);
 
-	  return Memoitem;
+	    return Memoitem;
 	}(_react2.default.Component);
 
 	exports.default = Memoitem;

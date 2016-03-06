@@ -30,7 +30,7 @@ class Memoboard extends React.Component{
 
     reLoad() {
         console.log('Called: memoboard.reLoad');
-        this.setState({data: []});
+        this.setState({data: []})
         this.loadFromServer();
     }
 
@@ -38,7 +38,7 @@ class Memoboard extends React.Component{
       return (<div>
               {this.state.data.map(function(memolistData ,i){
 
-                    return <Memolist key={i} data={memolistData} url={memolistData.uri} onChange={this.reLoad}/>;
+                    return <Memolist key={i} url={memolistData.uri} onChange={this.reLoad}/>;
               }.bind(this))}
               <Addlist url={this.props.url} onAdd={this.reLoad}/>
       </div>);

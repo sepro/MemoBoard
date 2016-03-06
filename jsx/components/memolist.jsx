@@ -8,8 +8,8 @@ import Additem from './additem.jsx'
 class Memolist extends React.Component{
     constructor(props) {
        super(props);
-       this.state = {data: this.props.data};
        this.reLoad = this.reLoad.bind(this);
+       this.state = {data: {items: []}};
     }
 
     loadFromServer() {
@@ -19,10 +19,14 @@ class Memolist extends React.Component{
           success: (data) => {
             this.setState({data: data});
           },
-          error: (xhr, status, err) => {
+          error: (xhr, status, err)  => {
             console.error(this.props.url, status, err.toString());
           }
         });
+    }
+
+    componentDidMount() {
+        this.loadFromServer();
     }
 
     reLoad() {
@@ -34,7 +38,7 @@ class Memolist extends React.Component{
     render() {
       return (<div><strong>{ this.state.data.name }</strong> <Deletebutton onDelete={this.props.onChange} url={this.state.data.uri} />
          {this.state.data.items.map(function(memoitemData ,i){
-            return <Memoitem key={i} data={memoitemData} url={memoitemData.uri} onChange={this.reLoad}/>;
+            return <Memoitem key={i} url={memoitemData.uri} onChange={this.reLoad}/>;
           }.bind(this))}
       <Additem url={this.state.data.items_uri} onAdd={this.reLoad}/>
       </div>);

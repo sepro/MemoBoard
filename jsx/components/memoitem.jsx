@@ -6,20 +6,24 @@ import Deletebutton from './deletebutton.jsx'
 class Memoitem extends React.Component{
     constructor(props) {
        super(props);
-       this.state = {data: this.props.data};
+       this.state = {data: {content: '', created:''}};
     }
 
     loadFromServer() {
         $.ajax({
           url: this.props.url,
           dataType: 'json',
-          success: function(data) {
+          success: (data)  => {
             this.setState({data: data});
           },
-          error: function(xhr, status, err) {
+          error: (xhr, status, err) => {
             console.error(this.props.url, status, err.toString());
           }
         });
+    }
+
+    componentDidMount() {
+        this.loadFromServer();
     }
 
     render() {
