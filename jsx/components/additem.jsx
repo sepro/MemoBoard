@@ -21,10 +21,11 @@ class Additem extends React.Component{
             dataType: 'json',
             success: function(data) {
                 console.log(data);
+                this.props.onAdd();
             }.bind(this)
         });
 
-        this.props.onAdd();
+
     }
 
     render() {

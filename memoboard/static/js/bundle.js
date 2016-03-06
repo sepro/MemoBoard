@@ -60,7 +60,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var $ = __webpack_require__(162);
+	var $ = __webpack_require__(163);
 	__webpack_require__(1);
 
 	_reactDom2.default.render(_react2.default.createElement(_memoboard2.default, { url: document.getElementById('memoboard').getAttribute('url') }), document.getElementById('memoboard'));
@@ -19698,7 +19698,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var $ = __webpack_require__(162);
+	var $ = __webpack_require__(163);
 
 	var Memoboard = function (_React$Component) {
 	    _inherits(Memoboard, _React$Component);
@@ -19737,6 +19737,8 @@
 	    }, {
 	        key: 'reLoad',
 	        value: function reLoad() {
+	            console.log('Called: memoboard.reLoad');
+	            this.setState({ data: [] });
 	            this.loadFromServer();
 	        }
 	    }, {
@@ -19779,7 +19781,7 @@
 
 	var _memoitem2 = _interopRequireDefault(_memoitem);
 
-	var _deletebutton = __webpack_require__(163);
+	var _deletebutton = __webpack_require__(162);
 
 	var _deletebutton2 = _interopRequireDefault(_deletebutton);
 
@@ -19795,7 +19797,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var $ = __webpack_require__(162);
+	var $ = __webpack_require__(163);
 
 	var Memolist = function (_React$Component) {
 	    _inherits(Memolist, _React$Component);
@@ -19829,6 +19831,8 @@
 	    }, {
 	        key: 'reLoad',
 	        value: function reLoad() {
+	            console.log('Called: memolist.reLoad');
+	            this.setState({ data: { items: [] } });
 	            this.loadFromServer();
 	        }
 	    }, {
@@ -19845,8 +19849,8 @@
 	                ' ',
 	                _react2.default.createElement(_deletebutton2.default, { onDelete: this.props.onChange, url: this.state.data.uri }),
 	                this.state.data.items.map(function (memoitemData, i) {
-	                    return _react2.default.createElement(_memoitem2.default, { key: i, data: memoitemData, url: memoitemData.uri });
-	                }),
+	                    return _react2.default.createElement(_memoitem2.default, { key: i, data: memoitemData, url: memoitemData.uri, onChange: this.reLoad });
+	                }.bind(this)),
 	                _react2.default.createElement(_additem2.default, { url: this.state.data.items_uri, onAdd: this.reLoad })
 	            );
 	        }
@@ -19873,6 +19877,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _deletebutton = __webpack_require__(162);
+
+	var _deletebutton2 = _interopRequireDefault(_deletebutton);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19881,7 +19889,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var $ = __webpack_require__(162);
+	var $ = __webpack_require__(163);
 
 	var Memoitem = function (_React$Component) {
 	  _inherits(Memoitem, _React$Component);
@@ -19898,16 +19906,14 @@
 	  _createClass(Memoitem, [{
 	    key: 'loadFromServer',
 	    value: function loadFromServer() {
-	      var _this2 = this;
-
 	      $.ajax({
 	        url: this.props.url,
 	        dataType: 'json',
 	        success: function success(data) {
-	          _this2.setState({ data: data });
+	          this.setState({ data: data });
 	        },
 	        error: function error(xhr, status, err) {
-	          console.error(_this2.props.url, status, err.toString());
+	          console.error(this.props.url, status, err.toString());
 	        }
 	      });
 	    }
@@ -19923,7 +19929,8 @@
 	          'em',
 	          null,
 	          this.state.data.created
-	        )
+	        ),
+	        _react2.default.createElement(_deletebutton2.default, { onDelete: this.props.onChange, url: this.state.data.uri })
 	      );
 	    }
 	  }]);
@@ -19935,6 +19942,76 @@
 
 /***/ },
 /* 162 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var $ = __webpack_require__(163);
+
+	var Deletebutton = function (_React$Component) {
+	    _inherits(Deletebutton, _React$Component);
+
+	    function Deletebutton(props) {
+	        _classCallCheck(this, Deletebutton);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Deletebutton).call(this, props));
+
+	        _this.sendDelete = _this.sendDelete.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(Deletebutton, [{
+	        key: 'sendDelete',
+	        value: function sendDelete() {
+	            $.ajax({
+	                type: 'DELETE',
+	                url: this.props.url,
+	                success: function () {
+	                    console.log('deleted');
+	                    this.props.onDelete();
+	                }.bind(this)
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'p',
+	                    { onClick: this.sendDelete },
+	                    'delete'
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Deletebutton;
+	}(_react2.default.Component);
+
+	exports.default = Deletebutton;
+
+/***/ },
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -29771,77 +29848,6 @@
 
 
 /***/ },
-/* 163 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var $ = __webpack_require__(162);
-
-	var Deletebutton = function (_React$Component) {
-	    _inherits(Deletebutton, _React$Component);
-
-	    function Deletebutton(props) {
-	        _classCallCheck(this, Deletebutton);
-
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Deletebutton).call(this, props));
-
-	        _this.sendDelete = _this.sendDelete.bind(_this);
-	        return _this;
-	    }
-
-	    _createClass(Deletebutton, [{
-	        key: 'sendDelete',
-	        value: function sendDelete() {
-	            $.ajax({
-	                type: 'DELETE',
-	                url: this.props.url,
-	                success: function () {
-	                    console.log('deleted');
-	                }.bind(this)
-	            });
-
-	            this.props.onDelete();
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                    'p',
-	                    { onClick: this.sendDelete.bind(this) },
-	                    'delete'
-	                )
-	            );
-	        }
-	    }]);
-
-	    return Deletebutton;
-	}(_react2.default.Component);
-
-	exports.default = Deletebutton;
-
-/***/ },
 /* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -29869,7 +29875,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var $ = __webpack_require__(162);
+	var $ = __webpack_require__(163);
 
 	var Additem = function (_React$Component) {
 	    _inherits(Additem, _React$Component);
@@ -29897,10 +29903,9 @@
 	                dataType: 'json',
 	                success: function (data) {
 	                    console.log(data);
+	                    this.props.onAdd();
 	                }.bind(this)
 	            });
-
-	            this.props.onAdd();
 	        }
 	    }, {
 	        key: 'render',
@@ -29947,7 +29952,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var $ = __webpack_require__(162);
+	var $ = __webpack_require__(163);
 
 	var Addlist = function (_React$Component) {
 	    _inherits(Addlist, _React$Component);
@@ -29975,10 +29980,9 @@
 	                dataType: 'json',
 	                success: function (data) {
 	                    console.log(data);
+	                    this.props.onAdd();
 	                }.bind(this)
 	            });
-
-	            this.props.onAdd();
 	        }
 	    }, {
 	        key: 'render',
@@ -29987,7 +29991,7 @@
 	                'div',
 	                null,
 	                _react2.default.createElement('input', { type: 'text', name: 'listname', ref: 'listname' }),
-	                _react2.default.createElement('input', { type: 'button', onClick: this.addList.bind(this), value: 'add' })
+	                _react2.default.createElement('input', { type: 'button', onClick: this.addList, value: 'add' })
 	            );
 	        }
 	    }]);

@@ -14,15 +14,14 @@ class Deletebutton extends React.Component{
             url: this.props.url,
             success: function() {
                 console.log('deleted');
+                this.props.onDelete();
             }.bind(this)
         });
-
-        this.props.onDelete();
     }
 
     render() {
       return (<div>
-                <p onClick={this.sendDelete.bind(this)}>delete</p></div>);
+                <p onClick={this.sendDelete}>delete</p></div>);
     }
 }
 

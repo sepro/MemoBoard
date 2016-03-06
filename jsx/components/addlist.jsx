@@ -21,16 +21,17 @@ class Addlist extends React.Component{
             dataType: 'json',
             success: function(data) {
                 console.log(data);
+                this.props.onAdd();
             }.bind(this)
         });
 
-        this.props.onAdd();
+
     }
 
     render() {
       return (<div>
                 <input type="text" name="listname" ref="listname" />
-                <input type="button" onClick={this.addList.bind(this)} value="add" /></div>);
+                <input type="button" onClick={this.addList} value="add" /></div>);
     }
 }
 

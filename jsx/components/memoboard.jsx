@@ -29,6 +29,8 @@ class Memoboard extends React.Component{
     }
 
     reLoad() {
+        console.log('Called: memoboard.reLoad');
+        this.setState({data: []});
         this.loadFromServer();
     }
 

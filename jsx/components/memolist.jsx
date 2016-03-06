@@ -26,14 +26,16 @@ class Memolist extends React.Component{
     }
 
     reLoad() {
+        console.log('Called: memolist.reLoad');
+        this.setState({data: {items: []}});
         this.loadFromServer();
     }
 
     render() {
       return (<div><strong>{ this.state.data.name }</strong> <Deletebutton onDelete={this.props.onChange} url={this.state.data.uri} />
          {this.state.data.items.map(function(memoitemData ,i){
-            return <Memoitem key={i} data={memoitemData} url={memoitemData.uri} />;
-          })}
+            return <Memoitem key={i} data={memoitemData} url={memoitemData.uri} onChange={this.reLoad}/>;
+          }.bind(this))}
       <Additem url={this.state.data.items_uri} onAdd={this.reLoad}/>
       </div>);
     }
