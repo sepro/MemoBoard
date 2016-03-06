@@ -2,13 +2,12 @@ var $ = require ('jquery');
 import React from 'react';
 
 import Memoitem from './memoitem.jsx'
-import Deletebutton from './deletebutton.jsx'
+import Button from './button.jsx'
 import Additem from './additem.jsx'
 
 class Memolist extends React.Component{
     constructor(props) {
        super(props);
-       this.reLoad = this.reLoad.bind(this);
        this.state = {data: {items: []}};
     }
 
@@ -29,18 +28,27 @@ class Memolist extends React.Component{
         this.loadFromServer();
     }
 
-    reLoad() {
-        console.log('Called: memolist.reLoad');
-        this.setState({data: {items: []}});
-        this.loadFromServer();
+    deleteItem(i, url) {
+        $.ajax({
+            type: 'DELETE',
+            url: url,
+            success: function() {
+                //Item removed now remove from state.
+                console.log('Called : memolist.deleteItem');
+                var newData = this.state.data;
+                newData.items.splice(i,1);
+                this.setState({data: newData});
+
+            }.bind(this)
+        });
     }
 
     render() {
-      return (<div><strong>{ this.state.data.name }</strong> <Deletebutton onDelete={this.props.onChange} url={this.state.data.uri} />
+      return (<div><strong>{ this.state.data.name }</strong> <Button onClick={this.props.handleDelete} text="Delete list" />
          {this.state.data.items.map(function(memoitemData ,i){
-            return <Memoitem key={i} url={memoitemData.uri} onChange={this.reLoad}/>;
+            return <Memoitem key={memoitemData.id} url={memoitemData.uri} handleDelete={this.deleteItem.bind(this, i, memoitemData.uri)} />;
           }.bind(this))}
-      <Additem url={this.state.data.items_uri} onAdd={this.reLoad}/>
+      <Additem url={this.state.data.items_uri} onAdd={this.loadFromServer.bind(this)}/>
       </div>);
     }
 }

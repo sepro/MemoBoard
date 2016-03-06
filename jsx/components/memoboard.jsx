@@ -8,7 +8,6 @@ class Memoboard extends React.Component{
     constructor(props) {
        super(props);
        this.state = {data: []};
-       this.reLoad = this.reLoad.bind(this);
     }
 
     loadFromServer() {
@@ -28,19 +27,27 @@ class Memoboard extends React.Component{
         this.loadFromServer();
     }
 
-    reLoad() {
-        console.log('Called: memoboard.reLoad');
-        this.setState({data: []})
-        this.loadFromServer();
+    deleteList(i, url) {
+        $.ajax({
+            type: 'DELETE',
+            url: url,
+            success: function() {
+                //Item removed now remove from state.
+                console.log('Called : memolist.deleteItem');
+                var newData = this.state.data;
+                newData.splice(i,1);
+                this.setState({data: newData});
+
+            }.bind(this)
+        });
     }
 
     render() {
       return (<div>
               {this.state.data.map(function(memolistData ,i){
-
-                    return <Memolist key={i} url={memolistData.uri} onChange={this.reLoad}/>;
+                    return <Memolist key={memolistData.id} url={memolistData.uri} handleDelete={this.deleteList.bind(this, i, memolistData.uri)} />;
               }.bind(this))}
-              <Addlist url={this.props.url} onAdd={this.reLoad}/>
+              <Addlist url={this.props.url} onAdd={this.loadFromServer.bind(this)}/>
       </div>);
     }
 }

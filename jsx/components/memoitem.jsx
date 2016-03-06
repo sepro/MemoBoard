@@ -1,7 +1,7 @@
 var $ = require ('jquery');
 import React from 'react';
 
-import Deletebutton from './deletebutton.jsx'
+import Button from './button.jsx'
 
 class Memoitem extends React.Component{
     constructor(props) {
@@ -28,7 +28,7 @@ class Memoitem extends React.Component{
 
     render() {
       return (<div>{ this.state.data.content } <em>{ this.state.data.created }</em>
-      <Deletebutton onDelete={this.props.onChange} url={this.state.data.uri} /></div>);
+      <Button onClick={this.props.handleDelete} text="Delete item" /></div>);
     }
 }
 

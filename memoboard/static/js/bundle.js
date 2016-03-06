@@ -19709,7 +19709,6 @@
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Memoboard).call(this, props));
 
 	        _this.state = { data: [] };
-	        _this.reLoad = _this.reLoad.bind(_this);
 	        return _this;
 	    }
 
@@ -19735,11 +19734,19 @@
 	            this.loadFromServer();
 	        }
 	    }, {
-	        key: 'reLoad',
-	        value: function reLoad() {
-	            console.log('Called: memoboard.reLoad');
-	            this.setState({ data: [] });
-	            this.loadFromServer();
+	        key: 'deleteList',
+	        value: function deleteList(i, url) {
+	            $.ajax({
+	                type: 'DELETE',
+	                url: url,
+	                success: function () {
+	                    //Item removed now remove from state.
+	                    console.log('Called : memolist.deleteItem');
+	                    var newData = this.state.data;
+	                    newData.splice(i, 1);
+	                    this.setState({ data: newData });
+	                }.bind(this)
+	            });
 	        }
 	    }, {
 	        key: 'render',
@@ -19748,10 +19755,9 @@
 	                'div',
 	                null,
 	                this.state.data.map(function (memolistData, i) {
-
-	                    return _react2.default.createElement(_memolist2.default, { key: i, url: memolistData.uri, onChange: this.reLoad });
+	                    return _react2.default.createElement(_memolist2.default, { key: memolistData.id, url: memolistData.uri, handleDelete: this.deleteList.bind(this, i, memolistData.uri) });
 	                }.bind(this)),
-	                _react2.default.createElement(_addlist2.default, { url: this.props.url, onAdd: this.reLoad })
+	                _react2.default.createElement(_addlist2.default, { url: this.props.url, onAdd: this.loadFromServer.bind(this) })
 	            );
 	        }
 	    }]);
@@ -19781,9 +19787,9 @@
 
 	var _memoitem2 = _interopRequireDefault(_memoitem);
 
-	var _deletebutton = __webpack_require__(162);
+	var _button = __webpack_require__(162);
 
-	var _deletebutton2 = _interopRequireDefault(_deletebutton);
+	var _button2 = _interopRequireDefault(_button);
 
 	var _additem = __webpack_require__(164);
 
@@ -19807,7 +19813,6 @@
 
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Memolist).call(this, props));
 
-	        _this.reLoad = _this.reLoad.bind(_this);
 	        _this.state = { data: { items: [] } };
 	        return _this;
 	    }
@@ -19834,11 +19839,19 @@
 	            this.loadFromServer();
 	        }
 	    }, {
-	        key: 'reLoad',
-	        value: function reLoad() {
-	            console.log('Called: memolist.reLoad');
-	            this.setState({ data: { items: [] } });
-	            this.loadFromServer();
+	        key: 'deleteItem',
+	        value: function deleteItem(i, url) {
+	            $.ajax({
+	                type: 'DELETE',
+	                url: url,
+	                success: function () {
+	                    //Item removed now remove from state.
+	                    console.log('Called : memolist.deleteItem');
+	                    var newData = this.state.data;
+	                    newData.items.splice(i, 1);
+	                    this.setState({ data: newData });
+	                }.bind(this)
+	            });
 	        }
 	    }, {
 	        key: 'render',
@@ -19852,11 +19865,11 @@
 	                    this.state.data.name
 	                ),
 	                ' ',
-	                _react2.default.createElement(_deletebutton2.default, { onDelete: this.props.onChange, url: this.state.data.uri }),
+	                _react2.default.createElement(_button2.default, { onClick: this.props.handleDelete, text: 'Delete list' }),
 	                this.state.data.items.map(function (memoitemData, i) {
-	                    return _react2.default.createElement(_memoitem2.default, { key: i, url: memoitemData.uri, onChange: this.reLoad });
+	                    return _react2.default.createElement(_memoitem2.default, { key: memoitemData.id, url: memoitemData.uri, handleDelete: this.deleteItem.bind(this, i, memoitemData.uri) });
 	                }.bind(this)),
-	                _react2.default.createElement(_additem2.default, { url: this.state.data.items_uri, onAdd: this.reLoad })
+	                _react2.default.createElement(_additem2.default, { url: this.state.data.items_uri, onAdd: this.loadFromServer.bind(this) })
 	            );
 	        }
 	    }]);
@@ -19882,9 +19895,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _deletebutton = __webpack_require__(162);
+	var _button = __webpack_require__(162);
 
-	var _deletebutton2 = _interopRequireDefault(_deletebutton);
+	var _button2 = _interopRequireDefault(_button);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19942,7 +19955,7 @@
 	                    null,
 	                    this.state.data.created
 	                ),
-	                _react2.default.createElement(_deletebutton2.default, { onDelete: this.props.onChange, url: this.state.data.uri })
+	                _react2.default.createElement(_button2.default, { onClick: this.props.handleDelete, text: 'Delete item' })
 	            );
 	        }
 	    }]);
@@ -19978,31 +19991,16 @@
 
 	var $ = __webpack_require__(163);
 
-	var Deletebutton = function (_React$Component) {
-	    _inherits(Deletebutton, _React$Component);
+	var Button = function (_React$Component) {
+	    _inherits(Button, _React$Component);
 
-	    function Deletebutton(props) {
-	        _classCallCheck(this, Deletebutton);
+	    function Button(props) {
+	        _classCallCheck(this, Button);
 
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Deletebutton).call(this, props));
-
-	        _this.sendDelete = _this.sendDelete.bind(_this);
-	        return _this;
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Button).call(this, props));
 	    }
 
-	    _createClass(Deletebutton, [{
-	        key: 'sendDelete',
-	        value: function sendDelete() {
-	            $.ajax({
-	                type: 'DELETE',
-	                url: this.props.url,
-	                success: function () {
-	                    console.log('deleted');
-	                    this.props.onDelete();
-	                }.bind(this)
-	            });
-	        }
-	    }, {
+	    _createClass(Button, [{
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
@@ -20010,17 +20008,17 @@
 	                null,
 	                _react2.default.createElement(
 	                    'p',
-	                    { onClick: this.sendDelete },
-	                    'delete'
+	                    { onClick: this.props.onClick },
+	                    this.props.text
 	                )
 	            );
 	        }
 	    }]);
 
-	    return Deletebutton;
+	    return Button;
 	}(_react2.default.Component);
 
-	exports.default = Deletebutton;
+	exports.default = Button;
 
 /***/ },
 /* 163 */
