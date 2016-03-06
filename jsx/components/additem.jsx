@@ -3,14 +3,14 @@ import React from 'react';
 import ReactDom from 'react-dom';
 
 
-class Addlist extends React.Component{
+class Additem extends React.Component{
     constructor(props) {
        super(props);
-       this.addList = this.addList.bind(this);
+       this.addItem = this.addItem.bind(this);
     }
 
-    addList() {
-        var postdata = {name: ReactDom.findDOMNode(this.refs.listname).value};
+    addItem() {
+        var postdata = {content: ReactDom.findDOMNode(this.refs.itemname).value};
 
         console.log(name);
 
@@ -29,9 +29,9 @@ class Addlist extends React.Component{
 
     render() {
       return (<div>
-                <input type="text" name="listname" ref="listname" />
-                <input type="button" onClick={this.addList.bind(this)} value="add" /></div>);
+                <input type="text" name="itemname" ref="itemname" />
+                <input type="button" onClick={this.addItem.bind(this)} value="add" /></div>);
     }
 }
 
-export default Addlist;
+export default Additem;

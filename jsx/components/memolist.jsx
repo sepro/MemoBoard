@@ -2,11 +2,14 @@ var $ = require ('jquery');
 import React from 'react';
 
 import Memoitem from './memoitem.jsx'
+import Deletebutton from './deletebutton.jsx'
+import Additem from './additem.jsx'
 
 class Memolist extends React.Component{
     constructor(props) {
        super(props);
        this.state = {data: this.props.data};
+       this.reLoad = this.reLoad.bind(this);
     }
 
     loadFromServer() {
@@ -22,12 +25,16 @@ class Memolist extends React.Component{
         });
     }
 
+    reLoad() {
+        this.loadFromServer();
+    }
+
     render() {
-      return (<div><strong>{ this.state.data.name }</strong>
+      return (<div><strong>{ this.state.data.name }</strong> <Deletebutton onDelete={this.props.onChange} url={this.state.data.uri} />
          {this.state.data.items.map(function(memoitemData ,i){
             return <Memoitem key={i} data={memoitemData} url={memoitemData.uri} />;
           })}
-
+      <Additem url={this.state.data.items_uri} onAdd={this.reLoad}/>
       </div>);
     }
 }
