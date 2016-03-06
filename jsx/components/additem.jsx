@@ -20,7 +20,6 @@ class Additem extends React.Component{
             data: postdata,
             dataType: 'json',
             success: function(data) {
-                console.log(data);
                 this.props.onAdd();
             }.bind(this)
         });

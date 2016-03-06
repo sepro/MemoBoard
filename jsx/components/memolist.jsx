@@ -28,25 +28,20 @@ class Memolist extends React.Component{
         this.loadFromServer();
     }
 
-    deleteItem(i, url) {
+    deleteItem(url) {
         $.ajax({
             type: 'DELETE',
             url: url,
             success: function() {
-                //Item removed now remove from state.
-                console.log('Called : memolist.deleteItem');
-                var newData = this.state.data;
-                newData.items.splice(i,1);
-                this.setState({data: newData});
-
+                this.loadFromServer();
             }.bind(this)
         });
     }
 
     render() {
       return (<div><strong>{ this.state.data.name }</strong> <Button onClick={this.props.handleDelete} text="Delete list" />
-         {this.state.data.items.map(function(memoitemData ,i){
-            return <Memoitem key={memoitemData.id} url={memoitemData.uri} handleDelete={this.deleteItem.bind(this, i, memoitemData.uri)} />;
+         {this.state.data.items.map(function(memoitemData){
+            return <Memoitem key={memoitemData.id} url={memoitemData.uri} handleDelete={this.deleteItem.bind(this, memoitemData.uri)} />;
           }.bind(this))}
       <Additem url={this.state.data.items_uri} onAdd={this.loadFromServer.bind(this)}/>
       </div>);

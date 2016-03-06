@@ -19735,16 +19735,12 @@
 	        }
 	    }, {
 	        key: 'deleteList',
-	        value: function deleteList(i, url) {
+	        value: function deleteList(url) {
 	            $.ajax({
 	                type: 'DELETE',
 	                url: url,
 	                success: function () {
-	                    //Item removed now remove from state.
-	                    console.log('Called : memolist.deleteItem');
-	                    var newData = this.state.data;
-	                    newData.splice(i, 1);
-	                    this.setState({ data: newData });
+	                    this.loadFromServer();
 	                }.bind(this)
 	            });
 	        }
@@ -19754,8 +19750,8 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                this.state.data.map(function (memolistData, i) {
-	                    return _react2.default.createElement(_memolist2.default, { key: memolistData.id, url: memolistData.uri, handleDelete: this.deleteList.bind(this, i, memolistData.uri) });
+	                this.state.data.map(function (memolistData) {
+	                    return _react2.default.createElement(_memolist2.default, { key: memolistData.id, url: memolistData.uri, handleDelete: this.deleteList.bind(this, memolistData.uri) });
 	                }.bind(this)),
 	                _react2.default.createElement(_addlist2.default, { url: this.props.url, onAdd: this.loadFromServer.bind(this) })
 	            );
@@ -19840,16 +19836,12 @@
 	        }
 	    }, {
 	        key: 'deleteItem',
-	        value: function deleteItem(i, url) {
+	        value: function deleteItem(url) {
 	            $.ajax({
 	                type: 'DELETE',
 	                url: url,
 	                success: function () {
-	                    //Item removed now remove from state.
-	                    console.log('Called : memolist.deleteItem');
-	                    var newData = this.state.data;
-	                    newData.items.splice(i, 1);
-	                    this.setState({ data: newData });
+	                    this.loadFromServer();
 	                }.bind(this)
 	            });
 	        }
@@ -19866,8 +19858,8 @@
 	                ),
 	                ' ',
 	                _react2.default.createElement(_button2.default, { onClick: this.props.handleDelete, text: 'Delete list' }),
-	                this.state.data.items.map(function (memoitemData, i) {
-	                    return _react2.default.createElement(_memoitem2.default, { key: memoitemData.id, url: memoitemData.uri, handleDelete: this.deleteItem.bind(this, i, memoitemData.uri) });
+	                this.state.data.items.map(function (memoitemData) {
+	                    return _react2.default.createElement(_memoitem2.default, { key: memoitemData.id, url: memoitemData.uri, handleDelete: this.deleteItem.bind(this, memoitemData.uri) });
 	                }.bind(this)),
 	                _react2.default.createElement(_additem2.default, { url: this.state.data.items_uri, onAdd: this.loadFromServer.bind(this) })
 	            );
@@ -29912,7 +29904,6 @@
 	                data: postdata,
 	                dataType: 'json',
 	                success: function (data) {
-	                    console.log(data);
 	                    this.props.onAdd();
 	                }.bind(this)
 	            });

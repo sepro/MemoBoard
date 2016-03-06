@@ -27,25 +27,20 @@ class Memoboard extends React.Component{
         this.loadFromServer();
     }
 
-    deleteList(i, url) {
+    deleteList(url) {
         $.ajax({
             type: 'DELETE',
             url: url,
             success: function() {
-                //Item removed now remove from state.
-                console.log('Called : memolist.deleteItem');
-                var newData = this.state.data;
-                newData.splice(i,1);
-                this.setState({data: newData});
-
+                this.loadFromServer();
             }.bind(this)
         });
     }
 
     render() {
       return (<div>
-              {this.state.data.map(function(memolistData ,i){
-                    return <Memolist key={memolistData.id} url={memolistData.uri} handleDelete={this.deleteList.bind(this, i, memolistData.uri)} />;
+              {this.state.data.map(function(memolistData){
+                    return <Memolist key={memolistData.id} url={memolistData.uri} handleDelete={this.deleteList.bind(this, memolistData.uri)} />;
               }.bind(this))}
               <Addlist url={this.props.url} onAdd={this.loadFromServer.bind(this)}/>
       </div>);
