@@ -19989,7 +19989,7 @@
 	                    { className: 'pull-right text-muted' },
 	                    _react2.default.createElement(
 	                        'em',
-	                        null,
+	                        { className: 'item-date' },
 	                        date
 	                    ),
 	                    _react2.default.createElement(_button2.default, { onClick: this.props.handleDelete, glyph: 'glyphicon glyphicon-remove' })
