@@ -29,8 +29,13 @@ class Additem extends React.Component{
 
     render() {
       return (<div>
-                <input type="text" name="itemname" ref="itemname" placeholder="Add item"/>
-                <input type="button" onClick={this.addItem.bind(this)} value="add" /></div>);
+            <div className="input-group input-group-sm">
+                <input className="form-control input-sm" type="text" name="itemname" ref="itemname" placeholder="Add item"/>
+                <span className="input-group-btn">
+                <button className="btn btn-success btn-sm" type="button" onClick={this.addItem.bind(this)}>Add</button>
+                </span>
+                </div>
+            </div>);
     }
 }
 

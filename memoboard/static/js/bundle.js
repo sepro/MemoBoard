@@ -19752,13 +19752,22 @@
 	                { className: 'container' },
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'clearfix' },
+	                    { className: 'row' },
 	                    _react2.default.createElement(
-	                        'h1',
-	                        { className: 'pull-left' },
-	                        'MemoBoard'
+	                        'div',
+	                        { className: 'col-lg-4 col-sm-6 col-xs-12' },
+	                        _react2.default.createElement(
+	                            'h1',
+	                            null,
+	                            'MemoBoard'
+	                        )
 	                    ),
-	                    _react2.default.createElement(_addlist2.default, { url: this.props.url, onAdd: this.loadFromServer.bind(this) })
+	                    _react2.default.createElement('div', { className: 'col-lg-4  visible-lg' }),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-lg-4 col-sm-6 col-xs-12' },
+	                        _react2.default.createElement(_addlist2.default, { url: this.props.url, onAdd: this.loadFromServer.bind(this) })
+	                    )
 	                ),
 	                _react2.default.createElement('hr', null),
 	                _react2.default.createElement(
@@ -43059,8 +43068,20 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement('input', { type: 'text', name: 'itemname', ref: 'itemname', placeholder: 'Add item' }),
-	                _react2.default.createElement('input', { type: 'button', onClick: this.addItem.bind(this), value: 'add' })
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'input-group input-group-sm' },
+	                    _react2.default.createElement('input', { className: 'form-control input-sm', type: 'text', name: 'itemname', ref: 'itemname', placeholder: 'Add item' }),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'input-group-btn' },
+	                        _react2.default.createElement(
+	                            'button',
+	                            { className: 'btn btn-success btn-sm', type: 'button', onClick: this.addItem.bind(this) },
+	                            'Add'
+	                        )
+	                    )
+	                )
 	            );
 	        }
 	    }]);
@@ -43131,10 +43152,18 @@
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                'form',
-	                { className: 'form-inline pull-right addlist' },
-	                _react2.default.createElement('input', { type: 'text', name: 'listname', ref: 'listname', placeholder: 'Add list' }),
-	                _react2.default.createElement('input', { type: 'button', onClick: this.addList, value: 'add' })
+	                'div',
+	                { className: 'input-group input-group-sm addlist' },
+	                _react2.default.createElement('input', { className: 'form-control input-sm', type: 'text', name: 'listname', ref: 'listname', placeholder: 'Add list' }),
+	                _react2.default.createElement(
+	                    'span',
+	                    { className: 'input-group-btn' },
+	                    _react2.default.createElement(
+	                        'button',
+	                        { className: 'btn btn-primary btn-sm', type: 'button', onClick: this.addList },
+	                        'Add'
+	                    )
+	                )
 	            );
 	        }
 	    }]);

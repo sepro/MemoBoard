@@ -26,10 +26,12 @@ class Addlist extends React.Component{
     }
 
     render() {
-      return (<form className="form-inline pull-right addlist">
-                <input type="text" name="listname" ref="listname" placeholder="Add list"/>
-                <input type="button" onClick={this.addList} value="add" />
-                </form>);
+      return (<div className="input-group input-group-sm addlist">
+                <input className="form-control input-sm" type="text" name="listname" ref="listname" placeholder="Add list"/>
+                <span className="input-group-btn">
+                <button className="btn btn-primary btn-sm" type="button" onClick={this.addList}>Add</button>
+                </span>
+              </div>);
     }
 }
 

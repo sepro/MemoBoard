@@ -39,9 +39,11 @@ class Memoboard extends React.Component{
 
     render() {
       return (<div className="container">
-                <div className="clearfix">
-                <h1 className="pull-left">MemoBoard</h1>
-                <Addlist url={this.props.url} onAdd={this.loadFromServer.bind(this)}/>
+                <div className="row">
+                <div className="col-lg-4 col-sm-6 col-xs-12"><h1>MemoBoard</h1></div>
+                <div className="col-lg-4  visible-lg"></div>
+                <div className="col-lg-4 col-sm-6 col-xs-12">
+                <Addlist url={this.props.url} onAdd={this.loadFromServer.bind(this)}/></div>
                 </div>
                 <hr />
                 <div className="row">
