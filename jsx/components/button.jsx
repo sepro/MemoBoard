@@ -8,8 +8,8 @@ class Button extends React.Component{
     }
 
     render() {
-      return (<div>
-                <p onClick={this.props.onClick}>{this.props.text}</p></div>);
+      return (
+                <a href="#" onClick={this.props.onClick} className="text-muted"><span className={this.props.glyph}></span></a>);
     }
 }
 

@@ -12,15 +12,12 @@ class Addlist extends React.Component{
     addList() {
         var postdata = {name: ReactDom.findDOMNode(this.refs.listname).value};
 
-        console.log(name);
-
         $.ajax({
             type: 'POST',
             url: this.props.url,
             data: postdata,
             dataType: 'json',
             success: function(data) {
-                console.log(data);
                 this.props.onAdd();
             }.bind(this)
         });
@@ -29,9 +26,14 @@ class Addlist extends React.Component{
     }
 
     render() {
-      return (<div>
+      return (<div className="row">
+                <div className="col-lg-12">
+                <form className="form">
                 <input type="text" name="listname" ref="listname" />
-                <input type="button" onClick={this.addList} value="add" /></div>);
+                <input type="button" onClick={this.addList} value="add" />
+                </form>
+                </div>
+              </div>);
     }
 }
 

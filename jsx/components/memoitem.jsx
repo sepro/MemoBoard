@@ -1,5 +1,6 @@
 var $ = require ('jquery');
 import React from 'react';
+var moment = require('moment');
 
 import Button from './button.jsx'
 
@@ -27,8 +28,15 @@ class Memoitem extends React.Component{
     }
 
     render() {
-      return (<div>{ this.state.data.content } <em>{ this.state.data.created }</em>
-      <Button onClick={this.props.handleDelete} text="Delete item" /></div>);
+      var date = '';
+
+      if (this.state.data.created) {
+           date =  moment(this.state.data.created).format("DD-MM-YY");
+      }
+
+      console.log(date);
+      return (<div className="clearfix"><div className="pull-left">{ this.state.data.content }</div><div className="pull-right text-muted"><em>{ date }</em>
+       <Button onClick={this.props.handleDelete} glyph="glyphicon glyphicon-remove" /></div></div>);
     }
 }
 

@@ -38,11 +38,14 @@ class Memoboard extends React.Component{
     }
 
     render() {
-      return (<div>
-              {this.state.data.map(function(memolistData){
-                    return <Memolist key={memolistData.id} url={memolistData.uri} handleDelete={this.deleteList.bind(this, memolistData.uri)} />;
-              }.bind(this))}
-              <Addlist url={this.props.url} onAdd={this.loadFromServer.bind(this)}/>
+      return (<div className="container">
+                <h1>MemoBoard</h1>
+                <Addlist url={this.props.url} onAdd={this.loadFromServer.bind(this)}/>
+                <div className="row">
+                  {this.state.data.map(function(memolistData){
+                        return <Memolist key={memolistData.id} url={memolistData.uri} handleDelete={this.deleteList.bind(this, memolistData.uri)} />;
+                  }.bind(this))}
+                </div>
       </div>);
     }
 }
