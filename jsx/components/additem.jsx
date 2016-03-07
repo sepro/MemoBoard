@@ -21,6 +21,7 @@ class Additem extends React.Component{
             dataType: 'json',
             success: function(data) {
                 this.props.onAdd();
+                ReactDom.findDOMNode(this.refs.itemname).value = "";
             }.bind(this)
         });
 

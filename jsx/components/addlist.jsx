@@ -19,6 +19,7 @@ class Addlist extends React.Component{
             dataType: 'json',
             success: function(data) {
                 this.props.onAdd();
+                ReactDom.findDOMNode(this.refs.listname).value = "";
             }.bind(this)
         });
 

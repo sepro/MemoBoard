@@ -31,13 +31,13 @@ class Memoitem extends React.Component{
       var date = '';
 
       if (this.state.data.created) {
-           date =  moment(this.state.data.created).format("DD-MM-YY");
+           date =  moment(this.state.data.created).format("DD-MM-YY HH:mm");
       }
 
       return (<tr>
-      <td className="col-xs-6">{ this.state.data.content }</td>
+      <td className="col-xs-6 first">{ this.state.data.content }</td>
       <td className="col-xs-4 text-muted"><em className="item-date">{ date }</em></td>
-      <td className="col-xs-2 text-muted"><Button onClick={this.props.handleDelete} glyph="glyphicon glyphicon-remove" /></td>
+      <td className="col-xs-2 text-muted last"><div className="pull-right"><Button onClick={this.props.handleDelete} glyph="glyphicon glyphicon-remove" /></div></td>
       </tr>);
     }
 }

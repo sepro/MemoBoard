@@ -19899,25 +19899,6 @@
 	                            'table',
 	                            { className: 'table table-striped' },
 	                            _react2.default.createElement(
-	                                'thead',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'tr',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        'Item'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        'Added'
-	                                    ),
-	                                    _react2.default.createElement('th', null)
-	                                )
-	                            ),
-	                            _react2.default.createElement(
 	                                'tbody',
 	                                null,
 	                                this.state.data.items.map(function (memoitemData) {
@@ -20012,7 +19993,7 @@
 	            var date = '';
 
 	            if (this.state.data.created) {
-	                date = moment(this.state.data.created).format("DD-MM-YY");
+	                date = moment(this.state.data.created).format("DD-MM-YY HH:mm");
 	            }
 
 	            return _react2.default.createElement(
@@ -20020,7 +20001,7 @@
 	                null,
 	                _react2.default.createElement(
 	                    'td',
-	                    { className: 'col-xs-6' },
+	                    { className: 'col-xs-6 first' },
 	                    this.state.data.content
 	                ),
 	                _react2.default.createElement(
@@ -20034,8 +20015,12 @@
 	                ),
 	                _react2.default.createElement(
 	                    'td',
-	                    { className: 'col-xs-2 text-muted' },
-	                    _react2.default.createElement(_button2.default, { onClick: this.props.handleDelete, glyph: 'glyphicon glyphicon-remove' })
+	                    { className: 'col-xs-2 text-muted last' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'pull-right' },
+	                        _react2.default.createElement(_button2.default, { onClick: this.props.handleDelete, glyph: 'glyphicon glyphicon-remove' })
+	                    )
 	                )
 	            );
 	        }
@@ -43093,6 +43078,7 @@
 	                dataType: 'json',
 	                success: function (data) {
 	                    this.props.onAdd();
+	                    _reactDom2.default.findDOMNode(this.refs.itemname).value = "";
 	                }.bind(this)
 	            });
 	        }
@@ -43179,6 +43165,7 @@
 	                dataType: 'json',
 	                success: function (data) {
 	                    this.props.onAdd();
+	                    _reactDom2.default.findDOMNode(this.refs.listname).value = "";
 	                }.bind(this)
 	            });
 	        }

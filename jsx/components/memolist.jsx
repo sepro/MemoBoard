@@ -46,13 +46,6 @@ class Memolist extends React.Component{
 
       <div className="table-responsive">
         <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Added</th>
-            <th></th>
-          </tr>
-        </thead>
         <tbody>
          {this.state.data.items.map(function(memoitemData){
             return <Memoitem key={memoitemData.id} url={memoitemData.uri} handleDelete={this.deleteItem.bind(this, memoitemData.uri)} />;

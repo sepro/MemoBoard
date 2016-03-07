@@ -5,3 +5,11 @@
 .item-date {
     margin-right: 5px;
 }
+
+td.first {
+    padding-left: 15px !important;
+}
+
+td.last {
+    padding-right: 15px !important;
+}
