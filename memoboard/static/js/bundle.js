@@ -19894,11 +19894,41 @@
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
+	                        { className: 'table-responsive' },
+	                        _react2.default.createElement(
+	                            'table',
+	                            { className: 'table table-striped' },
+	                            _react2.default.createElement(
+	                                'thead',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'tr',
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        'th',
+	                                        null,
+	                                        'Item'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'th',
+	                                        null,
+	                                        'Added'
+	                                    ),
+	                                    _react2.default.createElement('th', null)
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'tbody',
+	                                null,
+	                                this.state.data.items.map(function (memoitemData) {
+	                                    return _react2.default.createElement(_memoitem2.default, { key: memoitemData.id, url: memoitemData.uri, handleDelete: this.deleteItem.bind(this, memoitemData.uri) });
+	                                }.bind(this))
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
 	                        { className: 'panel-body' },
-	                        this.state.data.items.map(function (memoitemData) {
-	                            return _react2.default.createElement(_memoitem2.default, { key: memoitemData.id, url: memoitemData.uri, handleDelete: this.deleteItem.bind(this, memoitemData.uri) });
-	                        }.bind(this)),
-	                        _react2.default.createElement('hr', null),
 	                        _react2.default.createElement(_additem2.default, { url: this.state.data.items_uri, onAdd: this.loadFromServer.bind(this) })
 	                    )
 	                )
@@ -19986,21 +20016,25 @@
 	            }
 
 	            return _react2.default.createElement(
-	                'div',
-	                { className: 'clearfix' },
+	                'tr',
+	                null,
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'pull-left' },
+	                    'td',
+	                    { className: 'col-xs-6' },
 	                    this.state.data.content
 	                ),
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'pull-right text-muted' },
+	                    'td',
+	                    { className: 'col-xs-4 text-muted' },
 	                    _react2.default.createElement(
 	                        'em',
 	                        { className: 'item-date' },
 	                        date
-	                    ),
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'td',
+	                    { className: 'col-xs-2 text-muted' },
 	                    _react2.default.createElement(_button2.default, { onClick: this.props.handleDelete, glyph: 'glyphicon glyphicon-remove' })
 	                )
 	            );
