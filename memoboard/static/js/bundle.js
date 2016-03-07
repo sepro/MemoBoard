@@ -19751,11 +19751,16 @@
 	                'div',
 	                { className: 'container' },
 	                _react2.default.createElement(
-	                    'h1',
-	                    null,
-	                    'MemoBoard'
+	                    'div',
+	                    { className: 'clearfix' },
+	                    _react2.default.createElement(
+	                        'h1',
+	                        { className: 'pull-left' },
+	                        'MemoBoard'
+	                    ),
+	                    _react2.default.createElement(_addlist2.default, { url: this.props.url, onAdd: this.loadFromServer.bind(this) })
 	                ),
-	                _react2.default.createElement(_addlist2.default, { url: this.props.url, onAdd: this.loadFromServer.bind(this) }),
+	                _react2.default.createElement('hr', null),
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'row' },
@@ -19971,7 +19976,6 @@
 	                date = moment(this.state.data.created).format("DD-MM-YY");
 	            }
 
-	            console.log(date);
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'clearfix' },
@@ -43055,7 +43059,7 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement('input', { type: 'text', name: 'itemname', ref: 'itemname' }),
+	                _react2.default.createElement('input', { type: 'text', name: 'itemname', ref: 'itemname', placeholder: 'Add item' }),
 	                _react2.default.createElement('input', { type: 'button', onClick: this.addItem.bind(this), value: 'add' })
 	            );
 	        }
@@ -43127,18 +43131,10 @@
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                'div',
-	                { className: 'row' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-lg-12' },
-	                    _react2.default.createElement(
-	                        'form',
-	                        { className: 'form' },
-	                        _react2.default.createElement('input', { type: 'text', name: 'listname', ref: 'listname' }),
-	                        _react2.default.createElement('input', { type: 'button', onClick: this.addList, value: 'add' })
-	                    )
-	                )
+	                'form',
+	                { className: 'form-inline pull-right addlist' },
+	                _react2.default.createElement('input', { type: 'text', name: 'listname', ref: 'listname', placeholder: 'Add list' }),
+	                _react2.default.createElement('input', { type: 'button', onClick: this.addList, value: 'add' })
 	            );
 	        }
 	    }]);

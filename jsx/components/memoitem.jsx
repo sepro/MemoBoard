@@ -34,7 +34,6 @@ class Memoitem extends React.Component{
            date =  moment(this.state.data.created).format("DD-MM-YY");
       }
 
-      console.log(date);
       return (<div className="clearfix"><div className="pull-left">{ this.state.data.content }</div><div className="pull-right text-muted"><em>{ date }</em>
        <Button onClick={this.props.handleDelete} glyph="glyphicon glyphicon-remove" /></div></div>);
     }

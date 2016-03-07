@@ -29,7 +29,7 @@ class Additem extends React.Component{
 
     render() {
       return (<div>
-                <input type="text" name="itemname" ref="itemname" />
+                <input type="text" name="itemname" ref="itemname" placeholder="Add item"/>
                 <input type="button" onClick={this.addItem.bind(this)} value="add" /></div>);
     }
 }

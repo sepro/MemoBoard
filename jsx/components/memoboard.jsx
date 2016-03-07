@@ -39,8 +39,11 @@ class Memoboard extends React.Component{
 
     render() {
       return (<div className="container">
-                <h1>MemoBoard</h1>
+                <div className="clearfix">
+                <h1 className="pull-left">MemoBoard</h1>
                 <Addlist url={this.props.url} onAdd={this.loadFromServer.bind(this)}/>
+                </div>
+                <hr />
                 <div className="row">
                   {this.state.data.map(function(memolistData){
                         return <Memolist key={memolistData.id} url={memolistData.uri} handleDelete={this.deleteList.bind(this, memolistData.uri)} />;
