@@ -35,9 +35,9 @@ class Memoitem extends React.Component{
       }
 
       return (<tr>
-      <td className="col-xs-6 first">{ this.state.data.content }</td>
-      <td className="col-xs-4 text-muted"><em className="item-date">{ date }</em></td>
-      <td className="col-xs-2 text-muted last"><div className="pull-right"><Button onClick={this.props.handleDelete} glyph="glyphicon glyphicon-remove" /></div></td>
+      <td className="col-sm-6 col-xs-10 first">{ this.state.data.content }</td>
+      <td className="col-sm-4 hidden-xs text-muted"><em className="item-date">{ date }</em></td>
+      <td className="col-sm-2 col-xs-2text-muted last"><div className="pull-right"><Button onClick={this.props.handleDelete} glyph="glyphicon glyphicon-remove" /></div></td>
       </tr>);
     }
 }

@@ -20001,12 +20001,12 @@
 	                null,
 	                _react2.default.createElement(
 	                    'td',
-	                    { className: 'col-xs-6 first' },
+	                    { className: 'col-sm-6 col-xs-10 first' },
 	                    this.state.data.content
 	                ),
 	                _react2.default.createElement(
 	                    'td',
-	                    { className: 'col-xs-4 text-muted' },
+	                    { className: 'col-sm-4 hidden-xs text-muted' },
 	                    _react2.default.createElement(
 	                        'em',
 	                        { className: 'item-date' },
@@ -20015,7 +20015,7 @@
 	                ),
 	                _react2.default.createElement(
 	                    'td',
-	                    { className: 'col-xs-2 text-muted last' },
+	                    { className: 'col-sm-2 col-xs-2text-muted last' },
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'pull-right' },
@@ -43065,6 +43065,13 @@
 	    }
 
 	    _createClass(Additem, [{
+	        key: 'handleKeyPress',
+	        value: function handleKeyPress(event) {
+	            if (event.charCode == 13) {
+	                this.addItem();
+	            }
+	        }
+	    }, {
 	        key: 'addItem',
 	        value: function addItem() {
 	            var postdata = { content: _reactDom2.default.findDOMNode(this.refs.itemname).value };
@@ -43091,7 +43098,7 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'input-group input-group-sm' },
-	                    _react2.default.createElement('input', { className: 'form-control input-sm', type: 'text', name: 'itemname', ref: 'itemname', placeholder: 'Add item' }),
+	                    _react2.default.createElement('input', { className: 'form-control input-sm', type: 'text', onKeyPress: this.handleKeyPress.bind(this), name: 'itemname', ref: 'itemname', placeholder: 'Add item' }),
 	                    _react2.default.createElement(
 	                        'span',
 	                        { className: 'input-group-btn' },
@@ -43154,6 +43161,13 @@
 	    }
 
 	    _createClass(Addlist, [{
+	        key: 'handleKeyPress',
+	        value: function handleKeyPress(event) {
+	            if (event.charCode == 13) {
+	                this.addList();
+	            }
+	        }
+	    }, {
 	        key: 'addList',
 	        value: function addList() {
 	            var postdata = { name: _reactDom2.default.findDOMNode(this.refs.listname).value };
@@ -43175,7 +43189,7 @@
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'input-group input-group-sm addlist' },
-	                _react2.default.createElement('input', { className: 'form-control input-sm', type: 'text', name: 'listname', ref: 'listname', placeholder: 'Add list' }),
+	                _react2.default.createElement('input', { className: 'form-control input-sm', type: 'text', onKeyPress: this.handleKeyPress.bind(this), name: 'listname', ref: 'listname', placeholder: 'Add list' }),
 	                _react2.default.createElement(
 	                    'span',
 	                    { className: 'input-group-btn' },
