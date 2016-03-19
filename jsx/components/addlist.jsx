@@ -9,6 +9,12 @@ class Addlist extends React.Component{
        this.addList = this.addList.bind(this);
     }
 
+    handleKeyPress(event) {
+         if(event.charCode == 13){
+            this.addList();
+         }
+    }
+
     addList() {
         var postdata = {name: ReactDom.findDOMNode(this.refs.listname).value};
 
@@ -28,7 +34,7 @@ class Addlist extends React.Component{
 
     render() {
       return (<div className="input-group input-group-sm addlist">
-                <input className="form-control input-sm" type="text" name="listname" ref="listname" placeholder="Add list"/>
+                <input className="form-control input-sm" type="text"  onKeyPress={this.handleKeyPress.bind(this)} name="listname" ref="listname" placeholder="Add list"/>
                 <span className="input-group-btn">
                 <button className="btn btn-primary btn-sm" type="button" onClick={this.addList}>Add</button>
                 </span>

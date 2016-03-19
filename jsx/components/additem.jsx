@@ -9,6 +9,12 @@ class Additem extends React.Component{
        this.addItem = this.addItem.bind(this);
     }
 
+    handleKeyPress(event) {
+         if(event.charCode == 13){
+            this.addItem();
+         }
+    }
+
     addItem() {
         var postdata = {content: ReactDom.findDOMNode(this.refs.itemname).value};
 
@@ -31,7 +37,7 @@ class Additem extends React.Component{
     render() {
       return (<div>
             <div className="input-group input-group-sm">
-                <input className="form-control input-sm" type="text" name="itemname" ref="itemname" placeholder="Add item"/>
+                <input className="form-control input-sm" type="text" onKeyPress={this.handleKeyPress.bind(this)} name="itemname" ref="itemname" placeholder="Add item"/>
                 <span className="input-group-btn">
                 <button className="btn btn-success btn-sm" type="button" onClick={this.addItem.bind(this)}>Add</button>
                 </span>
