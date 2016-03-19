@@ -19802,6 +19802,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactDom = __webpack_require__(158);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
 	var _memoitem = __webpack_require__(161);
 
 	var _memoitem2 = _interopRequireDefault(_memoitem);
@@ -19858,6 +19862,13 @@
 	            this.loadFromServer();
 	        }
 	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            if (this.state.edit) {
+	                _reactDom2.default.findDOMNode(this.refs.listname).focus();
+	            }
+	        }
+	    }, {
 	        key: 'deleteItem',
 	        value: function deleteItem(url) {
 	            $.ajax({
@@ -19869,10 +19880,42 @@
 	            });
 	        }
 	    }, {
-	        key: 'handleClick',
-	        value: function handleClick() {
-	            console.log("click...");
+	        key: 'handleHeaderClick',
+	        value: function handleHeaderClick() {
+	            console.log("Clicked header");
 	            this.setState({ edit: true });
+	        }
+	    }, {
+	        key: 'handleAcceptClick',
+	        value: function handleAcceptClick() {
+	            console.log("Clicked Accept");
+	            var putdata = { name: _reactDom2.default.findDOMNode(this.refs.listname).value };
+
+	            $.ajax({
+	                type: 'PUT',
+	                url: this.state.data.uri,
+	                data: putdata,
+	                dataType: 'json',
+	                success: function () {
+	                    this.loadFromServer();
+	                }.bind(this)
+	            });
+	            this.setState({ edit: false });
+	        }
+	    }, {
+	        key: 'handleCancelClick',
+	        value: function handleCancelClick() {
+	            console.log("Clicked Cancel");
+	            this.setState({ edit: false });
+	        }
+	    }, {
+	        key: 'handleKeyDown',
+	        value: function handleKeyDown(event) {
+	            if (event.key == 'Enter') {
+	                this.handleAcceptClick();
+	            } else if (event.key == 'Escape') {
+	                this.handleCancelClick();
+	            }
 	        }
 	    }, {
 	        key: 'render',
@@ -19882,18 +19925,18 @@
 	                header = _react2.default.createElement(
 	                    'div',
 	                    { className: 'input-group input-group-sm' },
-	                    _react2.default.createElement('input', { className: 'form-control input-sm', type: 'text', name: 'itemname', ref: 'itemname', value: this.state.data.name }),
+	                    _react2.default.createElement('input', { className: 'form-control input-sm', type: 'text', name: 'listname', ref: 'listname', onKeyDown: this.handleKeyDown.bind(this), defaultValue: this.state.data.name }),
 	                    _react2.default.createElement(
 	                        'span',
 	                        { className: 'input-group-btn' },
 	                        _react2.default.createElement(
 	                            'button',
-	                            { className: 'btn btn-success btn-sm', type: 'button' },
+	                            { className: 'btn btn-success btn-sm', type: 'button', onClick: this.handleAcceptClick.bind(this) },
 	                            _react2.default.createElement('span', { className: 'glyphicon glyphicon-ok', 'aria-hidden': 'true' })
 	                        ),
 	                        _react2.default.createElement(
 	                            'button',
-	                            { className: 'btn btn-default btn-sm', type: 'button' },
+	                            { className: 'btn btn-default btn-sm', type: 'button', onClick: this.handleCancelClick.bind(this) },
 	                            _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove-circle', 'aria-hidden': 'true' })
 	                        )
 	                    )
@@ -19904,7 +19947,7 @@
 	                    null,
 	                    _react2.default.createElement(
 	                        'h4',
-	                        { className: 'panel-title  pull-left', onClick: this.handleClick.bind(this) },
+	                        { className: 'panel-title  pull-left', onClick: this.handleHeaderClick.bind(this) },
 	                        this.state.data.name,
 	                        ' '
 	                    ),
@@ -20036,12 +20079,12 @@
 	                null,
 	                _react2.default.createElement(
 	                    'td',
-	                    { className: 'col-xs-6 first' },
+	                    { className: 'col-sm-6 col-xs-10 first' },
 	                    this.state.data.content
 	                ),
 	                _react2.default.createElement(
 	                    'td',
-	                    { className: 'col-xs-4 text-muted' },
+	                    { className: 'col-sm-4 hidden-xs text-muted' },
 	                    _react2.default.createElement(
 	                        'em',
 	                        { className: 'item-date' },
@@ -20050,7 +20093,7 @@
 	                ),
 	                _react2.default.createElement(
 	                    'td',
-	                    { className: 'col-xs-2 text-muted last' },
+	                    { className: 'col-sm-2 col-xs-2 text-muted last' },
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'pull-right' },
@@ -43100,6 +43143,13 @@
 	    }
 
 	    _createClass(Additem, [{
+	        key: 'handleKeyPress',
+	        value: function handleKeyPress(event) {
+	            if (event.charCode == 13) {
+	                this.addItem();
+	            }
+	        }
+	    }, {
 	        key: 'addItem',
 	        value: function addItem() {
 	            var postdata = { content: _reactDom2.default.findDOMNode(this.refs.itemname).value };
@@ -43126,7 +43176,7 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'input-group input-group-sm' },
-	                    _react2.default.createElement('input', { className: 'form-control input-sm', type: 'text', name: 'itemname', ref: 'itemname', placeholder: 'Add item' }),
+	                    _react2.default.createElement('input', { className: 'form-control input-sm', type: 'text', onKeyPress: this.handleKeyPress.bind(this), name: 'itemname', ref: 'itemname', placeholder: 'Add item' }),
 	                    _react2.default.createElement(
 	                        'span',
 	                        { className: 'input-group-btn' },
@@ -43189,6 +43239,13 @@
 	    }
 
 	    _createClass(Addlist, [{
+	        key: 'handleKeyPress',
+	        value: function handleKeyPress(event) {
+	            if (event.charCode == 13) {
+	                this.addList();
+	            }
+	        }
+	    }, {
 	        key: 'addList',
 	        value: function addList() {
 	            var postdata = { name: _reactDom2.default.findDOMNode(this.refs.listname).value };
@@ -43210,7 +43267,7 @@
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'input-group input-group-sm addlist' },
-	                _react2.default.createElement('input', { className: 'form-control input-sm', type: 'text', name: 'listname', ref: 'listname', placeholder: 'Add list' }),
+	                _react2.default.createElement('input', { className: 'form-control input-sm', type: 'text', onKeyPress: this.handleKeyPress.bind(this), name: 'listname', ref: 'listname', placeholder: 'Add list' }),
 	                _react2.default.createElement(
 	                    'span',
 	                    { className: 'input-group-btn' },
