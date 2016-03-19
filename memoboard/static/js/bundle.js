@@ -19832,7 +19832,7 @@
 
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Memolist).call(this, props));
 
-	        _this.state = { data: { items: [] } };
+	        _this.state = { data: { items: [] }, edit: false };
 	        return _this;
 	    }
 
@@ -19869,8 +19869,53 @@
 	            });
 	        }
 	    }, {
+	        key: 'handleClick',
+	        value: function handleClick() {
+	            console.log("click...");
+	            this.setState({ edit: true });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var header;
+	            if (this.state.edit) {
+	                header = _react2.default.createElement(
+	                    'div',
+	                    { className: 'input-group input-group-sm' },
+	                    _react2.default.createElement('input', { className: 'form-control input-sm', type: 'text', name: 'itemname', ref: 'itemname', value: this.state.data.name }),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'input-group-btn' },
+	                        _react2.default.createElement(
+	                            'button',
+	                            { className: 'btn btn-success btn-sm', type: 'button' },
+	                            _react2.default.createElement('span', { className: 'glyphicon glyphicon-ok', 'aria-hidden': 'true' })
+	                        ),
+	                        _react2.default.createElement(
+	                            'button',
+	                            { className: 'btn btn-default btn-sm', type: 'button' },
+	                            _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove-circle', 'aria-hidden': 'true' })
+	                        )
+	                    )
+	                );
+	            } else {
+	                header = _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'h4',
+	                        { className: 'panel-title  pull-left', onClick: this.handleClick.bind(this) },
+	                        this.state.data.name,
+	                        ' '
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'btn-group pull-right' },
+	                        _react2.default.createElement(_button2.default, { onClick: this.props.handleDelete, glyph: 'glyphicon glyphicon-remove' })
+	                    )
+	                );
+	            }
+
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'col-lg-4 col-sm-6 col-xs-12' },
@@ -19880,17 +19925,7 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'panel-heading clearfix' },
-	                        _react2.default.createElement(
-	                            'h4',
-	                            { className: 'panel-title  pull-left' },
-	                            this.state.data.name,
-	                            ' '
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'btn-group pull-right' },
-	                            _react2.default.createElement(_button2.default, { onClick: this.props.handleDelete, glyph: 'glyphicon glyphicon-remove' })
-	                        )
+	                        header
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
