@@ -75,13 +75,13 @@ class Memoitem extends React.Component{
       var content;
 
       if (this.state.edit) {
-        content = <tr><td><div><div className="input-group input-group-sm">
+        content = <tr><td className="col-sm-12 col-xs-12" colSpan="3"><div className="input-group input-group-sm edititem">
                 <input className="form-control input-sm" type="text" name="itemname" ref="itemname" onKeyDown={this.handleKeyDown.bind(this)} defaultValue={ this.state.data.content }/>
                 <span className="input-group-btn">
                 <button className="btn btn-success btn-sm" type="button" onClick={this.handleAcceptClick.bind(this)}><span className="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
                 <button className="btn btn-default btn-sm" type="button" onClick={this.handleCancelClick.bind(this)}><span className="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></button>
                 </span>
-                </div></div></td></tr>
+                </div></td></tr>
       } else {
         content = <tr>
                     <td className="col-sm-6 col-xs-10 first" onClick={this.handleItemClick.bind(this)}>{ this.state.data.content }</td>

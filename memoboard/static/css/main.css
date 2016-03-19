@@ -2,6 +2,12 @@
     margin-top: 23px;
 }
 
+.edititem {
+    width: 100%;
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
 .item-date {
     margin-right: 5px;
 }
