@@ -91,7 +91,7 @@ class Memolist extends React.Component{
                 </div>;
       } else {
         header = <div>
-                    <h4 className="panel-title  pull-left" onClick={this.handleHeaderClick.bind(this)}>{ this.state.data.name } </h4>
+                    <h4 className="panel-title  pull-left" onClick={this.handleHeaderClick.bind(this)}>{ this.state.data.name != '' ? this.state.data.name : 'Unnamed list' } </h4>
                     <div className="btn-group pull-right"><Button onClick={this.props.handleDelete} glyph="glyphicon glyphicon-remove" /></div>
                  </div>;
 

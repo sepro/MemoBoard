@@ -19948,7 +19948,7 @@
 	                    _react2.default.createElement(
 	                        'h4',
 	                        { className: 'panel-title  pull-left', onClick: this.handleHeaderClick.bind(this) },
-	                        this.state.data.name,
+	                        this.state.data.name != '' ? this.state.data.name : 'Unnamed list',
 	                        ' '
 	                    ),
 	                    _react2.default.createElement(
