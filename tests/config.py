@@ -13,8 +13,8 @@ TESTING = True
 SECRET_KEY = 'change me !'
 
 # Database settings, database location and path to migration scripts
-_, DATABASE_PATH = tempfile.mkstemp()
-SQLALCHEMY_DATABASE_URI = 'sqlite:///' + DATABASE_PATH
+# use in memory sqlitedb for testing
+SQLALCHEMY_DATABASE_URI = 'sqlite:///'
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'migration')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_ECHO = False

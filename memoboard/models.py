@@ -27,6 +27,7 @@ class MemoList(db.Model):
         db.session.delete(list)
         db.session.commit()
 
+
 class MemoItem(db.Model):
     __tablename__ = 'items'
     id = db.Column(db.Integer, primary_key=True)
