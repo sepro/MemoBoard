@@ -83,6 +83,13 @@ class MyTest(TestCase):
 
         self.assertTrue(all([f in data.keys() for f in required_fields_item]))
 
+        # Test getting all list items
+        response = self.client.get(items_url, follow_redirects=True)
+        self.assert200(response)
+        data = json.loads(response.data.decode('utf-8'))
+        for d in data:
+            self.assertTrue(all([f in d.keys() for f in required_fields_item]))
+
         # Test getting all lists
         response = self.client.get(url)
         self.assert200(response)
