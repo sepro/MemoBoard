@@ -33,16 +33,67 @@ class MyTest(TestCase):
         self.assert200(response)
 
     def test_api(self):
-        # check if route returns code 200
+        required_fields_list = ['name', 'id', 'created', 'items', 'items_uri', 'uri']
+        required_fields_item = ['content', 'created', 'id', 'list', 'list_uri', 'uri']
         url = url_for('api.lists')
-        response = self.client.get(url)
-        self.assert200(response)
 
+        # Test creating a new list
         response = self.client.post(url, data=dict(name="New List"), follow_redirects=True)
         self.assert200(response)
         data = json.loads(response.data.decode('utf-8'))
 
-        url = url_for('api.list', list_id=1)
-        response = self.client.put(url, data=dict(name="New List, New Name"), follow_redirects=True)
+        self.assertTrue(all([f in data.keys() for f in required_fields_list]))
+
+        list_url = url_for('api.list', list_id=data['id'])
+
+        # Test getting existing list
+        response = self.client.get(list_url, follow_redirects=True)
         self.assert200(response)
         data = json.loads(response.data.decode('utf-8'))
+
+        self.assertTrue(all([f in data.keys() for f in required_fields_list]))
+
+        # Test updating existing list
+        response = self.client.put(list_url, data=dict(name="New List, New Name"), follow_redirects=True)
+        self.assert200(response)
+        data = json.loads(response.data.decode('utf-8'))
+
+        self.assertTrue(all([f in data.keys() for f in required_fields_list]))
+
+        # Test creating an item
+        items_url = data['items_uri']
+        response = self.client.post(items_url, data=dict(content="New Item"), follow_redirects=True)
+        self.assert200(response)
+        data = json.loads(response.data.decode('utf-8'))
+
+        self.assertTrue(all([f in data.keys() for f in required_fields_item]))
+
+        # Test getting an item
+        item_url = data['uri']
+        response = self.client.get(item_url, follow_redirects=True)
+        self.assert200(response)
+        data = json.loads(response.data.decode('utf-8'))
+
+        self.assertTrue(all([f in data.keys() for f in required_fields_item]))
+
+        # Test updating an item
+        response = self.client.put(item_url, data=dict(content="New Item, New Name"), follow_redirects=True)
+        self.assert200(response)
+        data = json.loads(response.data.decode('utf-8'))
+
+        self.assertTrue(all([f in data.keys() for f in required_fields_item]))
+
+        # Test getting all lists
+        response = self.client.get(url)
+        self.assert200(response)
+        data = json.loads(response.data.decode('utf-8'))
+        for d in data:
+            self.assertTrue(all([f in d.keys() for f in required_fields_list]))
+
+        # Test removing an item
+        response = self.client.delete(item_url, follow_redirects=True)
+        self.assert200(response)
+
+        # Test removing a list
+        response = self.client.delete(list_url, follow_redirects=True)
+        self.assert200(response)
