@@ -1,4 +1,3 @@
-var $ = require ('jquery');
 import React from 'react';
 import ReactDom from 'react-dom';
 
@@ -9,13 +8,8 @@ class Additem extends React.Component{
        this.addItem = this.addItem.bind(this);
     }
 
-    handleKeyPress(event) {
-         if(event.charCode == 13){
-            this.addItem();
-         }
-    }
-
-    addItem() {
+    addItem(ev) {
+        ev.preventDefault();
         var postdata = {content: ReactDom.findDOMNode(this.refs.itemname).value};
 
         console.log(name);
@@ -35,14 +29,16 @@ class Additem extends React.Component{
     }
 
     render() {
-      return (<div>
-            <div className="input-group input-group-sm">
-                <input className="form-control input-sm" type="text" onKeyPress={this.handleKeyPress.bind(this)} name="itemname" ref="itemname" placeholder="Add item"/>
-                <span className="input-group-btn">
-                <button className="btn btn-success btn-sm" type="button" onClick={this.addItem.bind(this)}>Add</button>
-                </span>
+      return (
+            <form onSubmit={this.addItem}>
+                <div className="input-group input-group-sm">
+                    <input className="form-control input-sm" type="text" name="itemname" ref="itemname" placeholder="Add item"/>
+                    <span className="input-group-btn">
+                        <input className="btn btn-success btn-sm" type="submit" value="Add" />
+                    </span>
                 </div>
-            </div>);
+            </form>
+            );
     }
 }
 

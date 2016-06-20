@@ -1,8 +1,3 @@
-
-var $ = require ('jquery');
-require('react');
-
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 
