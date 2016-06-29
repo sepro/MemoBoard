@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import axios from 'axios';
 
 import Memoitem from './memoitem.jsx'
 import Button from './button.jsx'
@@ -12,16 +13,13 @@ class Memolist extends React.Component{
     }
 
     loadFromServer() {
-        $.ajax({
-          url: this.props.url,
-          dataType: 'json',
-          success: (data) => {
-            this.setState({data: data});
-          },
-          error: (xhr, status, err)  => {
-            console.error(this.props.url, status, err.toString());
-          }
-        });
+        axios.get(this.props.url)
+            .then((response) => {
+                this.setState({data: response.data});
+            })
+            .catch((err) => {
+                console.error(err);
+            });
     }
 
     componentDidMount() {
@@ -35,13 +33,10 @@ class Memolist extends React.Component{
     }
 
     deleteItem(url) {
-        $.ajax({
-            type: 'DELETE',
-            url: url,
-            success: function() {
+        axios.delete(url)
+            .this((response) => {
                 this.loadFromServer();
-            }.bind(this)
-        });
+            });
     }
 
     handleHeaderClick() {
