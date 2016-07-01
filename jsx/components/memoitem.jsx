@@ -35,14 +35,12 @@ class Memoitem extends React.Component{
     }
 
     handleItemClick() {
-        console.log("Clicked header");
         this.setState({edit: true});
     }
 
     handleAcceptClick() {
-        console.log("Clicked Accept");
         var putdata = {content: ReactDom.findDOMNode(this.refs.itemname).value};
-
+        console.log(this.props.url, putdata);
         $.ajax({
             type: 'PUT',
             url: this.state.data.uri,

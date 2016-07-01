@@ -40,28 +40,30 @@ class Memolist extends React.Component{
     }
 
     handleHeaderClick() {
-        console.log("Clicked header");
         this.setState({edit: true});
     }
 
     handleAcceptClick() {
-        console.log("Clicked Accept");
-        var putdata = {name: ReactDom.findDOMNode(this.refs.listname).value};
+        var params = new URLSearchParams();
+        params.append('name', ReactDom.findDOMNode(this.refs.listname).value);
 
-        $.ajax({
-            type: 'PUT',
-            url: this.state.data.uri,
-            data: putdata,
-            dataType: 'json',
-            success: function() {
+        axios({
+            method: 'put',
+            url: this.props.url,
+            data: params,
+            headers: {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}
+        })
+            .then((response) => {
                 this.loadFromServer();
-            }.bind(this)
-        });
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+
         this.setState({edit: false});
     }
 
     handleCancelClick() {
-        console.log("Clicked Cancel");
         this.setState({edit: false});
     }
 
