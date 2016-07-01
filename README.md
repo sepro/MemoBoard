@@ -11,3 +11,30 @@ using flask and flask-restful. The front end is coded around the react js librar
 
 ## Installation
 
+Installation instruction for deployment on a linux system. 
+
+Clone the repository
+
+    git clone https://github.com/sepro/MemoBoard.git MemoBoard
+    
+Set up a virtual environment
+    
+    cd MemoBoard
+    virtualenv --python=python3 venv
+    
+Activate the environment and install packages
+
+    source venv/bin/activate
+    pip install -r requirements.txt
+    
+Configure MemoBoard
+
+    vim config.py
+    
+Run tests and run app
+
+    python run_tests.py
+    
+    python run.py
+    
+Check the web how to configure the webserver of your choice (tested with uwsgi and nginx) to serve memoboard. 
