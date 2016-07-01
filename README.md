@@ -30,6 +30,10 @@ Activate the environment and install packages
 Configure MemoBoard
 
     vim config.py
+
+Create the database
+
+    python db_action.py create
     
 Run tests and run app
 
@@ -37,4 +41,5 @@ Run tests and run app
     
     python run.py
     
-Check the web how to configure the webserver of your choice (tested with uwsgi and nginx) to serve memoboard. 
+Check the web how to configure the webserver of your choice (tested with uwsgi and nginx) to serve memoboard. In case
+a sqlite database is used, make sure the file is readable and writeable by the webserver.
