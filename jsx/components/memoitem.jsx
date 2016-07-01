@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import axios from 'axios';
 
 var moment = require('moment');
 
@@ -12,16 +13,13 @@ class Memoitem extends React.Component{
     }
 
     loadFromServer() {
-        $.ajax({
-          url: this.props.url,
-          dataType: 'json',
-          success: (data)  => {
-            this.setState({data: data});
-          },
-          error: (xhr, status, err) => {
-            console.error(this.props.url, status, err.toString());
-          }
-        });
+        axios.get(this.props.url)
+            .then((response) => {
+                this.setState({data: response.data});
+            })
+            .catch((err) => {
+                console.error(err);
+            });
     }
 
     componentDidMount() {
@@ -39,22 +37,20 @@ class Memoitem extends React.Component{
     }
 
     handleAcceptClick() {
-        var putdata = {content: ReactDom.findDOMNode(this.refs.itemname).value};
-        console.log(this.props.url, putdata);
-        $.ajax({
-            type: 'PUT',
-            url: this.state.data.uri,
-            data: putdata,
-            dataType: 'json',
-            success: function() {
+        var putdata = new URLSearchParams();
+        putdata.append('content', ReactDom.findDOMNode(this.refs.itemname).value);
+
+        axios.put(this.props.url, putdata, {headers: {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}})
+            .then((response) => {
                 this.loadFromServer();
-            }.bind(this)
-        });
+            })
+            .catch((err) => {
+                console.error(err);
+            });
         this.setState({edit: false});
     }
 
     handleCancelClick() {
-        console.log("Clicked Cancel");
         this.setState({edit: false});
     }
 

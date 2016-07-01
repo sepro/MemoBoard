@@ -34,7 +34,7 @@ class Memolist extends React.Component{
 
     deleteItem(url) {
         axios.delete(url)
-            .this((response) => {
+            .then((response) => {
                 this.loadFromServer();
             });
     }
@@ -47,12 +47,7 @@ class Memolist extends React.Component{
         var params = new URLSearchParams();
         params.append('name', ReactDom.findDOMNode(this.refs.listname).value);
 
-        axios({
-            method: 'put',
-            url: this.props.url,
-            data: params,
-            headers: {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}
-        })
+        axios.put(this.props.url, params, {headers: {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}})
             .then((response) => {
                 this.loadFromServer();
             })

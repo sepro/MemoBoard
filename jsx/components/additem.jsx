@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import axios from 'axios';
 
 
 class Additem extends React.Component{
@@ -10,22 +11,18 @@ class Additem extends React.Component{
 
     addItem(ev) {
         ev.preventDefault();
-        var postdata = {content: ReactDom.findDOMNode(this.refs.itemname).value};
 
-        console.log(name);
+        var postdata = new URLSearchParams();
+        postdata.append('content', ReactDom.findDOMNode(this.refs.itemname).value);
 
-        $.ajax({
-            type: 'POST',
-            url: this.props.url,
-            data: postdata,
-            dataType: 'json',
-            success: function(data) {
+        axios.post(this.props.url, postdata, {headers: {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}})
+            .then((response) => {
                 this.props.onAdd();
                 ReactDom.findDOMNode(this.refs.itemname).value = "";
-            }.bind(this)
-        });
-
-
+            })
+            .catch((err) => {
+                console.error(err);
+            });
     }
 
     render() {

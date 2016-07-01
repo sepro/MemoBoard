@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import axios from 'axios';
 
 
 class Addlist extends React.Component{
@@ -10,20 +11,18 @@ class Addlist extends React.Component{
 
     addList(ev) {
         ev.preventDefault();
-        var postdata = {name: ReactDom.findDOMNode(this.refs.listname).value};
 
-        $.ajax({
-            type: 'POST',
-            url: this.props.url,
-            data: postdata,
-            dataType: 'json',
-            success: function(data) {
+        var postdata = new URLSearchParams();
+        postdata.append('name', ReactDom.findDOMNode(this.refs.listname).value);
+
+        axios.post(this.props.url, postdata, {headers: {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}})
+            .then((response) => {
                 this.props.onAdd();
                 ReactDom.findDOMNode(this.refs.listname).value = "";
-            }.bind(this)
-        });
-
-
+            })
+            .catch((err) => {
+                console.error(err);
+            });
     }
 
     render() {
