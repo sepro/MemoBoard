@@ -1,9 +1,8 @@
 import { createStore } from 'redux';
+import rootReducer from './reducers/index.jsx'
 
-function reducer(state = [], action) {
-    return state;
-}
+const defaultState = {lists: []};
 
-const store = createStore(reducer);
+const store = createStore(rootReducer, defaultState);
 
 export default store;
