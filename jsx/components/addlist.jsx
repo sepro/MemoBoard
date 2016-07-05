@@ -11,9 +11,18 @@ class Addlist extends React.Component{
 
     addList(ev) {
         ev.preventDefault();
-        const name = ReactDom.findDOMNode(this.refs.listname).value;
 
-        this.props.add_list(name, this.props.url);
+        var postdata = new URLSearchParams();
+        postdata.append('name', ReactDom.findDOMNode(this.refs.listname).value);
+
+        axios.post(this.props.url, postdata, {headers: {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}})
+            .then((response) => {
+                this.props.onAdd();
+                ReactDom.findDOMNode(this.refs.listname).value = "";
+            })
+            .catch((err) => {
+                console.error(err);
+            });
     }
 
     render() {

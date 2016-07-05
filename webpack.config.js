@@ -2,7 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  entry: './jsx/main.jsx',
+  entry: './jsx/main.js',
   output: { path: './memoboard/static/js/', filename: 'bundle.js' },
   module: {
     loaders: [

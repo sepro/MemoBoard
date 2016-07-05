@@ -15,8 +15,9 @@ class Additem extends React.Component{
         var postdata = new URLSearchParams();
         postdata.append('content', ReactDom.findDOMNode(this.refs.itemname).value);
 
-        axios.post(this.props.uri, postdata, {headers: {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}})
+        axios.post(this.props.url, postdata, {headers: {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}})
             .then((response) => {
+                this.props.onAdd();
                 ReactDom.findDOMNode(this.refs.itemname).value = "";
             })
             .catch((err) => {
