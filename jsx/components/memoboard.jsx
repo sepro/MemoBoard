@@ -15,8 +15,8 @@ class Memoboard extends React.Component{
                 </div>
                 <hr />
                 <div className="row">
-                  {this.props.lists.map(function(memolistData){
-                        return <Memolist key={memolistData.id} {...this.props}/>;
+                  {this.props.lists.map((memolistData, i) => {
+                        return <Memolist key={ memolistData.id } list_index={ i } {...this.props}/>;
                   })}
                 </div>
       </div>);
