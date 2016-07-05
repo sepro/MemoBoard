@@ -6,17 +6,21 @@ export function add_list(name, uri) {
     }
 }
 
-export function update_list(name, uri) {
+
+export function update_list(list_index, name, uri) {
     return {
         type: 'UPDATE_LIST',
+        list_index,
         name,
         uri
     }
 }
 
-export function delete_list(uri) {
+
+export function delete_list(list_index, uri) {
     return {
         type: 'DELETE_LIST',
+        list_index,
         uri
     }
 }

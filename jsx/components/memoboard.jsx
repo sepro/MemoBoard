@@ -11,12 +11,12 @@ class Memoboard extends React.Component{
                 <div className="col-lg-4 col-sm-6 col-xs-12"><h1>MemoBoard</h1></div>
                 <div className="col-lg-4  visible-lg"></div>
                 <div className="col-lg-4 col-sm-6 col-xs-12">
-                <Addlist url={this.props.url} /></div>
+                <Addlist {...this.props} /></div>
                 </div>
                 <hr />
                 <div className="row">
-                  {this.props.lists.map(function(memolistData){
-                        return <Memolist key={memolistData.id} {...this.props}/>;
+                  {this.props.lists.map((memolistData, i) => {
+                        return <Memolist key={ memolistData.id } list_index={ i } {...this.props}/>;
                   })}
                 </div>
       </div>);
