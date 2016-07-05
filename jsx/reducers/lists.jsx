@@ -2,7 +2,6 @@
 function lists(state = [], action) {
     switch(action.type) {
         case 'DELETE_LIST' :
-            console.log(state, action);
             var i = action.list_index;
             return [
                 ...state.slice(0,i),
@@ -10,21 +9,16 @@ function lists(state = [], action) {
             ]
 
         case 'UPDATE_LIST' :
-            console.log(state, action);
             var i = action.list_index;
-            var output = Object.assign([], state);
-            output[i].name = action.name;
-            return output;
+
+            return [
+                ...state.slice(0,i),
+                { ...state[i], name: action.name },
+                ...state.slice(i+1)
+            ]
 
         case 'ADD_LIST' :
-            console.log(state, action);
-            var new_list = {
-                id: 20,
-                name: action.name,
-                items: [],
-                uri: ''
-            }
-            return [...state, new_list];
+            return [...state, action.data];
 
         case 'LOAD_DATA' :
             return action.data;

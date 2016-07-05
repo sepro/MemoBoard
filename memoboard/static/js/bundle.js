@@ -21475,6 +21475,8 @@
 	    value: true
 	});
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 	function lists() {
@@ -21490,19 +21492,12 @@
 	        case 'UPDATE_LIST':
 	            console.log(state, action);
 	            var i = action.list_index;
-	            var output = Object.assign([], state);
-	            output[i].name = action.name;
-	            return output;
+
+	            return [].concat(_toConsumableArray(state.slice(0, i)), [_extends({}, state[i], { name: action.name })], _toConsumableArray(state.slice(i + 1)));
 
 	        case 'ADD_LIST':
 	            console.log(state, action);
-	            var new_list = {
-	                id: 20,
-	                name: action.name,
-	                items: [],
-	                uri: ''
-	            };
-	            return [].concat(_toConsumableArray(state), [new_list]);
+	            return [].concat(_toConsumableArray(state), [action.data]);
 
 	        case 'LOAD_DATA':
 	            return action.data;
@@ -21571,6 +21566,9 @@
 	exports.delete_item = delete_item;
 	exports.load_data = load_data;
 	exports.fetch_data = fetch_data;
+	exports.delete_list_remote = delete_list_remote;
+	exports.update_list_remote = update_list_remote;
+	exports.add_list_remote = add_list_remote;
 
 	var _axios = __webpack_require__(191);
 
@@ -21578,28 +21576,25 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function add_list(name, uri) {
+	function add_list(data) {
 	    return {
 	        type: 'ADD_LIST',
-	        name: name,
-	        uri: uri
+	        data: data
 	    };
 	}
 
-	function update_list(list_index, name, uri) {
+	function update_list(list_index, name) {
 	    return {
 	        type: 'UPDATE_LIST',
 	        list_index: list_index,
-	        name: name,
-	        uri: uri
+	        name: name
 	    };
 	}
 
-	function delete_list(list_index, uri) {
+	function delete_list(list_index) {
 	    return {
 	        type: 'DELETE_LIST',
-	        list_index: list_index,
-	        uri: uri
+	        list_index: list_index
 	    };
 	}
 
@@ -21621,7 +21616,7 @@
 
 	function delete_item(uri) {
 	    return {
-	        type: 'UPDATE_ITEM',
+	        type: 'DELETE_ITEM',
 	        uri: uri
 	    };
 	}
@@ -21637,7 +21632,43 @@
 	    return function (dispatch) {
 
 	        return _axios2.default.get(uri).then(function (response) {
+	            console.log('Fetched data from server');
 	            dispatch(load_data(response.data));
+	        });
+	    };
+	}
+
+	function delete_list_remote(list_index, uri) {
+	    return function (dispatch) {
+	        dispatch(delete_list(list_index));
+	        return _axios2.default.delete(uri).then(function (response) {
+	            console.log('Removed list from server');
+	        });
+	    };
+	}
+
+	function update_list_remote(list_index, name, uri) {
+	    return function (dispatch) {
+	        dispatch(update_list(list_index, name));
+
+	        var params = new URLSearchParams();
+	        params.append('name', name);
+
+	        return _axios2.default.put(uri, params, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then(function (response) {
+	            console.log('Updated list on server');
+	        });
+	    };
+	}
+
+	function add_list_remote(name, uri) {
+	    return function (dispatch) {
+
+	        var params = new URLSearchParams();
+	        params.append('name', name);
+
+	        return _axios2.default.post(uri, params, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then(function (response) {
+	            console.log('New list on server');
+	            dispatch(add_list(response.data));
 	        });
 	    };
 	}
@@ -23037,7 +23068,7 @@
 	    }, {
 	        key: 'handleAcceptClick',
 	        value: function handleAcceptClick() {
-	            this.props.update_list(this.props.list_index, _reactDom2.default.findDOMNode(this.refs.listname).value, this.props.lists[this.props.list_index].uri);
+	            this.props.update_list_remote(this.props.list_index, _reactDom2.default.findDOMNode(this.refs.listname).value, this.props.lists[this.props.list_index].uri);
 	            this.setState({ edit: false });
 	        }
 	    }, {
@@ -23093,7 +23124,7 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'btn-group pull-right' },
-	                        _react2.default.createElement(_button2.default, { onClick: this.props.delete_list.bind(null, this.props.list_index, this.props.lists[this.props.list_index].uri), glyph: 'glyphicon glyphicon-remove' })
+	                        _react2.default.createElement(_button2.default, { onClick: this.props.delete_list_remote.bind(null, this.props.list_index, this.props.lists[this.props.list_index].uri), glyph: 'glyphicon glyphicon-remove' })
 	                    )
 	                );
 	            }
@@ -36607,7 +36638,7 @@
 	            ev.preventDefault();
 	            var name = _reactDom2.default.findDOMNode(this.refs.listname).value;
 
-	            this.props.add_list(name, this.props.url);
+	            this.props.add_list_remote(name, this.props.url);
 	        }
 	    }, {
 	        key: 'render',
