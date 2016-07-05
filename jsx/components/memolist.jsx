@@ -12,21 +12,10 @@ class Memolist extends React.Component{
        this.state = {edit:false};
     }
 
-    componentDidMount() {
-        //pass
-    }
-
     componentDidUpdate() {
         if ( this.state.edit ) {
             ReactDom.findDOMNode(this.refs.listname).focus();
         }
-    }
-
-    deleteItem(url) {
-        axios.delete(url)
-            .then((response) => {
-                this.loadFromServer();
-            });
     }
 
     handleHeaderClick() {
@@ -34,8 +23,8 @@ class Memolist extends React.Component{
     }
 
     handleAcceptClick() {
-        this.props.update_list_remote(this.props.list_index, ReactDom.findDOMNode(this.refs.listname).value, this.props.lists[this.props.list_index].uri);
         this.setState({edit: false});
+        this.props.update_list_remote(this.props.list_index, ReactDom.findDOMNode(this.refs.listname).value, this.props.lists[this.props.list_index].uri);
     }
 
     handleCancelClick() {

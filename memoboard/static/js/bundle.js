@@ -21485,19 +21485,31 @@
 
 	    switch (action.type) {
 	        case 'DELETE_LIST':
-	            console.log(state, action);
 	            var i = action.list_index;
 	            return [].concat(_toConsumableArray(state.slice(0, i)), _toConsumableArray(state.slice(i + 1)));
 
 	        case 'UPDATE_LIST':
-	            console.log(state, action);
 	            var i = action.list_index;
 
 	            return [].concat(_toConsumableArray(state.slice(0, i)), [_extends({}, state[i], { name: action.name })], _toConsumableArray(state.slice(i + 1)));
 
 	        case 'ADD_LIST':
-	            console.log(state, action);
 	            return [].concat(_toConsumableArray(state), [action.data]);
+
+	        case 'DELETE_ITEM':
+	            var i = action.list_index;
+	            var j = action.item_index;
+	            return [].concat(_toConsumableArray(state.slice(0, i)), [_extends({}, state[i], { items: [].concat(_toConsumableArray(state[i].items.slice(0, j)), _toConsumableArray(state[i].items.slice(j + 1))) })], _toConsumableArray(state.slice(i + 1)));
+
+	        case 'UPDATE_ITEM':
+	            var i = action.list_index;
+	            var j = action.item_index;
+	            return [].concat(_toConsumableArray(state.slice(0, i)), [_extends({}, state[i], { items: [].concat(_toConsumableArray(state[i].items.slice(0, j)), [_extends({}, state[i].items[j], { content: action.content })], _toConsumableArray(state[i].items.slice(j + 1))) })], _toConsumableArray(state.slice(i + 1)));
+
+	        case 'ADD_ITEM':
+	            var i = action.list_index;
+	            console.log(action.data);
+	            return [].concat(_toConsumableArray(state.slice(0, i)), [_extends({}, state[i], { items: [].concat(_toConsumableArray(state[i].items), [action.data]) })], _toConsumableArray(state.slice(i + 1)));
 
 	        case 'LOAD_DATA':
 	            return action.data;
@@ -21569,6 +21581,9 @@
 	exports.delete_list_remote = delete_list_remote;
 	exports.update_list_remote = update_list_remote;
 	exports.add_list_remote = add_list_remote;
+	exports.delete_item_remote = delete_item_remote;
+	exports.update_item_remote = update_item_remote;
+	exports.add_item_remote = add_item_remote;
 
 	var _axios = __webpack_require__(191);
 
@@ -21598,26 +21613,28 @@
 	    };
 	}
 
-	function add_item(content, uri) {
+	function add_item(list_index, data) {
 	    return {
 	        type: 'ADD_ITEM',
-	        name: name,
-	        uri: uri
+	        list_index: list_index,
+	        data: data
 	    };
 	}
 
-	function update_item(content, uri) {
+	function update_item(list_index, item_index, content) {
 	    return {
 	        type: 'UPDATE_ITEM',
-	        name: name,
-	        uri: uri
+	        list_index: list_index,
+	        item_index: item_index,
+	        content: content
 	    };
 	}
 
-	function delete_item(uri) {
+	function delete_item(list_index, item_index) {
 	    return {
 	        type: 'DELETE_ITEM',
-	        uri: uri
+	        list_index: list_index,
+	        item_index: item_index
 	    };
 	}
 
@@ -21662,13 +21679,47 @@
 
 	function add_list_remote(name, uri) {
 	    return function (dispatch) {
-
 	        var params = new URLSearchParams();
 	        params.append('name', name);
 
 	        return _axios2.default.post(uri, params, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then(function (response) {
 	            console.log('New list on server');
 	            dispatch(add_list(response.data));
+	        });
+	    };
+	}
+
+	function delete_item_remote(list_index, item_index, uri) {
+	    return function (dispatch) {
+	        dispatch(delete_item(list_index, item_index));
+
+	        return _axios2.default.delete(uri).then(function (response) {
+	            console.log('Deleted item from server');
+	        });
+	    };
+	}
+
+	function update_item_remote(list_index, item_index, content, uri) {
+	    return function (dispatch) {
+	        dispatch(update_item(list_index, item_index, content));
+
+	        var params = new URLSearchParams();
+	        params.append('content', content);
+
+	        return _axios2.default.put(uri, params, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then(function (response) {
+	            console.log('Updated item on server');
+	        });
+	    };
+	}
+
+	function add_item_remote(list_index, content, uri) {
+	    return function (dispatch) {
+	        var params = new URLSearchParams();
+	        params.append('content', content);
+
+	        return _axios2.default.post(uri, params, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then(function (response) {
+	            console.log('New item on server');
+	            dispatch(add_item(list_index, response.data));
 	        });
 	    };
 	}
@@ -23040,25 +23091,11 @@
 	    }
 
 	    _createClass(Memolist, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            //pass
-	        }
-	    }, {
 	        key: 'componentDidUpdate',
 	        value: function componentDidUpdate() {
 	            if (this.state.edit) {
 	                _reactDom2.default.findDOMNode(this.refs.listname).focus();
 	            }
-	        }
-	    }, {
-	        key: 'deleteItem',
-	        value: function deleteItem(url) {
-	            var _this2 = this;
-
-	            _axios2.default.delete(url).then(function (response) {
-	                _this2.loadFromServer();
-	            });
 	        }
 	    }, {
 	        key: 'handleHeaderClick',
@@ -23068,8 +23105,8 @@
 	    }, {
 	        key: 'handleAcceptClick',
 	        value: function handleAcceptClick() {
-	            this.props.update_list_remote(this.props.list_index, _reactDom2.default.findDOMNode(this.refs.listname).value, this.props.lists[this.props.list_index].uri);
 	            this.setState({ edit: false });
+	            this.props.update_list_remote(this.props.list_index, _reactDom2.default.findDOMNode(this.refs.listname).value, this.props.lists[this.props.list_index].uri);
 	        }
 	    }, {
 	        key: 'handleCancelClick',
@@ -23088,7 +23125,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this3 = this;
+	            var _this2 = this;
 
 	            var header;
 	            if (this.state.edit) {
@@ -23150,7 +23187,7 @@
 	                                'tbody',
 	                                null,
 	                                this.props.lists[this.props.list_index].items.map(function (memoitemData, i) {
-	                                    return _react2.default.createElement(_memoitem2.default, _extends({ key: memoitemData.id, item_index: i }, _this3.props));
+	                                    return _react2.default.createElement(_memoitem2.default, _extends({ key: memoitemData.id, item_index: i }, _this2.props));
 	                                })
 	                            )
 	                        )
@@ -23216,27 +23253,11 @@
 
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Memoitem).call(this, props));
 
-	        _this.state = { data: { content: '', created: '' }, edit: false };
+	        _this.state = { edit: false };
 	        return _this;
 	    }
 
 	    _createClass(Memoitem, [{
-	        key: 'loadFromServer',
-	        value: function loadFromServer() {
-	            var _this2 = this;
-
-	            _axios2.default.get(this.props.url).then(function (response) {
-	                _this2.setState({ data: response.data });
-	            }).catch(function (err) {
-	                console.error(err);
-	            });
-	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            this.loadFromServer();
-	        }
-	    }, {
 	        key: 'componentDidUpdate',
 	        value: function componentDidUpdate() {
 	            if (this.state.edit) {
@@ -23251,16 +23272,13 @@
 	    }, {
 	        key: 'handleAcceptClick',
 	        value: function handleAcceptClick() {
-	            var _this3 = this;
+	            var item_index = this.props.item_index;
+	            var list_index = this.props.list_index;
+	            var uri = this.props.lists[list_index].items[item_index].uri;
 
-	            var putdata = new URLSearchParams();
-	            putdata.append('content', _reactDom2.default.findDOMNode(this.refs.itemname).value);
+	            var content = _reactDom2.default.findDOMNode(this.refs.itemname).value;
 
-	            _axios2.default.put(this.props.url, putdata, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then(function (response) {
-	                _this3.loadFromServer();
-	            }).catch(function (err) {
-	                console.error(err);
-	            });
+	            this.props.update_item_remote(list_index, item_index, content, uri);
 	            this.setState({ edit: false });
 	        }
 	    }, {
@@ -23280,7 +23298,10 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var date = this.props.lists[this.props.list_index].items[this.props.item_index].created ? moment(this.props.lists[this.props.list_index].items[this.props.item_index].created).format("DD-MM-YY HH:mm") : '';
+	            var item_index = this.props.item_index;
+	            var list_index = this.props.list_index;
+	            var uri = this.props.lists[list_index].items[item_index].uri;
+	            var date = this.props.lists[list_index].items[item_index].created ? moment(this.props.lists[list_index].items[item_index].created).format("DD-MM-YY HH:mm") : '';
 
 	            var content;
 
@@ -23294,7 +23315,7 @@
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'input-group input-group-sm edititem' },
-	                            _react2.default.createElement('input', { className: 'form-control input-sm', type: 'text', name: 'itemname', ref: 'itemname', onKeyDown: this.handleKeyDown.bind(this), defaultValue: this.props.lists[this.props.list_index].items[this.props.item_index].content }),
+	                            _react2.default.createElement('input', { className: 'form-control input-sm', type: 'text', name: 'itemname', ref: 'itemname', onKeyDown: this.handleKeyDown.bind(this), defaultValue: this.props.lists[list_index].items[item_index].content }),
 	                            _react2.default.createElement(
 	                                'span',
 	                                { className: 'input-group-btn' },
@@ -23313,13 +23334,14 @@
 	                    )
 	                );
 	            } else {
+
 	                content = _react2.default.createElement(
 	                    'tr',
 	                    null,
 	                    _react2.default.createElement(
 	                        'td',
 	                        { className: 'col-sm-6 col-xs-10 first', onClick: this.handleItemClick.bind(this) },
-	                        this.props.lists[this.props.list_index].items[this.props.item_index].content
+	                        this.props.lists[list_index].items[item_index].content
 	                    ),
 	                    _react2.default.createElement(
 	                        'td',
@@ -23336,7 +23358,7 @@
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'pull-right' },
-	                            _react2.default.createElement(_button2.default, { onClick: this.props.handleDelete, glyph: 'glyphicon glyphicon-remove' })
+	                            _react2.default.createElement(_button2.default, { onClick: this.props.delete_item_remote.bind(null, list_index, item_index, uri), glyph: 'glyphicon glyphicon-remove' })
 	                        )
 	                    )
 	                );
@@ -23378,10 +23400,10 @@
 	var Button = function (_React$Component) {
 	    _inherits(Button, _React$Component);
 
-	    function Button(props) {
+	    function Button() {
 	        _classCallCheck(this, Button);
 
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Button).call(this, props));
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Button).apply(this, arguments));
 	    }
 
 	    _createClass(Button, [{
@@ -36538,37 +36560,29 @@
 	var Additem = function (_React$Component) {
 	    _inherits(Additem, _React$Component);
 
-	    function Additem(props) {
+	    function Additem() {
 	        _classCallCheck(this, Additem);
 
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Additem).call(this, props));
-
-	        _this.addItem = _this.addItem.bind(_this);
-	        return _this;
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Additem).apply(this, arguments));
 	    }
 
 	    _createClass(Additem, [{
 	        key: 'addItem',
 	        value: function addItem(ev) {
-	            var _this2 = this;
-
 	            ev.preventDefault();
 
-	            var postdata = new URLSearchParams();
-	            postdata.append('content', _reactDom2.default.findDOMNode(this.refs.itemname).value);
+	            var content = _reactDom2.default.findDOMNode(this.refs.itemname).value;
+	            var list_index = this.props.list_index;
+	            var uri = this.props.lists[list_index].items_uri;
 
-	            _axios2.default.post(this.props.uri, postdata, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then(function (response) {
-	                _reactDom2.default.findDOMNode(_this2.refs.itemname).value = "";
-	            }).catch(function (err) {
-	                console.error(err);
-	            });
+	            this.props.add_item_remote(list_index, content, uri);
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'form',
-	                { onSubmit: this.addItem },
+	                { onSubmit: this.addItem.bind(this) },
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'input-group input-group-sm' },
@@ -36623,13 +36637,10 @@
 	var Addlist = function (_React$Component) {
 	    _inherits(Addlist, _React$Component);
 
-	    function Addlist(props) {
+	    function Addlist() {
 	        _classCallCheck(this, Addlist);
 
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Addlist).call(this, props));
-
-	        _this.addList = _this.addList.bind(_this);
-	        return _this;
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Addlist).apply(this, arguments));
 	    }
 
 	    _createClass(Addlist, [{
@@ -36645,7 +36656,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'form',
-	                { onSubmit: this.addList },
+	                { onSubmit: this.addList.bind(this) },
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'input-group input-group-sm addlist' },

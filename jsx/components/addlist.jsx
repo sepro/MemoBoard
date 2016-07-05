@@ -4,11 +4,6 @@ import axios from 'axios';
 
 
 class Addlist extends React.Component{
-    constructor(props) {
-       super(props);
-       this.addList = this.addList.bind(this);
-    }
-
     addList(ev) {
         ev.preventDefault();
         const name = ReactDom.findDOMNode(this.refs.listname).value;
@@ -17,7 +12,7 @@ class Addlist extends React.Component{
     }
 
     render() {
-      return (<form  onSubmit={ this.addList }>
+      return (<form  onSubmit={ this.addList.bind(this) }>
                 <div className="input-group input-group-sm addlist">
                     <input className="form-control input-sm" type="text" name="listname" ref="listname" placeholder="Add list"/>
                     <span className="input-group-btn">
