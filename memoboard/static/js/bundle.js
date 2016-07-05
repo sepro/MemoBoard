@@ -23127,6 +23127,9 @@
 	        value: function render() {
 	            var _this2 = this;
 
+	            var list_index = this.props.list_index;
+	            var uri = this.props.lists[list_index].uri;
+
 	            var header;
 	            if (this.state.edit) {
 	                header = _react2.default.createElement(
@@ -23161,7 +23164,7 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'btn-group pull-right' },
-	                        _react2.default.createElement(_button2.default, { onClick: this.props.delete_list_remote.bind(null, this.props.list_index, this.props.lists[this.props.list_index].uri), glyph: 'glyphicon glyphicon-remove' })
+	                        _react2.default.createElement(_button2.default, { onClick: this.props.delete_list_remote.bind(null, list_index, uri), glyph: 'glyphicon glyphicon-remove' })
 	                    )
 	                );
 	            }
