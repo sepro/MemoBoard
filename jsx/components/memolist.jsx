@@ -34,17 +34,7 @@ class Memolist extends React.Component{
     }
 
     handleAcceptClick() {
-        var params = new URLSearchParams();
-        params.append('name', ReactDom.findDOMNode(this.refs.listname).value);
-
-        axios.put(this.props.url, params, {headers: {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}})
-            .then((response) => {
-                this.loadFromServer();
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-
+        this.props.update_list(this.props.list_index, ReactDom.findDOMNode(this.refs.listname).value, this.props.lists[this.props.list_index].uri);
         this.setState({edit: false});
     }
 
@@ -73,7 +63,7 @@ class Memolist extends React.Component{
       } else {
         header = <div>
                     <h4 className="panel-title  pull-left" onClick={this.handleHeaderClick.bind(this)}>{ this.props.lists[this.props.list_index].name !== '' ? this.props.lists[this.props.list_index].name : 'Unnamed list' } </h4>
-                    <div className="btn-group pull-right"><Button onClick={this.props.handleDelete} glyph="glyphicon glyphicon-remove" /></div>
+                    <div className="btn-group pull-right"><Button onClick={this.props.delete_list.bind(null, this.props.list_index, this.props.lists[this.props.list_index].uri)} glyph="glyphicon glyphicon-remove" /></div>
                  </div>;
 
       }

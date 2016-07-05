@@ -60,7 +60,7 @@
 
 	var _store2 = _interopRequireDefault(_store);
 
-	var _app = __webpack_require__(208);
+	var _app = __webpack_require__(189);
 
 	var _app2 = _interopRequireDefault(_app);
 
@@ -21403,7 +21403,7 @@
 
 	var _index2 = _interopRequireDefault(_index);
 
-	var _lists = __webpack_require__(207);
+	var _lists = __webpack_require__(188);
 
 	var _lists2 = _interopRequireDefault(_lists);
 
@@ -21439,6 +21439,93 @@
 
 /***/ },
 /* 187 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+	function lists() {
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+	    var action = arguments[1];
+
+	    switch (action.type) {
+	        case 'DELETE_LIST':
+	            console.log(state, action);
+	            var i = action.list_index;
+	            return [].concat(_toConsumableArray(state.slice(0, i)), _toConsumableArray(state.slice(i + 1)));
+
+	        case 'UPDATE_LIST':
+	            console.log(state, action);
+	            var i = action.list_index;
+	            var output = Object.assign([], state);
+	            output[i].name = action.name;
+	            return output;
+
+	        case 'ADD_LIST':
+	            console.log(state, action);
+	            var new_list = {
+	                id: 20,
+	                name: action.name,
+	                items: [],
+	                uri: ''
+	            };
+	            return [].concat(_toConsumableArray(state), [new_list]);
+
+	        default:
+	            return state;
+	    }
+	}
+
+	exports.default = lists;
+
+/***/ },
+/* 188 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var lists = [{
+	    "created": "2016-07-05T10:52:49.258420+00:00",
+	    "id": 1,
+	    "items": [{
+	        "content": "nez",
+	        "created": "2016-07-05T11:12:28.107846+00:00",
+	        "id": 1,
+	        "list": 1,
+	        "list_uri": "/api/lists/1",
+	        "uri": "/api/lists/1/items/1"
+	    }, {
+	        "content": "new",
+	        "created": "2016-07-05T11:12:31.443037+00:00",
+	        "id": 2,
+	        "list": 1,
+	        "list_uri": "/api/lists/1",
+	        "uri": "/api/lists/1/items/2"
+	    }, {
+	        "content": "asdf",
+	        "created": "2016-07-05T11:14:31.934928+00:00",
+	        "id": 3,
+	        "list": 1,
+	        "list_uri": "/api/lists/1",
+	        "uri": "/api/lists/1/items/3"
+	    }],
+	    "items_uri": "/api/lists/1/items",
+	    "name": "test",
+	    "uri": "/api/lists/1"
+	}];
+
+	exports.default = lists;
+
+/***/ },
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21447,46 +21534,218 @@
 	    value: true
 	});
 
-	var _axios = __webpack_require__(188);
+	var _redux = __webpack_require__(166);
 
-	var _axios2 = _interopRequireDefault(_axios);
+	var _reactRedux = __webpack_require__(159);
+
+	var _actionCreators = __webpack_require__(190);
+
+	var actionCreators = _interopRequireWildcard(_actionCreators);
+
+	var _memoboard = __webpack_require__(191);
+
+	var _memoboard2 = _interopRequireDefault(_memoboard);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function lists() {
-	    var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
-	    var action = arguments[1];
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-	    if (action.type === 'LOAD_SERVER') {
-	        return ['test'];
-	    } else {
-	        console.log(state, action);
-	        return state;
-	    }
+	function mapStateToProps(state) {
+	    return {
+	        lists: state.lists
+	    };
 	}
 
-	exports.default = lists;
+	function mapDispatchToProps(dispatch) {
+	    return (0, _redux.bindActionCreators)(actionCreators, dispatch);
+	}
+
+	var App = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_memoboard2.default);
+
+	exports.default = App;
 
 /***/ },
-/* 188 */
-/***/ function(module, exports, __webpack_require__) {
+/* 190 */
+/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(189);
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.add_list = add_list;
+	exports.update_list = update_list;
+	exports.delete_list = delete_list;
+	exports.add_item = add_item;
+	exports.update_item = update_item;
+	exports.delete_item = delete_item;
+	exports.load_server = load_server;
+	function add_list(name, uri) {
+	    return {
+	        type: 'ADD_LIST',
+	        name: name,
+	        uri: uri
+	    };
+	}
+
+	function update_list(list_index, name, uri) {
+	    return {
+	        type: 'UPDATE_LIST',
+	        list_index: list_index,
+	        name: name,
+	        uri: uri
+	    };
+	}
+
+	function delete_list(list_index, uri) {
+	    return {
+	        type: 'DELETE_LIST',
+	        list_index: list_index,
+	        uri: uri
+	    };
+	}
+
+	function add_item(content, uri) {
+	    return {
+	        type: 'ADD_ITEM',
+	        name: name,
+	        uri: uri
+	    };
+	}
+
+	function update_item(content, uri) {
+	    return {
+	        type: 'UPDATE_ITEM',
+	        name: name,
+	        uri: uri
+	    };
+	}
+
+	function delete_item(uri) {
+	    return {
+	        type: 'UPDATE_ITEM',
+	        uri: uri
+	    };
+	}
+
+	function load_server(uri) {
+	    return {
+	        type: 'LOAD_SERVER',
+	        uri: uri
+	    };
+	}
 
 /***/ },
-/* 189 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var defaults = __webpack_require__(190);
-	var utils = __webpack_require__(191);
-	var dispatchRequest = __webpack_require__(193);
-	var InterceptorManager = __webpack_require__(202);
-	var isAbsoluteURL = __webpack_require__(203);
-	var combineURLs = __webpack_require__(204);
-	var bind = __webpack_require__(205);
-	var transformData = __webpack_require__(197);
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _axios = __webpack_require__(192);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _memolist = __webpack_require__(211);
+
+	var _memolist2 = _interopRequireDefault(_memolist);
+
+	var _addlist = __webpack_require__(315);
+
+	var _addlist2 = _interopRequireDefault(_addlist);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Memoboard = function (_React$Component) {
+	  _inherits(Memoboard, _React$Component);
+
+	  function Memoboard() {
+	    _classCallCheck(this, Memoboard);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Memoboard).apply(this, arguments));
+	  }
+
+	  _createClass(Memoboard, [{
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'container' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-lg-4 col-sm-6 col-xs-12' },
+	            _react2.default.createElement(
+	              'h1',
+	              null,
+	              'MemoBoard'
+	            )
+	          ),
+	          _react2.default.createElement('div', { className: 'col-lg-4  visible-lg' }),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-lg-4 col-sm-6 col-xs-12' },
+	            _react2.default.createElement(_addlist2.default, this.props)
+	          )
+	        ),
+	        _react2.default.createElement('hr', null),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          this.props.lists.map(function (memolistData, i) {
+	            return _react2.default.createElement(_memolist2.default, _extends({ key: memolistData.id, list_index: i }, _this2.props));
+	          })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Memoboard;
+	}(_react2.default.Component);
+
+	exports.default = Memoboard;
+
+/***/ },
+/* 192 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(193);
+
+/***/ },
+/* 193 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var defaults = __webpack_require__(194);
+	var utils = __webpack_require__(195);
+	var dispatchRequest = __webpack_require__(197);
+	var InterceptorManager = __webpack_require__(206);
+	var isAbsoluteURL = __webpack_require__(207);
+	var combineURLs = __webpack_require__(208);
+	var bind = __webpack_require__(209);
+	var transformData = __webpack_require__(201);
 
 	function Axios(defaultConfig) {
 	  this.defaults = utils.merge({}, defaultConfig);
@@ -21575,7 +21834,7 @@
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(206);
+	axios.spread = __webpack_require__(210);
 
 	// Provide aliases for supported request methods
 	utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
@@ -21603,13 +21862,13 @@
 
 
 /***/ },
-/* 190 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(191);
-	var normalizeHeaderName = __webpack_require__(192);
+	var utils = __webpack_require__(195);
+	var normalizeHeaderName = __webpack_require__(196);
 
 	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 	var DEFAULT_CONTENT_TYPE = {
@@ -21681,7 +21940,7 @@
 
 
 /***/ },
-/* 191 */
+/* 195 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21964,12 +22223,12 @@
 
 
 /***/ },
-/* 192 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(191);
+	var utils = __webpack_require__(195);
 
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -21982,7 +22241,7 @@
 
 
 /***/ },
-/* 193 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -22004,10 +22263,10 @@
 	        adapter = config.adapter;
 	      } else if (typeof XMLHttpRequest !== 'undefined') {
 	        // For browsers use XHR adapter
-	        adapter = __webpack_require__(194);
+	        adapter = __webpack_require__(198);
 	      } else if (typeof process !== 'undefined') {
 	        // For node use HTTP adapter
-	        adapter = __webpack_require__(194);
+	        adapter = __webpack_require__(198);
 	      }
 
 	      if (typeof adapter === 'function') {
@@ -22023,18 +22282,18 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 194 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(191);
-	var buildURL = __webpack_require__(195);
-	var parseHeaders = __webpack_require__(196);
-	var transformData = __webpack_require__(197);
-	var isURLSameOrigin = __webpack_require__(198);
-	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(199);
-	var settle = __webpack_require__(200);
+	var utils = __webpack_require__(195);
+	var buildURL = __webpack_require__(199);
+	var parseHeaders = __webpack_require__(200);
+	var transformData = __webpack_require__(201);
+	var isURLSameOrigin = __webpack_require__(202);
+	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(203);
+	var settle = __webpack_require__(204);
 
 	module.exports = function xhrAdapter(resolve, reject, config) {
 	  var requestData = config.data;
@@ -22131,7 +22390,7 @@
 	  // This is only done if running in a standard browser environment.
 	  // Specifically not if we're in a web worker, or react-native.
 	  if (utils.isStandardBrowserEnv()) {
-	    var cookies = __webpack_require__(201);
+	    var cookies = __webpack_require__(205);
 
 	    // Add xsrf header
 	    var xsrfValue = config.withCredentials || isURLSameOrigin(config.url) ?
@@ -22192,12 +22451,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 195 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(191);
+	var utils = __webpack_require__(195);
 
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -22266,12 +22525,12 @@
 
 
 /***/ },
-/* 196 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(191);
+	var utils = __webpack_require__(195);
 
 	/**
 	 * Parse headers into an object
@@ -22309,12 +22568,12 @@
 
 
 /***/ },
-/* 197 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(191);
+	var utils = __webpack_require__(195);
 
 	/**
 	 * Transform the data for a request or a response
@@ -22335,12 +22594,12 @@
 
 
 /***/ },
-/* 198 */
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(191);
+	var utils = __webpack_require__(195);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -22409,7 +22668,7 @@
 
 
 /***/ },
-/* 199 */
+/* 203 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22451,7 +22710,7 @@
 
 
 /***/ },
-/* 200 */
+/* 204 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22475,12 +22734,12 @@
 
 
 /***/ },
-/* 201 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(191);
+	var utils = __webpack_require__(195);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -22534,12 +22793,12 @@
 
 
 /***/ },
-/* 202 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(191);
+	var utils = __webpack_require__(195);
 
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -22592,7 +22851,7 @@
 
 
 /***/ },
-/* 203 */
+/* 207 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22612,7 +22871,7 @@
 
 
 /***/ },
-/* 204 */
+/* 208 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22630,7 +22889,7 @@
 
 
 /***/ },
-/* 205 */
+/* 209 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22647,7 +22906,7 @@
 
 
 /***/ },
-/* 206 */
+/* 210 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22680,247 +22939,6 @@
 
 
 /***/ },
-/* 207 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	var lists = [{
-	    "created": "2016-07-05T10:52:49.258420+00:00",
-	    "id": 1,
-	    "items": [{
-	        "content": "nez",
-	        "created": "2016-07-05T11:12:28.107846+00:00",
-	        "id": 1,
-	        "list": 1,
-	        "list_uri": "/api/lists/1",
-	        "uri": "/api/lists/1/items/1"
-	    }, {
-	        "content": "new",
-	        "created": "2016-07-05T11:12:31.443037+00:00",
-	        "id": 2,
-	        "list": 1,
-	        "list_uri": "/api/lists/1",
-	        "uri": "/api/lists/1/items/2"
-	    }, {
-	        "content": "asdf",
-	        "created": "2016-07-05T11:14:31.934928+00:00",
-	        "id": 3,
-	        "list": 1,
-	        "list_uri": "/api/lists/1",
-	        "uri": "/api/lists/1/items/3"
-	    }],
-	    "items_uri": "/api/lists/1/items",
-	    "name": "test",
-	    "uri": "/api/lists/1"
-	}];
-
-	exports.default = lists;
-
-/***/ },
-/* 208 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _redux = __webpack_require__(166);
-
-	var _reactRedux = __webpack_require__(159);
-
-	var _actionCreators = __webpack_require__(209);
-
-	var actionCreators = _interopRequireWildcard(_actionCreators);
-
-	var _memoboard = __webpack_require__(210);
-
-	var _memoboard2 = _interopRequireDefault(_memoboard);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-	function mapStateToProps(state) {
-	    return {
-	        lists: state.lists
-	    };
-	}
-
-	function mapDispatchToProps(dispatch) {
-	    return (0, _redux.bindActionCreators)(actionCreators, dispatch);
-	}
-
-	var App = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_memoboard2.default);
-
-	exports.default = App;
-
-/***/ },
-/* 209 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.add_list = add_list;
-	exports.update_list = update_list;
-	exports.delete_list = delete_list;
-	exports.add_item = add_item;
-	exports.update_item = update_item;
-	exports.delete_item = delete_item;
-	exports.load_server = load_server;
-	function add_list(name, uri) {
-	    return {
-	        type: 'ADD_LIST',
-	        name: name,
-	        uri: uri
-	    };
-	}
-
-	function update_list(name, uri) {
-	    return {
-	        type: 'UPDATE_LIST',
-	        name: name,
-	        uri: uri
-	    };
-	}
-
-	function delete_list(uri) {
-	    return {
-	        type: 'DELETE_LIST',
-	        uri: uri
-	    };
-	}
-
-	function add_item(content, uri) {
-	    return {
-	        type: 'ADD_ITEM',
-	        name: name,
-	        uri: uri
-	    };
-	}
-
-	function update_item(content, uri) {
-	    return {
-	        type: 'UPDATE_ITEM',
-	        name: name,
-	        uri: uri
-	    };
-	}
-
-	function delete_item(uri) {
-	    return {
-	        type: 'UPDATE_ITEM',
-	        uri: uri
-	    };
-	}
-
-	function load_server(uri) {
-	    return {
-	        type: 'LOAD_SERVER',
-	        uri: uri
-	    };
-	}
-
-/***/ },
-/* 210 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _axios = __webpack_require__(188);
-
-	var _axios2 = _interopRequireDefault(_axios);
-
-	var _memolist = __webpack_require__(211);
-
-	var _memolist2 = _interopRequireDefault(_memolist);
-
-	var _addlist = __webpack_require__(315);
-
-	var _addlist2 = _interopRequireDefault(_addlist);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Memoboard = function (_React$Component) {
-	  _inherits(Memoboard, _React$Component);
-
-	  function Memoboard() {
-	    _classCallCheck(this, Memoboard);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Memoboard).apply(this, arguments));
-	  }
-
-	  _createClass(Memoboard, [{
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'container' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-lg-4 col-sm-6 col-xs-12' },
-	            _react2.default.createElement(
-	              'h1',
-	              null,
-	              'MemoBoard'
-	            )
-	          ),
-	          _react2.default.createElement('div', { className: 'col-lg-4  visible-lg' }),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-lg-4 col-sm-6 col-xs-12' },
-	            _react2.default.createElement(_addlist2.default, { url: this.props.url })
-	          )
-	        ),
-	        _react2.default.createElement('hr', null),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          this.props.lists.map(function (memolistData, i) {
-	            return _react2.default.createElement(_memolist2.default, _extends({ key: memolistData.id, list_index: i }, _this2.props));
-	          })
-	        )
-	      );
-	    }
-	  }]);
-
-	  return Memoboard;
-	}(_react2.default.Component);
-
-	exports.default = Memoboard;
-
-/***/ },
 /* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -22942,7 +22960,7 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _axios = __webpack_require__(188);
+	var _axios = __webpack_require__(192);
 
 	var _axios2 = _interopRequireDefault(_axios);
 
@@ -23007,17 +23025,7 @@
 	    }, {
 	        key: 'handleAcceptClick',
 	        value: function handleAcceptClick() {
-	            var _this3 = this;
-
-	            var params = new URLSearchParams();
-	            params.append('name', _reactDom2.default.findDOMNode(this.refs.listname).value);
-
-	            _axios2.default.put(this.props.url, params, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then(function (response) {
-	                _this3.loadFromServer();
-	            }).catch(function (err) {
-	                console.error(err);
-	            });
-
+	            this.props.update_list(this.props.list_index, _reactDom2.default.findDOMNode(this.refs.listname).value, this.props.lists[this.props.list_index].uri);
 	            this.setState({ edit: false });
 	        }
 	    }, {
@@ -23037,7 +23045,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this4 = this;
+	            var _this3 = this;
 
 	            var header;
 	            if (this.state.edit) {
@@ -23073,7 +23081,7 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'btn-group pull-right' },
-	                        _react2.default.createElement(_button2.default, { onClick: this.props.handleDelete, glyph: 'glyphicon glyphicon-remove' })
+	                        _react2.default.createElement(_button2.default, { onClick: this.props.delete_list.bind(null, this.props.list_index, this.props.lists[this.props.list_index].uri), glyph: 'glyphicon glyphicon-remove' })
 	                    )
 	                );
 	            }
@@ -23099,7 +23107,7 @@
 	                                'tbody',
 	                                null,
 	                                this.props.lists[this.props.list_index].items.map(function (memoitemData, i) {
-	                                    return _react2.default.createElement(_memoitem2.default, _extends({ key: memoitemData.id, item_index: i }, _this4.props));
+	                                    return _react2.default.createElement(_memoitem2.default, _extends({ key: memoitemData.id, item_index: i }, _this3.props));
 	                                })
 	                            )
 	                        )
@@ -23139,7 +23147,7 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _axios = __webpack_require__(188);
+	var _axios = __webpack_require__(192);
 
 	var _axios2 = _interopRequireDefault(_axios);
 
@@ -36472,7 +36480,7 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _axios = __webpack_require__(188);
+	var _axios = __webpack_require__(192);
 
 	var _axios2 = _interopRequireDefault(_axios);
 
@@ -36557,7 +36565,7 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _axios = __webpack_require__(188);
+	var _axios = __webpack_require__(192);
 
 	var _axios2 = _interopRequireDefault(_axios);
 
@@ -36584,19 +36592,10 @@
 	    _createClass(Addlist, [{
 	        key: 'addList',
 	        value: function addList(ev) {
-	            var _this2 = this;
-
 	            ev.preventDefault();
+	            var name = _reactDom2.default.findDOMNode(this.refs.listname).value;
 
-	            var postdata = new URLSearchParams();
-	            postdata.append('name', _reactDom2.default.findDOMNode(this.refs.listname).value);
-
-	            _axios2.default.post(this.props.url, postdata, { headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' } }).then(function (response) {
-	                _this2.props.onAdd();
-	                _reactDom2.default.findDOMNode(_this2.refs.listname).value = "";
-	            }).catch(function (err) {
-	                console.error(err);
-	            });
+	            this.props.add_list(name, this.props.url);
 	        }
 	    }, {
 	        key: 'render',
