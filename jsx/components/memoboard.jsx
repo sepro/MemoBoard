@@ -5,6 +5,10 @@ import Memolist from './memolist.jsx'
 import Addlist from './addlist.jsx'
 
 class Memoboard extends React.Component{
+    componentDidMount() {
+        this.props.fetch_data(this.props.url);
+    }
+
     render() {
       return (<div className="container">
                 <div className="row">
