@@ -26,6 +26,9 @@ function lists(state = [], action) {
             }
             return [...state, new_list];
 
+        case 'LOAD_DATA' :
+            return action.data;
+
         default:
             return state;
     }

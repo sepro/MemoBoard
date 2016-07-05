@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export function add_list(name, uri) {
     return {
         type: 'ADD_LIST',
@@ -48,10 +50,20 @@ export function delete_item(uri) {
     }
 }
 
-export function load_server(uri) {
+export function load_data(data) {
     return {
-        type: 'LOAD_SERVER',
-        uri
+        type: 'LOAD_DATA',
+        data
     }
 }
 
+export function fetch_data(uri) {
+    return (dispatch) => {
+
+        return axios.get(uri).then((response) => {
+            dispatch(load_data(response.data));
+        });
+
+    }
+
+}
