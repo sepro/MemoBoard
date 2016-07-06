@@ -1,32 +1,17 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import axios from 'axios';
 
 
 class Addlist extends React.Component{
-    constructor(props) {
-       super(props);
-       this.addList = this.addList.bind(this);
-    }
-
     addList(ev) {
         ev.preventDefault();
+        const name = ReactDom.findDOMNode(this.refs.listname).value;
 
-        var postdata = new URLSearchParams();
-        postdata.append('name', ReactDom.findDOMNode(this.refs.listname).value);
-
-        axios.post(this.props.url, postdata, {headers: {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}})
-            .then((response) => {
-                this.props.onAdd();
-                ReactDom.findDOMNode(this.refs.listname).value = "";
-            })
-            .catch((err) => {
-                console.error(err);
-            });
+        this.props.add_list_remote(name, this.props.url);
     }
 
     render() {
-      return (<form  onSubmit={ this.addList }>
+      return (<form  onSubmit={ this.addList.bind(this) }>
                 <div className="input-group input-group-sm addlist">
                     <input className="form-control input-sm" type="text" name="listname" ref="listname" placeholder="Add list"/>
                     <span className="input-group-btn">

@@ -39,8 +39,6 @@ class MemoListResource(Resource):
     def put(self, list_id):
         list = MemoList.query.get_or_404(list_id)
 
-        print(request, request.form)
-
         list.name = request.form['name']
         db.session.commit()
 
@@ -78,7 +76,6 @@ class MemoListItemResource(Resource):
         item = MemoItem.query.filter_by(id=item_id, list_id=list_id).first_or_404()
 
         if 'content' in request.form.keys():
-            print(request, request.form)
             item.content = request.form['content']
 
         db.session.commit()
