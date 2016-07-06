@@ -3,7 +3,7 @@ import ReactDom from 'react-dom';
 
 
 class Additem extends React.Component{
-    addItem(ev) {
+    addItem = (ev) => {
         ev.preventDefault();
 
         const content = ReactDom.findDOMNode(this.refs.itemname).value;
@@ -16,7 +16,7 @@ class Additem extends React.Component{
 
     render() {
       return (
-            <form onSubmit={ this.addItem.bind(this) }>
+            <form onSubmit={ this.addItem }>
                 <div className="input-group input-group-sm">
                     <input className="form-control input-sm" type="text" name="itemname" ref="itemname" placeholder="Add item"/>
                     <span className="input-group-btn">
