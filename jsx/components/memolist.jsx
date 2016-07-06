@@ -66,7 +66,7 @@ class Memolist extends React.Component{
 
       <div className="table-responsive">
         <table className="table table-striped">
-        <ReactCSSTransitionGroup component="tbody"  transitionName="example" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+        <ReactCSSTransitionGroup component="tbody"  transitionName="example" transitionEnterTimeout={300} transitionLeave={false}>
          {this.props.lists[this.props.list_index].items.map((memoitemData,i ) => {
             return <Memoitem key={memoitemData.id} item_index={ i } { ...this.props } />;
           })}
