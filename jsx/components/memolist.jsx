@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import axios from 'axios';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import Memoitem from './memoitem.jsx'
 import Button from './button.jsx'
@@ -66,13 +66,15 @@ class Memolist extends React.Component{
 
       <div className="table-responsive">
         <table className="table table-striped">
-        <tbody>
+        <ReactCSSTransitionGroup component="tbody"  transitionName="example" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
          {this.props.lists[this.props.list_index].items.map((memoitemData,i ) => {
             return <Memoitem key={memoitemData.id} item_index={ i } { ...this.props } />;
           })}
-         </tbody>
+
+         </ReactCSSTransitionGroup>
          </table>
-         </div>
+      </div>
+
       <div className="panel-body">
       <Additem uri={this.props.lists[this.props.list_index].items_uri} {...this.props} />
       </div>
