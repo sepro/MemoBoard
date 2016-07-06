@@ -11,6 +11,7 @@ class Additem extends React.Component{
         const uri = this.props.lists[list_index].items_uri;
 
         this.props.add_item_remote(list_index, content, uri);
+        ReactDom.findDOMNode(this.refs.itemname).value = '';
     }
 
     render() {

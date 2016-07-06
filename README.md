@@ -3,7 +3,7 @@
 # MemoBoard
 
 Single page web app to keep track of various things, like shopping lists, to dos, ... The backend is written in python
-using flask and flask-restful. The front end is coded around the react js library. Ideal to run on a hobby webserver 
+using flask and flask-restful. The front end is coded around the react and redux js libraries. Ideal to run on a hobby webserver 
 (e.g. raspberry pi).
 
 

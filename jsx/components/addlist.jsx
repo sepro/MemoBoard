@@ -8,6 +8,7 @@ class Addlist extends React.Component{
         const name = ReactDom.findDOMNode(this.refs.listname).value;
 
         this.props.add_list_remote(name, this.props.url);
+        ReactDom.findDOMNode(this.refs.listname).value = '';
     }
 
     render() {
