@@ -1,5 +1,7 @@
 from memoboard import create_app, db
 
+from memoboard.models import MemoList, MemoItem
+
 from flask import url_for
 from flask.ext.testing import TestCase
 
@@ -96,6 +98,12 @@ class MyTest(TestCase):
         data = json.loads(response.data.decode('utf-8'))
         for d in data:
             self.assertTrue(all([f in d.keys() for f in required_fields_list]))
+
+        # Test __repr__ on model class
+        first_list = MemoList.query.first()
+        first_item = MemoItem.query.first()
+        self.assertTrue(first_list.__repr__() == '<MemoList %d>' % first_list.id)
+        self.assertTrue(first_item.__repr__() == '<MemoItem %d>' % first_item.id)
 
         # Test removing an item
         response = self.client.delete(item_url, follow_redirects=True)
