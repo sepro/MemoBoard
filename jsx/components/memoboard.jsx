@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import Memolist from './memolist.jsx'
 import Addlist from './addlist.jsx'
@@ -19,9 +20,11 @@ class Memoboard extends React.Component{
                 </div>
                 <hr />
                 <div className="row">
+                <ReactCSSTransitionGroup component="div" transitionName="example" transitionEnterTimeout={200} transitionLeaveTimeout={200}>
                   {this.props.lists.map((memolistData, i) => {
                         return <Memolist key={ memolistData.id } list_index={ i } {...this.props}/>;
                   })}
+                </ReactCSSTransitionGroup>
                 </div>
       </div>);
     }
