@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-import Memolist from './memolist.jsx'
-import Addlist from './addlist.jsx'
+import Memolist from './memolist.jsx';
+import Addlist from './addlist.jsx';
 
 class Memoboard extends React.Component{
     componentDidMount() {

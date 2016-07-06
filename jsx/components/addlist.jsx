@@ -3,7 +3,7 @@ import ReactDom from 'react-dom';
 
 
 class Addlist extends React.Component{
-    addList(ev) {
+    addList = (ev) => {
         ev.preventDefault();
         const name = ReactDom.findDOMNode(this.refs.listname).value;
 
@@ -12,7 +12,7 @@ class Addlist extends React.Component{
     }
 
     render() {
-      return (<form  onSubmit={ this.addList.bind(this) }>
+      return (<form  onSubmit={ this.addList }>
                 <div className="input-group input-group-sm addlist">
                     <input className="form-control input-sm" type="text" name="listname" ref="listname" placeholder="Add list"/>
                     <span className="input-group-btn">
