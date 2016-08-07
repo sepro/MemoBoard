@@ -43,3 +43,7 @@ Run tests and run app
     
 Check the web how to configure the webserver of your choice (tested with uwsgi and nginx) to serve memoboard. In case
 a sqlite database is used, make sure the file is readable and writeable by the webserver.
+
+# Front-end development
+
+Install all packages through npm, **the jsPDF package doesn't work (with webpack), but the debug version does. Therefore it has been included as an external source**

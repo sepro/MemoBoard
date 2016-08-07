@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
+import jsPDF from '../external/jspdf.debug';
+
 import Memoitem from './memoitem.jsx';
 import Button from './button.jsx';
 import Additem from './additem.jsx';
@@ -37,6 +39,21 @@ class Memolist extends React.Component{
       this.props.delete_list_remote(list_index, uri);
     }
 
+    handlePDFClick = (event) => {
+      event.preventDefault();
+      const list_index = this.props.list_index;
+
+      var pdf = new jsPDF();
+      pdf.text(10, 20, this.props.lists[list_index].name);
+
+      this.props.lists[list_index].items.forEach( function(item, i) {
+        pdf.text(10, 40+(i*10), item.content);
+      })
+
+      pdf.save('memolist.pdf');
+    }
+
+
     handleKeyDown = (event) => {
          if(event.key == 'Enter'){
             this.handleAcceptClick();
@@ -60,8 +77,11 @@ class Memolist extends React.Component{
                 </div>;
       } else {
         header = <div>
-                    <h4 className="panel-title  pull-left" onClick={ this.handleHeaderClick }>{ this.props.lists[list_index].name !== '' ? this.props.lists[list_index].name : 'Unnamed list' } </h4>
-                    <div className="btn-group pull-right"><Button onClick={ this.handleDeleteClick } glyph="glyphicon glyphicon-remove" /></div>
+                   <div className="pull-right">
+                            <div className="btn-group"><Button onClick={ this.handleDeleteClick } glyph="glyphicon glyphicon-remove" /></div>
+                    </div>
+                    <h4 className="panel-title"><span onClick={ this.handleHeaderClick }>{ this.props.lists[list_index].name !== '' ? this.props.lists[list_index].name : 'Unnamed list' } </span> <div className="btn-group"><Button onClick={ this.handlePDFClick } glyph="glyphicon glyphicon-download-alt" style="color: #DDD" /></div></h4>
+
                  </div>;
 
       }
