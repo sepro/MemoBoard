@@ -3,6 +3,7 @@ import ReactDom from 'react-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import {Row, Col, Panel, Table} from 'react-bootstrap';
+import {FormGroup, InputGroup, FormControl, Button} from 'react-bootstrap';
 
 import jsPDF from '../external/jspdf.debug';
 
@@ -76,26 +77,28 @@ class Memolist extends React.Component{
       const uri = this.props.lists[list_index].uri;
 
       var header;
-      var configStyle = {};
       if ( this.state.edit ) {
-        header = <div className="input-group input-group-sm">
-                <input className="form-control input-sm" type="text" name="listname" ref="listname" onKeyDown={ this.handleKeyDown } defaultValue={ this.props.lists[list_index].name }/>
-                <span className="input-group-btn">
-                <button className="btn btn-success btn-sm" type="button" onClick={ this.handleAcceptClick }><span className="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
-                <button className="btn btn-default btn-sm" type="button" onClick={ this.handleCancelClick }><span className="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></button>
-                </span>
-                </div>;
+        header = <InputGroup bsSize="sm">
+                 <FormControl type="text" name="listname" ref="listname" onKeyDown={ this.handleKeyDown } defaultValue={ this.props.lists[list_index].name } />
+                 <InputGroup.Button>
+                  <Button bsStyle="success" onClick={this.handleAcceptClick}><span className="glyphicon glyphicon-ok" aria-hidden="true"></span></Button>
+                 </InputGroup.Button>
+                 <InputGroup.Button>
+                  <Button bsStyle="default" onClick={this.handleCancelClick}><span className="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></Button>
+                 </InputGroup.Button>
+                </InputGroup>;
       } else {
         header = <div>
-                   <div className="pull-right">
-                            <div className="btn-group"><span onClick={ this.handleConfigClick } className="text-muted glyphicon glyphicon-option-vertical"></ span></div>
-                    </div>
-                    <h4 className="panel-title"><span onClick={ this.handleHeaderClick }>{ this.props.lists[list_index].name !== '' ? this.props.lists[list_index].name : 'Unnamed list' } </span></h4>
+                 <div className="pull-right">
+                            <div className="btn-group"><span onClick={ this.handleConfigClick } className="text-muted glyphicon glyphicon-option-vertical"></span></div>
+                 </div>
+                 <h4 className="panel-title" onClick={ this.handleHeaderClick }>{ this.props.lists[list_index].name !== '' ? this.props.lists[list_index].name : 'Unnamed list' }</h4>
 
                  </div>;
 
       }
 
+      var configStyle = {};
       if ( this.state.config ) {
         configStyle = {display: 'inline'}
       } else {
@@ -106,8 +109,8 @@ class Memolist extends React.Component{
 
       <Panel header={ header }>
         <Row style={ configStyle } fill>
-          <Col lg={6} sm={6} xs={12}><span onClick={ this.handlePDFClick } className="text-muted"><span className="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Get PDF</span></Col>
-          <Col lg={6} sm={6} xs={12}><span onClick={ this.handleDeleteClick } className="text-muted"><span className="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete list</span></Col>
+          <Col xs={6}><span onClick={ this.handlePDFClick } className="text-muted"><span className="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Get PDF</span></Col>
+          <Col xs={6}><span onClick={ this.handleDeleteClick } className="text-muted"><span className="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete list</span></Col>
         </Row>
           <Table striped condensed hover fill>
             <ReactCSSTransitionGroup component="tbody"  transitionName="example" transitionEnterTimeout={300} transitionLeave={false}>

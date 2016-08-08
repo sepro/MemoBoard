@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import moment from'moment';
 
+import {FormGroup, InputGroup, FormControl, Button} from 'react-bootstrap';
+
 class Memoitem extends React.Component{
     constructor(props) {
        super(props);
@@ -58,13 +60,15 @@ class Memoitem extends React.Component{
         var content;
 
         if (this.state.edit) {
-        content = <tr><td className="col-sm-12 col-xs-12" colSpan="3"><div className="input-group input-group-sm edititem">
-                <input className="form-control input-sm" type="text" name="itemname" ref="itemname" onKeyDown={this.handleKeyDown} defaultValue={ this.props.lists[list_index].items[item_index].content }/>
-                <span className="input-group-btn">
-                <button className="btn btn-success btn-sm" type="button" onClick={this.handleAcceptClick}><span className="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
-                <button className="btn btn-default btn-sm" type="button" onClick={this.handleCancelClick}><span className="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></button>
-                </span>
-                </div></td></tr>
+        content = <tr><td colSpan="3"><InputGroup bsSize="sm" className="edititem">
+                <FormControl type="text" name="itemname" ref="itemname" onKeyDown={this.handleKeyDown} defaultValue={ this.props.lists[list_index].items[item_index].content }/>
+                <InputGroup.Button>
+                  <Button bsStyle="success" onClick={this.handleAcceptClick}><span className="glyphicon glyphicon-ok" aria-hidden="true"></span></Button>
+                </InputGroup.Button>
+                <InputGroup.Button>
+                  <Button bsStyle="default" onClick={this.handleCancelClick}><span className="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></Button>
+                </InputGroup.Button>
+                </InputGroup></td></tr>
         } else {
 
         content = <tr>
