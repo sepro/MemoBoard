@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import moment from'moment';
 
-import Button from './button.jsx';
-
 class Memoitem extends React.Component{
     constructor(props) {
        super(props);
@@ -72,7 +70,7 @@ class Memoitem extends React.Component{
         content = <tr>
                     <td className="col-sm-6 col-xs-10 first" onClick={this.handleItemClick}>{ this.props.lists[list_index].items[item_index].content }</td>
                     <td className="col-sm-4 hidden-xs text-muted"><em className="item-date">{ date }</em></td>
-                    <td className="col-sm-2 col-xs-2 text-muted last"><div className="pull-right"><Button onClick={ this.handleDeleteClick } glyph="glyphicon glyphicon-remove" /></div></td>
+                    <td className="col-sm-2 col-xs-2 text-muted last"><div className="pull-right"><span onClick={ this.handleDeleteClick } className="text-muted glyphicon glyphicon-remove"></ span></div></td>
                   </tr>
         }
 
