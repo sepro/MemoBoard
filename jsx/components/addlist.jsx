@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 
+import {FormGroup, InputGroup, FormControl, Button} from 'react-bootstrap';
 
 class Addlist extends React.Component{
     addList = (ev) => {
@@ -13,12 +14,14 @@ class Addlist extends React.Component{
 
     render() {
       return (<form  onSubmit={ this.addList }>
-                <div className="input-group input-group-sm addlist">
-                    <input className="form-control input-sm" type="text" name="listname" ref="listname" placeholder="Add list"/>
-                    <span className="input-group-btn">
-                        <input className="btn btn-primary btn-sm" type="submit" value="Add" />
-                    </span>
-                </div>
+                <FormGroup>
+                <InputGroup bsSize="sm">
+                    <FormControl type="text" ref="listname" placeholder="Add list"/>
+                    <InputGroup.Button>
+                        <Button type="submit" bsStyle="primary">Add</Button>
+                    </InputGroup.Button>
+                </InputGroup>
+                </FormGroup>
               </form>);
     }
 }

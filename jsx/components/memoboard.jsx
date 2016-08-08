@@ -15,9 +15,9 @@ class Memoboard extends React.Component{
       return (<div className="container">
                 <Row>
                     <Col lg={4} sm={6} xs={12}><h1>MemoBoard</h1></Col>
-                    <Col lg={4} visibleLgBlock></Col>
+                    <Col lg={4} sm={0} xs={0}></Col>
                     <Col lg={4} sm={6} xs={12}>
-                        <Addlist {...this.props} />
+                        <div className="addlist"><Addlist {...this.props} /></div>
                     </Col>
                 </Row>
                 <hr />
