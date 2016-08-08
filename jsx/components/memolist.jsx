@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
+import {Col, Panel, Table} from 'react-bootstrap';
+
 import jsPDF from '../external/jspdf.debug';
 
 import Memoitem from './memoitem.jsx';
@@ -86,25 +88,20 @@ class Memolist extends React.Component{
 
       }
 
-      return (<div className="col-lg-4 col-sm-6 col-xs-12">
-      <div className="panel panel-default">
-        <div className="panel-heading clearfix">{ header }</div>
+      return (<Col lg={4} sm={6} xs={12}>
 
-          <div className="table-responsive">
-            <table className="table table-striped">
+      <Panel header={ header }>
+          <Table striped condensed hover fill>
             <ReactCSSTransitionGroup component="tbody"  transitionName="example" transitionEnterTimeout={300} transitionLeave={false}>
               { this.props.lists[list_index].items.map((memoitemData,i ) => {
                   return <Memoitem key={ memoitemData.id } item_index={ i } { ...this.props } />;
               })}
             </ReactCSSTransitionGroup>
-            </table>
-          </div>
+          </Table>
 
-          <div className="panel-body">
-            <Additem uri={ this.props.lists[list_index].items_uri } { ...this.props } />
-          </div>
-        </div>
-      </div>);
+          <Additem uri={ this.props.lists[list_index].items_uri } { ...this.props } />
+      </Panel>
+    </Col>);
     }
 }
 
