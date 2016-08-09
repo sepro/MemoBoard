@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
+import {Row, Col} from 'react-bootstrap';
+
 import Memolist from './memolist.jsx';
 import Addlist from './addlist.jsx';
 
@@ -11,20 +13,21 @@ class Memoboard extends React.Component{
 
     render() {
       return (<div className="container">
-                <div className="row">
-                <div className="col-lg-4 col-sm-6 col-xs-12"><h1>MemoBoard</h1></div>
-                <div className="col-lg-4  visible-lg"></div>
-                <div className="col-lg-4 col-sm-6 col-xs-12">
-                <Addlist {...this.props} /></div>
-                </div>
+                <Row>
+                    <Col lg={4} sm={6} xs={12}><h1>MemoBoard</h1></Col>
+                    <Col lg={4} sm={0} xs={0}></Col>
+                    <Col lg={4} sm={6} xs={12}>
+                        <div className="addlist"><Addlist {...this.props} /></div>
+                    </Col>
+                </Row>
                 <hr />
-                <div className="row">
+                <Row>
                 <ReactCSSTransitionGroup component="div" transitionName="example" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
                   {this.props.lists.map((memolistData, i) => {
                         return <Memolist key={ memolistData.id } list_index={ i } {...this.props}/>;
                   })}
                 </ReactCSSTransitionGroup>
-                </div>
+                </Row>
       </div>);
     }
 }

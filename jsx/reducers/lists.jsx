@@ -40,7 +40,6 @@ function lists(state = [], action) {
 
         case 'ADD_ITEM' :
             var i = action.list_index;
-            console.log(action.data);
             return [
                 ...state.slice(0,i),
                 { ...state[i], items: [...state[i].items, action.data] },
