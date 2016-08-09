@@ -23,10 +23,6 @@ class Memolist extends React.Component{
     }
 
     handleHeaderClick = () => {
-        this.setState({edit: true, config: this.state.config});
-    }
-
-    handleHeaderClick = () => {
         this.setState({config: this.state.config, edit: !this.state.edit});
     }
 
