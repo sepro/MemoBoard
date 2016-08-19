@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
+import Remarkable from 'remarkable';
+
 import {Row, Col, Panel, Table} from 'react-bootstrap';
 import {FormGroup, InputGroup, FormControl, Button} from 'react-bootstrap';
 import {ButtonToolbar, DropdownButton, MenuItem} from 'react-bootstrap';
@@ -65,6 +67,13 @@ class Memolist extends React.Component{
          }
     }
 
+    renderMarkdown = (md) => {
+        var rm = new Remarkable();
+        var rawMarkup = rm.render(md);
+
+        return { __html: rawMarkup }
+    }
+
     render() {
       const list_index = this.props.list_index;
       const uri = this.props.lists[list_index].uri;
@@ -97,7 +106,7 @@ class Memolist extends React.Component{
                         </DropdownButton>
                     </ButtonToolbar>
                  </div>
-                 <h4 className="panel-title" onClick={ this.handleHeaderClick }>{ this.props.lists[list_index].name !== '' ? this.props.lists[list_index].name : 'Unnamed list' }</h4>
+                 <h4 className="panel-title" onClick={ this.handleHeaderClick }><span dangerouslySetInnerHTML={this.renderMarkdown( this.props.lists[list_index].name !== '' ? this.props.lists[list_index].name : 'Unnamed list')} /></h4>
 
                  </div>;
 

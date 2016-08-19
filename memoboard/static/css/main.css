@@ -37,3 +37,7 @@ td.last {
 .example-leave.example-leave-active {
   opacity: 0;
 }
+
+p {
+  margin: 0px;
+}

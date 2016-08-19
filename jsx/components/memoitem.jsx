@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import moment from'moment';
+import moment from 'moment';
+import Remarkable from 'remarkable';
 
 import {FormGroup, InputGroup, FormControl, Button} from 'react-bootstrap';
 
@@ -51,7 +52,16 @@ class Memoitem extends React.Component{
       this.props.delete_item_remote(list_index, item_index, uri);
     }
 
+    renderMarkdown = (md) => {
+        var rm = new Remarkable();
+        var rawMarkup = rm.render(md);
+
+        return { __html: rawMarkup }
+    }
+
     render() {
+
+
         const item_index = this.props.item_index;
         const list_index = this.props.list_index;
         const uri = this.props.lists[list_index].items[item_index].uri;
@@ -72,7 +82,7 @@ class Memoitem extends React.Component{
         } else {
 
         content = <tr>
-                    <td className="col-sm-6 col-xs-10 first" onClick={this.handleItemClick}>{ this.props.lists[list_index].items[item_index].content }</td>
+                    <td className="col-sm-6 col-xs-10 first" onClick={this.handleItemClick}><span dangerouslySetInnerHTML={this.renderMarkdown(this.props.lists[list_index].items[item_index].content)} /></td>
                     <td className="col-sm-4 hidden-xs text-muted"><em className="item-date">{ date }</em></td>
                     <td className="col-sm-2 col-xs-2 text-muted last"><div className="pull-right"><span onClick={ this.handleDeleteClick } className="text-muted glyphicon glyphicon-remove"></ span></div></td>
                   </tr>
