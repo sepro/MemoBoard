@@ -69,7 +69,7 @@ class Memolist extends React.Component{
     }
 
     renderMarkdown = (md) => {
-        var rm = new Remarkable();
+        var rm = new Remarkable({linkify: true});
         var rawMarkup = rm.render(md);
 
         return { __html: rawMarkup }
