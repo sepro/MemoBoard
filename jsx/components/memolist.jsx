@@ -3,6 +3,7 @@ import ReactDom from 'react-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import Remarkable from 'remarkable';
+import removeMd from 'remove-markdown';
 
 import {Row, Col, Panel, Table} from 'react-bootstrap';
 import {FormGroup, InputGroup, FormControl, Button} from 'react-bootstrap';
@@ -49,10 +50,10 @@ class Memolist extends React.Component{
       const list_index = this.props.list_index;
 
       var pdf = new jsPDF();
-      pdf.text(10, 20, this.props.lists[list_index].name);
+      pdf.text(10, 20, removeMd(this.props.lists[list_index].name));
 
       this.props.lists[list_index].items.forEach( function(item, i) {
-        pdf.text(10, 40+(i*10), item.content);
+        pdf.text(10, 40+(i*10), removeMd(item.content));
       })
 
       pdf.save('memolist.pdf');
