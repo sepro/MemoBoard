@@ -35,6 +35,8 @@ Create the database
 
     python db_action.py create
     
+**Note:** When running this through a webservice and using SQLite, make sure the user www-data has read/write access to the file.
+
 Run tests and run app
 
     python run_tests.py
