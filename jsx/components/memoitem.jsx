@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import moment from 'moment';
+import format from 'date-fns/format';
 import Remarkable from 'remarkable';
 
 import {FormGroup, InputGroup, FormControl, Button} from 'react-bootstrap';
@@ -65,7 +65,7 @@ class Memoitem extends React.Component{
         const item_index = this.props.item_index;
         const list_index = this.props.list_index;
         const uri = this.props.lists[list_index].items[item_index].uri;
-        const date = this.props.lists[list_index].items[item_index].created ? moment(this.props.lists[list_index].items[item_index].created).format("DD-MM-YY HH:mm") : '';
+        const date = this.props.lists[list_index].items[item_index].created ? format(this.props.lists[list_index].items[item_index].created, "DD-MM-YY HH:mm") : '';
 
         var content;
 
