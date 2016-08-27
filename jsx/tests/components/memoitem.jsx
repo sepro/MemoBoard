@@ -28,4 +28,10 @@ describe('Memoitem component', () => {
 
         expect(output.type).to.equal('tr');
     });
+
+    it('should render markdown', () => {
+        var test = new Memoitem();
+
+        expect(test.renderMarkdown("*test*").__html).to.equal('<p><em>test</em></p>\n');
+    });
 });
