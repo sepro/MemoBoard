@@ -6,6 +6,8 @@ python:
 
 # install codecov
 before_install:
+  - sudo apt-get update
+  - sudo apt-get install npm
   - pip install codecov
 
 # command to install dependencies
