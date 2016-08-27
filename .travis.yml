@@ -1,11 +1,8 @@
 language: python
 
 python:
-  - "3.3"
   - "3.4"
   - "3.5"
-  - "3.5-dev" # 3.5 development branch
-  - "nightly" # currently points to 3.6-dev
 
 # install codecov
 before_install:
@@ -13,10 +10,12 @@ before_install:
 
 # command to install dependencies
 install:
+  - npm install
   - pip install -r requirements.txt
 
 # command to run tests
 script:
+  - npm test
   - coverage run run_tests.py
 
 after_success:
