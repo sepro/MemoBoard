@@ -2,9 +2,9 @@ import {expect} from 'chai';
 
 import lists from '../reducers/lists.jsx';
 
-describe("Lists Reducer", function() {
+describe("Lists Reducer", () => {
 
-  it("should handle ADD_LIST", function() {
+  it("should handle ADD_LIST", () => {
     var defaultState = [];
     var actionAddList = {
       type: 'ADD_LIST',
@@ -16,7 +16,7 @@ describe("Lists Reducer", function() {
     expect(newState.length).to.equal(1);
   });
 
-  it("should handle UPDATE_LIST", function() {
+  it("should handle UPDATE_LIST", () => {
     var defaultState = [{'name' : 'new list'}];
     var actionUpdateList = {
       type: 'UPDATE_LIST',
@@ -30,7 +30,7 @@ describe("Lists Reducer", function() {
     expect(newState[0]['name']).to.equal('updated list');
   });
 
-  it("should handle DELETE_LIST", function() {
+  it("should handle DELETE_LIST", () => {
     var defaultState = [{'name' : 'new list'}];
     var actionDeleteList = {
       type: 'DELETE_LIST',
@@ -42,7 +42,7 @@ describe("Lists Reducer", function() {
     expect(newState.length).to.equal(0);
   });
 
-  it("should handle ADD_ITEM", function() {
+  it("should handle ADD_ITEM", () => {
     var defaultState = [{'name' : 'new list', 'items': []}];
     var actionAddItem = {
       type: 'ADD_ITEM',
@@ -55,7 +55,7 @@ describe("Lists Reducer", function() {
     expect(newState[0]['items'].length).to.equal(1);
   });
 
-  it("should handle UPDATE_ITEM", function() {
+  it("should handle UPDATE_ITEM", () => {
     var defaultState = [{'name' : 'new list', 'items': [{'content': 'new item'}]}];
     var actionUpdateItem = {
       type: 'UPDATE_ITEM',
@@ -70,7 +70,7 @@ describe("Lists Reducer", function() {
     expect(newState[0]['items'][0]['content']).to.equal('updated content');
   });
 
-  it("should handle DELETE_ITEM", function() {
+  it("should handle DELETE_ITEM", () => {
     var defaultState = [{'name' : 'new list', 'items': [{'content': 'new item'}]}];
     var actionDeleteItem = {
       type: 'DELETE_ITEM',
@@ -83,7 +83,7 @@ describe("Lists Reducer", function() {
     expect(newState[0]['items'].length).to.equal(0);
   });
 
-  it("should handle LOAD_DATA", function() {
+  it("should handle LOAD_DATA", () => {
     var defaultState = [{'name' : 'new list', 'items': [{'content': 'new item'}]}];
     var actionLoad = {
       type: 'LOAD_DATA',
