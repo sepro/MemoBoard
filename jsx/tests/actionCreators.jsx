@@ -34,5 +34,29 @@ describe("ActionCreators", function() {
     chai.expect(data['data']['content']).to.equal('new item');
   });
 
+  it("should be able to update an item", function() {
+
+    var data = actionCreators.update_item(1, 2, 'new name');
+    chai.expect(data['type']).to.equal('UPDATE_ITEM');
+    chai.expect(data['list_index']).to.equal(1);
+    chai.expect(data['item_index']).to.equal(2);
+    chai.expect(data['content']).to.equal('new name');
+  });
+
+  it("should be able to delete an item", function() {
+
+    var data = actionCreators.delete_item(1, 2);
+    chai.expect(data['type']).to.equal('DELETE_ITEM');
+    chai.expect(data['list_index']).to.equal(1);
+    chai.expect(data['item_index']).to.equal(2);
+  });
+
+  it("should be able to (re-)load dataa", function() {
+
+    var data = actionCreators.load_data([]);
+    chai.expect(data['type']).to.equal('LOAD_DATA');
+    chai.expect(data['data'].length).to.equal(0);
+  });
+
 });
 
