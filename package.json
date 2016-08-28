@@ -4,7 +4,7 @@
   "description": "A memo board based on react and flask",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require babel-core/register --recursive ./jsx/tests/**/*.jsx"
+    "test": "mocha --compilers jsx:babel-core/register -r jsdom-global/register ./jsx/tests/**/*.jsx"
   },
   "repository": {
     "type": "git",
@@ -38,7 +38,10 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
     "chai": "^3.5.0",
+    "jsdom": "^9.4.2",
+    "jsdom-global": "^2.1.0",
     "mocha": "^3.0.2",
+    "sinon": "^1.17.5",
     "webpack": "^1.13.1"
   }
 }
