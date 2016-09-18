@@ -65,7 +65,7 @@ class Memoitem extends React.Component{
         const item_index = this.props.item_index;
         const list_index = this.props.list_index;
         const uri = this.props.lists[list_index].items[item_index].uri;
-        const date = this.props.lists[list_index].items[item_index].created ? format(this.props.lists[list_index].items[item_index].created, "DD-MM-YY HH:mm") : '';
+        const date = this.props.lists[list_index].items[item_index].created ? format(this.props.lists[list_index].items[item_index].created, "DD-MM-YY") : '';
 
         var content;
 
@@ -82,8 +82,8 @@ class Memoitem extends React.Component{
         } else {
 
         content = <tr>
-                    <td className="col-sm-6 col-xs-10 first" onClick={this.handleItemClick}><span dangerouslySetInnerHTML={this.renderMarkdown(this.props.lists[list_index].items[item_index].content)} /></td>
-                    <td className="col-sm-4 hidden-xs text-muted"><em className="item-date">{ date }</em></td>
+                    <td className="col-sm-9 col-xs-10 first" onClick={this.handleItemClick}><span dangerouslySetInnerHTML={this.renderMarkdown(this.props.lists[list_index].items[item_index].content)} /></td>
+                    <td className="col-sm-3 hidden-xs text-muted"><em className="item-date">{ date }</em></td>
                     <td className="col-sm-2 col-xs-2 text-muted last"><div className="pull-right"><span onClick={ this.handleDeleteClick } className="text-muted glyphicon glyphicon-remove"></ span></div></td>
                   </tr>
         }

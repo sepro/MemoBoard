@@ -7,8 +7,14 @@ import Memolist from './memolist.jsx';
 import Addlist from './addlist.jsx';
 
 class Memoboard extends React.Component{
-    componentDidMount() {
+    _load = () => {
         this.props.fetch_data(this.props.url);
+
+        setTimeout(this._load, 500);
+    }
+
+    componentDidMount() {
+        this._load();
     }
 
     render() {
