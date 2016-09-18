@@ -52,6 +52,10 @@ Install all packages through npm
 
     npm install
 
+Test (using Mocha)
+
+    npm test
+
 Build ./memoboard/static/js/bundle.js using webpack
 
     webpack -p
