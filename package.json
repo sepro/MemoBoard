@@ -2,7 +2,7 @@
   "name": "Memoboard",
   "version": "1.0.0",
   "description": "A memo board based on react and flask",
-  "main": "index.js",
+  "main": "webpack.config.js",
   "scripts": {
     "test": "mocha --compilers jsx:babel-core/register -r jsdom-global/register ./jsx/tests/**/*.jsx"
   },
@@ -20,7 +20,7 @@
     "axios": "^0.12.0",
     "date-fns": "^1.3.0",
     "react": "^15.3.1",
-    "react-addons-css-transition-group": "^15.2.0",
+    "react-addons-css-transition-group": "^15.3.1",
     "react-addons-test-utils": "^15.3.1",
     "react-bootstrap": "^0.30.2",
     "react-dom": "^15.3.1",
