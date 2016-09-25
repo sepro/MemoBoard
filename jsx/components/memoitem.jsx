@@ -17,8 +17,12 @@ class Memoitem extends React.Component{
         }
     }
 
-    handleItemClick = () => {
-        this.setState({edit: true});
+    handleItemClick = (ev) => {
+        if (ev.target.tagName != "A") {
+            // Not a link (can happen if markdown is used)
+            ev.preventDefault();
+            this.setState({edit: true});
+        }
     }
 
     handleAcceptClick = () => {
