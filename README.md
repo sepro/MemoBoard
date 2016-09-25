@@ -61,3 +61,8 @@ Build ./memoboard/static/js/bundle.js using webpack
     webpack -p
 
 **the jsPDF package doesn't work (with webpack), but the debug version does. Therefore it has been included as an external source**
+
+# Acknowledgements
+
+This project makes use of several python packages and javascript libraries, without these development would have been much more complicated.
+The favicon is from [http://www.freefavicon.com/]([http://www.freefavicon.com/).
