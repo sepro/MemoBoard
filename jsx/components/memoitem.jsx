@@ -18,8 +18,20 @@ class Memoitem extends React.Component{
     }
 
     handleItemClick = (ev) => {
-        if (ev.target.tagName != "A") {
-            // Not a link (can happen if markdown is used)
+        // Need to check if a link was clicked (can happen with markdown)
+        var a = ev.target;
+        var linkFound = false;
+
+        while (a) {
+            if (a.nodeName.toLowerCase() === 'a') {
+                linkFound = true;
+                break;
+            } else {
+                 a = a.parentNode;
+            }
+        }
+
+        if (!linkFound) {
             ev.preventDefault();
             this.setState({edit: true});
         }
