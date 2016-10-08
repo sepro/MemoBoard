@@ -9,10 +9,9 @@ import {Row, Col, Panel, Table} from 'react-bootstrap';
 import {FormGroup, InputGroup, FormControl, Button} from 'react-bootstrap';
 import {ButtonToolbar, DropdownButton, MenuItem} from 'react-bootstrap';
 
-import jsPDF from '../external/jspdf.debug';
-
 import Memoitem from './memoitem.jsx';
 import Additem from './additem.jsx';
+
 
 class Memolist extends React.Component{
     constructor(props) {
@@ -48,15 +47,19 @@ class Memolist extends React.Component{
     handlePDFClick = (event) => {
       event.preventDefault();
       const list_index = this.props.list_index;
+      if (window.XMLHttpRequest !== undefined)
+      {
+          var jsPDF = require('../external/jspdf.debug');
 
-      var pdf = new jsPDF();
-      pdf.text(10, 20, removeMd(this.props.lists[list_index].name));
+          var pdf = new jsPDF();
+          pdf.text(10, 20, removeMd(this.props.lists[list_index].name));
 
-      this.props.lists[list_index].items.forEach( function(item, i) {
-        pdf.text(10, 40+(i*10), removeMd(item.content));
-      })
+          this.props.lists[list_index].items.forEach( function(item, i) {
+            pdf.text(10, 40+(i*10), removeMd(item.content));
+          })
 
-      pdf.save('memolist.pdf');
+          pdf.save('memolist.pdf');
+      }
     }
 
 
