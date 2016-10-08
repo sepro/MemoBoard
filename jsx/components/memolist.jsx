@@ -9,10 +9,9 @@ import {Row, Col, Panel, Table} from 'react-bootstrap';
 import {FormGroup, InputGroup, FormControl, Button} from 'react-bootstrap';
 import {ButtonToolbar, DropdownButton, MenuItem} from 'react-bootstrap';
 
-import jsPDF from '../external/jspdf.debug';
-
 import Memoitem from './memoitem.jsx';
 import Additem from './additem.jsx';
+
 
 class Memolist extends React.Component{
     constructor(props) {
@@ -42,21 +41,33 @@ class Memolist extends React.Component{
     handleDeleteClick = () => {
       const list_index = this.props.list_index;
       const uri = this.props.lists[list_index].uri;
-      this.props.delete_list_remote(list_index, uri);
+      if (this.props.lists[list_index].items.length == 0 || confirm("This list contains items.\nDelete List?")) {
+        this.props.delete_list_remote(list_index, uri);
+      }
     }
 
     handlePDFClick = (event) => {
       event.preventDefault();
       const list_index = this.props.list_index;
 
-      var pdf = new jsPDF();
-      pdf.text(10, 20, removeMd(this.props.lists[list_index].name));
+      /*
+        Check if XMLHttpRequest is available and build PDF.
+        Mocha tests are run outside the browser, required to exclude this
+        from testing (which would fail).
+      */
+      if (window.XMLHttpRequest !== undefined)
+      {
+          var jsPDF = require('../external/jspdf.debug');
 
-      this.props.lists[list_index].items.forEach( function(item, i) {
-        pdf.text(10, 40+(i*10), removeMd(item.content));
-      })
+          var pdf = new jsPDF();
+          pdf.text(10, 20, removeMd(this.props.lists[list_index].name));
 
-      pdf.save('memolist.pdf');
+          this.props.lists[list_index].items.forEach( function(item, i) {
+            pdf.text(10, 40+(i*10), removeMd(item.content));
+          })
+
+          pdf.save('memolist.pdf');
+      }
     }
 
 
@@ -102,8 +113,10 @@ class Memolist extends React.Component{
                  <div className="pull-right">
                         <ButtonToolbar>
                         <DropdownButton bsStyle="link" title={ dropdown_button } id="dropdown-link" noCaret pullRight style={ dropdown_button_style }>
-                        <MenuItem eventKey="1"><span onClick={ this.handlePDFClick } className="text-muted"><span className="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Get PDF</span></MenuItem>
-                        <MenuItem eventKey="2"><span onClick={ this.handleDeleteClick } className="text-muted"><span className="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete list</span></MenuItem>
+                        <MenuItem header>Actions</MenuItem>
+                        <MenuItem eventKey="1" onClick={ this.handlePDFClick }><span className="text-muted"><span className="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Get PDF</span></MenuItem>
+                        <MenuItem divider/>
+                        <MenuItem eventKey="2" onClick={ this.handleDeleteClick }><span className="text-muted"><span className="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete list</span></MenuItem>
                         </DropdownButton>
                     </ButtonToolbar>
                  </div>
