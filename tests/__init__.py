@@ -55,6 +55,13 @@ class MyTest(TestCase):
 
         self.assertTrue(all([f in data.keys() for f in required_fields_list]))
 
+        # Test if non-existant list are handled
+        invalid_list_url = url_for('api.list', list_id=666)
+        response = self.client.get(invalid_list_url, follow_redirects=True)
+        self.assert404(response)
+        data = json.loads(response.data.decode('utf-8'))
+        self.assertTrue("error" in data.keys())
+
         # Test updating existing list
         response = self.client.put(list_url, data=dict(name="New List, New Name"), follow_redirects=True)
         self.assert200(response)
@@ -84,6 +91,13 @@ class MyTest(TestCase):
         data = json.loads(response.data.decode('utf-8'))
 
         self.assertTrue(all([f in data.keys() for f in required_fields_item]))
+
+        # Test if non-existing item is handled
+        invalid_item_url = url_for('api.list_item', list_id=1, item_id=666)
+        response = self.client.get(invalid_item_url, follow_redirects=True)
+        self.assert404(response)
+        data = json.loads(response.data.decode('utf-8'))
+        self.assertTrue("error" in data.keys())
 
         # Test getting all list items
         response = self.client.get(items_url, follow_redirects=True)
