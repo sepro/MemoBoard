@@ -6,6 +6,7 @@ from flask import url_for
 from flask.ext.testing import TestCase
 
 import json
+import config
 
 
 class MyTest(TestCase):
@@ -126,3 +127,11 @@ class MyTest(TestCase):
         # Test removing a list
         response = self.client.delete(list_url, follow_redirects=True)
         self.assert200(response)
+
+    def test_config(self):
+        config_items = [config.basedir, config.DEBUG, config.TESTING, config.SECRET_KEY,
+                        config.DEBUG_TB_INTERCEPT_REDIRECTS, config.SQLALCHEMY_DATABASE_URI,
+                        config.SQLALCHEMY_ECHO, config.SQLALCHEMY_MIGRATE_REPO, config.SQLALCHEMY_TRACK_MODIFICATIONS,
+                        config.MINIFY_PAGE]
+
+        self.assertTrue(all([i is not None for i in config_items]))
