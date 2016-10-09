@@ -16,8 +16,13 @@ def mallowfy(s):
         """
         @wraps(method)
         def mallowfied(*args, **kw):
-            result = s.dump(method(*args, **kw))
-            return result.data
+            data = method(*args, **kw)
+
+            if data is not None:
+                result = s.dump(data)
+                return result.data, 200
+            else:
+                return {'error': 'Not Found'}, 404
 
         return mallowfied
     return mallowfy_decorator

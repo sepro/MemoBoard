@@ -26,7 +26,7 @@ class MemoListsResource(Resource):
 class MemoListResource(Resource):
     @mallowfy(ListSchema())
     def get(self, list_id):
-        list = MemoList.query.get_or_404(list_id)
+        list = MemoList.query.get(list_id)
 
         return list
 
@@ -37,7 +37,7 @@ class MemoListResource(Resource):
 
     @mallowfy(ListSchema())
     def put(self, list_id):
-        list = MemoList.query.get_or_404(list_id)
+        list = MemoList.query.get(list_id)
 
         list.name = request.form['name']
         db.session.commit()
@@ -48,7 +48,7 @@ class MemoListResource(Resource):
 class MemoListItemsResource(Resource):
     @mallowfy(ItemSchema(many=True))
     def get(self, list_id):
-        list = MemoList.query.get_or_404(list_id)
+        list = MemoList.query.get(list_id)
 
         return list.items
 
@@ -62,7 +62,7 @@ class MemoListItemsResource(Resource):
 class MemoListItemResource(Resource):
     @mallowfy(ItemSchema())
     def get(self, list_id, item_id):
-        item = MemoItem.query.filter_by(id=item_id, list_id=list_id).first_or_404()
+        item = MemoItem.query.filter_by(id=item_id, list_id=list_id).first()
 
         return item
 
@@ -73,7 +73,7 @@ class MemoListItemResource(Resource):
 
     @mallowfy(ItemSchema())
     def put(self, list_id, item_id):
-        item = MemoItem.query.filter_by(id=item_id, list_id=list_id).first_or_404()
+        item = MemoItem.query.filter_by(id=item_id, list_id=list_id).first()
 
         if 'content' in request.form.keys():
             item.content = request.form['content']
@@ -81,3 +81,4 @@ class MemoListItemResource(Resource):
         db.session.commit()
 
         return item
+
