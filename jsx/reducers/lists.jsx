@@ -47,7 +47,11 @@ function lists(state = [], action) {
             ]
 
         case 'LOAD_DATA' :
-            return action.data;
+            if (action.data != state) {
+                return action.data;
+            } else {
+                return state;
+            }
 
         default:
             return state;

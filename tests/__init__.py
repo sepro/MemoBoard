@@ -1,7 +1,5 @@
 from memoboard import create_app, db
 
-from memoboard.models import MemoList, MemoItem
-
 from flask import url_for
 from flask.ext.testing import TestCase
 
@@ -36,6 +34,8 @@ class MyTest(TestCase):
         self.assert200(response)
 
     def test_api(self):
+        from memoboard.models import MemoList, MemoItem
+
         required_fields_list = ['name', 'id', 'created', 'items', 'items_uri', 'uri']
         required_fields_item = ['content', 'created', 'id', 'list', 'list_uri', 'uri']
         url = url_for('api.lists')
