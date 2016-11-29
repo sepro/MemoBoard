@@ -92,55 +92,51 @@ class Memolist extends React.Component{
 
       var header;
       if ( this.state.edit ) {
-        header = <InputGroup bsSize="sm">
-                 <FormControl type="text" name="listname" ref="listname" onKeyDown={ this.handleKeyDown } defaultValue={ this.props.lists[list_index].name } />
-                 <InputGroup.Button>
-                  <Button bsStyle="success" onClick={this.handleAcceptClick}><span className="glyphicon glyphicon-ok" aria-hidden="true"></span></Button>
-                 </InputGroup.Button>
-                 <InputGroup.Button>
-                  <Button bsStyle="default" onClick={this.handleCancelClick}><span className="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></Button>
-                 </InputGroup.Button>
-                </InputGroup>;
+            header = <InputGroup bsSize="sm">
+                     <FormControl type="text" name="listname" ref="listname" onKeyDown={ this.handleKeyDown } defaultValue={ this.props.lists[list_index].name } />
+                     <InputGroup.Button>
+                      <Button bsStyle="success" onClick={this.handleAcceptClick}><span className="glyphicon glyphicon-ok" aria-hidden="true"></span></Button>
+                     </InputGroup.Button>
+                     <InputGroup.Button>
+                      <Button bsStyle="default" onClick={this.handleCancelClick}><span className="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></Button>
+                     </InputGroup.Button>
+                    </InputGroup>;
       } else {
-        var dropdown_button = <span className="text-muted glyphicon glyphicon-option-vertical"></span>;
-        var dropdown_button_style = {
-            border: '0 px',
-            margin: 0,
-            padding: 0
-        }
+            var dropdown_button = <span className="text-muted glyphicon glyphicon-option-vertical"></span>;
+            var dropdown_button_style = {
+                border: '0 px',
+                margin: 0,
+                padding: 0
+            }
 
-        header = <div>
-                 <div className="pull-right">
-                        <ButtonToolbar>
-                        <DropdownButton bsStyle="link" title={ dropdown_button } id="dropdown-link" noCaret pullRight style={ dropdown_button_style }>
-                        <MenuItem header>Actions</MenuItem>
-                        <MenuItem eventKey="1" onClick={ this.handlePDFClick }><span className="text-muted"><span className="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Get PDF</span></MenuItem>
-                        <MenuItem divider/>
-                        <MenuItem eventKey="2" onClick={ this.handleDeleteClick }><span className="text-muted"><span className="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete list</span></MenuItem>
-                        </DropdownButton>
-                    </ButtonToolbar>
-                 </div>
-                 <h4 className="panel-title" onClick={ this.handleHeaderClick }><span dangerouslySetInnerHTML={this.renderMarkdown( this.props.lists[list_index].name !== '' ? this.props.lists[list_index].name : 'Unnamed list')} /></h4>
-
-                 </div>;
-
+            header = <div>
+                         <div className="pull-right">
+                                <ButtonToolbar>
+                                <DropdownButton bsStyle="link" title={ dropdown_button } id="dropdown-link" noCaret pullRight style={ dropdown_button_style }>
+                                <MenuItem header>Actions</MenuItem>
+                                <MenuItem eventKey="1" onClick={ this.handlePDFClick }><span className="text-muted"><span className="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Get PDF</span></MenuItem>
+                                <MenuItem divider/>
+                                <MenuItem eventKey="2" onClick={ this.handleDeleteClick }><span className="text-muted"><span className="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete list</span></MenuItem>
+                                </DropdownButton>
+                            </ButtonToolbar>
+                         </div>
+                         <h4 className="panel-title" onClick={ this.handleHeaderClick }><span dangerouslySetInnerHTML={this.renderMarkdown( this.props.lists[list_index].name !== '' ? this.props.lists[list_index].name : 'Unnamed list')} /></h4>
+                     </div>;
       }
 
-
-
       return (
+          <Panel header={ header }>
+              <Table striped condensed hover fill>
+                <ReactCSSTransitionGroup component="tbody"  transitionName="example" transitionEnterTimeout={300} transitionLeave={false}>
+                  { this.props.lists[list_index].items.map((memoitemData,i ) => {
+                      return <Memoitem key={ memoitemData.id } item_index={ i } { ...this.props } />;
+                  })}
+                </ReactCSSTransitionGroup>
+              </Table>
 
-      <Panel header={ header }>
-          <Table striped condensed hover fill>
-            <ReactCSSTransitionGroup component="tbody"  transitionName="example" transitionEnterTimeout={300} transitionLeave={false}>
-              { this.props.lists[list_index].items.map((memoitemData,i ) => {
-                  return <Memoitem key={ memoitemData.id } item_index={ i } { ...this.props } />;
-              })}
-            </ReactCSSTransitionGroup>
-          </Table>
-
-          <Additem uri={ this.props.lists[list_index].items_uri } { ...this.props } />
-      </Panel>);
+              <Additem uri={ this.props.lists[list_index].items_uri } { ...this.props } />
+          </Panel>
+      );
     }
 }
 

@@ -104,8 +104,7 @@ class Memoitem extends React.Component{
                   </tr>
         }
 
-        return ( content
-        );
+        return content;
     }
 }
 

@@ -18,7 +18,8 @@ class Memoboard extends React.Component{
     }
 
     render() {
-      return (<div className="container">
+      return (
+            <div className="container">
                 <Row>
                     <Col lg={4} sm={6} xs={12}><h1>MemoBoard</h1></Col>
                     <Col lg={4} sm={0} xs={0}></Col>
@@ -38,7 +39,8 @@ class Memoboard extends React.Component{
                   })}
                 </FlipMove>
                 </Row>
-      </div>);
+            </div>
+      );
     }
 }
 
