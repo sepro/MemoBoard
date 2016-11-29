@@ -58,7 +58,6 @@ export function load_data(data) {
 
 export function fetch_data(uri) {
     return (dispatch) => {
-
         return axios.get(uri).then((response) => {
             dispatch(load_data(response.data));
         });
@@ -67,19 +66,21 @@ export function fetch_data(uri) {
 
 export function delete_list_remote(list_index, uri) {
     return (dispatch) => {
-        dispatch(delete_list(list_index));
-        return axios.delete(uri);
+        return axios.delete(uri).then((response) => {
+                dispatch(delete_list(list_index));
+            });
     }
 }
 
 export function update_list_remote(list_index, name, uri) {
     return (dispatch) => {
-        dispatch(update_list(list_index, name));
-
         var params = new URLSearchParams();
         params.append('name', name);
 
         return axios.put(uri, params, {headers: {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}})
+            .then((response) => {
+                dispatch(update_list(list_index, name));
+            })
     }
 }
 
@@ -98,20 +99,21 @@ export function add_list_remote(name, uri) {
 
 export function delete_item_remote(list_index, item_index, uri) {
     return (dispatch) => {
-        dispatch(delete_item(list_index, item_index));
-
-        return axios.delete(uri)
+        return axios.delete(uri).then((response) => {
+                dispatch(delete_item(list_index, item_index));
+            })
     }
 }
 
 export function update_item_remote(list_index, item_index, content, uri) {
     return (dispatch) => {
-        dispatch(update_item(list_index, item_index, content));
-
         var params = new URLSearchParams();
         params.append('content', content);
 
         return axios.put(uri, params, {headers: {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}})
+            .then((response) => {
+                dispatch(update_item(list_index, item_index, content));
+            })
     }
 }
 
