@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 
 import React from 'react';
-import {Col} from 'react-bootstrap';
+import {Panel} from 'react-bootstrap';
 import TestUtils from 'react-addons-test-utils';
 
 import Memolist from '../../components/memolist.jsx';
@@ -26,7 +26,7 @@ describe('Memolist component', () => {
     it('should render correctly', () => {
         const { props, output } = setup();
 
-        expect(output.type).to.equal(Col);
+        expect(output.type).to.equal(Panel);
     });
 
     it('should render markdown', () => {

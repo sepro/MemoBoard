@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import FlipMove from 'react-flip-move';
 
 import {Row, Col} from 'react-bootstrap';
 
@@ -28,11 +28,15 @@ class Memoboard extends React.Component{
                 </Row>
                 <hr />
                 <Row>
-                <ReactCSSTransitionGroup component="div" transitionName="example" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+                <FlipMove easing="cubic-bezier(0, 0.7, 0.8, 0.1)" typeName="div">
                   {this.props.lists.map((memolistData, i) => {
-                        return <Memolist key={ memolistData.id } list_index={ i } {...this.props}/>;
+                        return (
+                            <div className="col-lg-4 col-md-6 col-xs-12" key={ "wraps" + memolistData.id }>
+                                <Memolist key={ memolistData.id } list_index={ i } {...this.props}/>
+                            </div>
+                        );
                   })}
-                </ReactCSSTransitionGroup>
+                </FlipMove>
                 </Row>
       </div>);
     }

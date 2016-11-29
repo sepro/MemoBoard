@@ -128,10 +128,9 @@ class Memolist extends React.Component{
 
 
 
-      return (<Col lg={4} sm={6} xs={12}>
+      return (
 
       <Panel header={ header }>
-
           <Table striped condensed hover fill>
             <ReactCSSTransitionGroup component="tbody"  transitionName="example" transitionEnterTimeout={300} transitionLeave={false}>
               { this.props.lists[list_index].items.map((memoitemData,i ) => {
@@ -141,8 +140,7 @@ class Memolist extends React.Component{
           </Table>
 
           <Additem uri={ this.props.lists[list_index].items_uri } { ...this.props } />
-      </Panel>
-    </Col>);
+      </Panel>);
     }
 }
 
