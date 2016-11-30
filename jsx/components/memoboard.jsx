@@ -29,7 +29,7 @@ class Memoboard extends React.Component{
                 </Row>
                 <hr />
                 <Row>
-                <FlipMove easing="cubic-bezier(0, 0.7, 0.8, 0.1)" typeName="div">
+                <FlipMove easing="cubic-bezier(0, 0.7, 0.8, 0.1)" typeName="div" staggerDelayBy="50" enterAnimation="fade" leaveAnimation="fade">
                   {this.props.lists.map((memolistData, i) => {
                         return (
                             <div className="col-lg-4 col-md-6 col-sm-6 col-xs-12" key={ "wraps" + memolistData.id }>
