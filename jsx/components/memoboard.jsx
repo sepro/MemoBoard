@@ -10,7 +10,7 @@ class Memoboard extends React.Component{
     _load = () => {
         this.props.fetch_data(this.props.url);
 
-        setTimeout(this._load, 1000);
+        setTimeout(this._load, 5000);
     }
 
     componentDidMount() {
