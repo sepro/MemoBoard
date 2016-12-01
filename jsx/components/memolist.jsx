@@ -57,7 +57,7 @@ class Memolist extends React.Component{
       */
       if (window.XMLHttpRequest !== undefined)
       {
-          var jsPDF = require('../external/jspdf.debug');
+          var jsPDF = require('../external/jspdf.min');
 
           var pdf = new jsPDF();
           pdf.text(10, 20, removeMd(this.props.lists[list_index].name));
