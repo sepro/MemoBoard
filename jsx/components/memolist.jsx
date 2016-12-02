@@ -8,6 +8,14 @@ import removeMd from 'remove-markdown';
 import {Row, Col, Panel, Table} from 'react-bootstrap';
 import {FormGroup, InputGroup, FormControl, Button} from 'react-bootstrap';
 import {ButtonToolbar, DropdownButton, MenuItem} from 'react-bootstrap';
+import {
+  Modal,
+  ModalHeader,
+  ModalTitle,
+  ModalClose,
+  ModalBody,
+  ModalFooter
+} from 'react-modal-bootstrap';
 
 import Memoitem from './memoitem.jsx';
 import Additem from './additem.jsx';
@@ -16,7 +24,7 @@ import Additem from './additem.jsx';
 class Memolist extends React.Component{
     constructor(props) {
        super(props);
-       this.state = {edit:false};
+       this.state = {edit:false, modalIsOpen: false };
     }
 
     componentDidUpdate() {
@@ -39,16 +47,31 @@ class Memolist extends React.Component{
     }
 
     handleDeleteClick = () => {
-      const list_index = this.props.list_index;
-      const uri = this.props.lists[list_index].uri;
-      if (this.props.lists[list_index].items.length == 0 || confirm("This list contains items.\nDelete List?")) {
-        this.props.delete_list_remote(list_index, uri);
+      let list_index = this.props.list_index;
+      if (this.props.lists[list_index].items.length == 0) {
+          this.handleDelete();
+      } else {
+          this.openModal();
       }
+    }
+
+    handleDelete = () => {
+      let list_index = this.props.list_index;
+      let uri = this.props.lists[list_index].uri;
+      this.props.delete_list_remote(list_index, uri);
+    }
+
+    openModal = () => {
+      this.setState({modalIsOpen: true});
+    }
+
+    closeModal = () => {
+      this.setState({modalIsOpen: false});
     }
 
     handlePDFClick = (event) => {
       event.preventDefault();
-      const list_index = this.props.list_index;
+      let list_index = this.props.list_index;
 
       /*
         Check if XMLHttpRequest is available and build PDF.
@@ -57,9 +80,9 @@ class Memolist extends React.Component{
       */
       if (window.XMLHttpRequest !== undefined)
       {
-          var jsPDF = require('../external/jspdf.debug');
+          let jsPDF = require('../external/jspdf.debug');
 
-          var pdf = new jsPDF();
+          let pdf = new jsPDF();
           pdf.text(10, 20, removeMd(this.props.lists[list_index].name));
 
           this.props.lists[list_index].items.forEach( function(item, i) {
@@ -80,17 +103,17 @@ class Memolist extends React.Component{
     }
 
     renderMarkdown = (md) => {
-        var rm = new Remarkable({linkify: true});
-        var rawMarkup = rm.render(md);
+        let rm = new Remarkable({linkify: true});
+        let rawMarkup = rm.render(md);
 
         return { __html: rawMarkup }
     }
 
     render() {
-      const list_index = this.props.list_index;
-      const uri = this.props.lists[list_index].uri;
+      let list_index = this.props.list_index;
+      let uri = this.props.lists[list_index].uri;
 
-      var header;
+      let header;
       if ( this.state.edit ) {
             header = <InputGroup bsSize="sm">
                      <FormControl type="text" name="listname" ref="listname" onKeyDown={ this.handleKeyDown } defaultValue={ this.props.lists[list_index].name } />
@@ -102,8 +125,8 @@ class Memolist extends React.Component{
                      </InputGroup.Button>
                     </InputGroup>;
       } else {
-            var dropdown_button = <span className="text-muted glyphicon glyphicon-option-vertical"></span>;
-            var dropdown_button_style = {
+            let dropdown_button = <span className="text-muted glyphicon glyphicon-option-vertical"></span>;
+            let dropdown_button_style = {
                 border: '0 px',
                 margin: 0,
                 padding: 0
@@ -120,6 +143,24 @@ class Memolist extends React.Component{
                                 </DropdownButton>
                             </ButtonToolbar>
                          </div>
+                        <Modal isOpen={this.state.modalIsOpen} onRequestHide={this.closeModal}>
+                          <ModalHeader>
+                            <ModalClose onClick={this.closeModal}/>
+                            <ModalTitle>Confirm delete</ModalTitle>
+                          </ModalHeader>
+                          <ModalBody>
+                            <p>You are about to delete a list with items. Do you want to proceed ?</p>
+                          </ModalBody>
+                          <ModalFooter>
+                            <button className='btn btn-default' onClick={this.closeModal}>
+                              Cancel
+                            </button>
+                            <button className='btn btn-primary' onClick={this.handleDelete}>
+                              Delete
+                            </button>
+                          </ModalFooter>
+                        </Modal>
+
                          <h4 className="panel-title" onClick={ this.handleHeaderClick }><span dangerouslySetInnerHTML={this.renderMarkdown( this.props.lists[list_index].name !== '' ? this.props.lists[list_index].name : 'Unnamed list')} /></h4>
                      </div>;
       }
