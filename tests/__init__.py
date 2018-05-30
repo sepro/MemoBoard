@@ -70,6 +70,12 @@ class MyTest(TestCase):
 
         self.assertTrue(all([f in data.keys() for f in required_fields_list]))
 
+        # Test update with improper information (should return 400)
+        response = self.client.put(list_url, data=dict(), follow_redirects=True)
+        self.assert404(response)
+        faulty_data = json.loads(response.data.decode('utf-8'))
+        self.assertTrue("error" in faulty_data.keys())
+
         # Test creating an item
         items_url = data['items_uri']
         response = self.client.post(items_url, data=dict(content="New Item"), follow_redirects=True)
@@ -92,6 +98,12 @@ class MyTest(TestCase):
         data = json.loads(response.data.decode('utf-8'))
 
         self.assertTrue(all([f in data.keys() for f in required_fields_item]))
+
+        # Test updating an item without new content
+        response = self.client.put(item_url, data=dict(), follow_redirects=True)
+        self.assert404(response)
+        faulty_data = json.loads(response.data.decode('utf-8'))
+        self.assertTrue("error" in faulty_data.keys())
 
         # Test if non-existing item is handled
         invalid_item_url = url_for('api.list_item', list_id=1, item_id=666)
