@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import format from 'date-fns/format';
 import Remarkable from 'remarkable';
 
 import {FormGroup, InputGroup, FormControl, Button} from 'react-bootstrap';
@@ -81,8 +80,6 @@ class Memoitem extends React.Component{
         const item_index = this.props.item_index;
         const list_index = this.props.list_index;
         const uri = this.props.lists[list_index].items[item_index].uri;
-        const date = this.props.lists[list_index].items[item_index].created ? format(this.props.lists[list_index].items[item_index].created, "DD-MM-YY") : '';
-
         var content;
 
         if (this.state.edit) {
