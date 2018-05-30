@@ -2,7 +2,6 @@ from flask import request
 from flask_restful import Resource
 
 from memoboard.models import MemoList, MemoItem
-from memoboard import db
 
 from memoboard.api_schemas import ItemSchema, ListSchema
 
@@ -37,12 +36,11 @@ class MemoListResource(Resource):
 
     @mallowfy(ListSchema())
     def put(self, list_id):
-        list = MemoList.query.get(list_id)
-
-        list.name = request.form['name']
-        db.session.commit()
-
-        return list
+        if 'name' in request.form.keys():
+            list = MemoList.update(list_id, request.form['name'])
+            return list
+        else:
+            return None
 
 
 class MemoListItemsResource(Resource):
@@ -73,12 +71,10 @@ class MemoListItemResource(Resource):
 
     @mallowfy(ItemSchema())
     def put(self, list_id, item_id):
-        item = MemoItem.query.filter_by(id=item_id, list_id=list_id).first()
 
         if 'content' in request.form.keys():
-            item.content = request.form['content']
-
-        db.session.commit()
-
-        return item
+            item = MemoItem.update(item_id, list_id, request.form['content'])
+            return item
+        else:
+            return None
 

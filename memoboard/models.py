@@ -27,6 +27,15 @@ class MemoList(db.Model):
         db.session.delete(list)
         db.session.commit()
 
+    @staticmethod
+    def update(list_id, new_name):
+        list = MemoList.query.get(list_id)
+
+        list.name = new_name
+        db.session.commit()
+
+        return list
+
 
 class MemoItem(db.Model):
     __tablename__ = 'items'
@@ -55,3 +64,13 @@ class MemoItem(db.Model):
 
         db.session.delete(item)
         db.session.commit()
+
+    @staticmethod
+    def update(item_id, list_id, new_content):
+        item = MemoItem.query.filter_by(id=item_id, list_id=list_id).first()
+
+        item.content = new_content
+
+        db.session.commit()
+
+        return item
