@@ -1,7 +1,7 @@
 from memoboard import create_app, db
 
 from flask import url_for
-from flask.ext.testing import TestCase
+from flask_testing import TestCase
 
 import json
 import config
