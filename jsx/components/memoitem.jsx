@@ -98,8 +98,8 @@ class Memoitem extends React.Component{
         } else {
 
         content = <tr>
-                    <td className="col-sm-9 col-xs-10 first" onClick={this.handleItemClick}><span dangerouslySetInnerHTML={this.renderMarkdown(this.props.lists[list_index].items[item_index].content)} /></td>
-                    <td className="col-sm-3 hidden-xs text-muted"><em className="item-date">{ date }</em></td>
+                    <td className="col-sm-7 col-xs-10 first" onClick={this.handleItemClick}><span dangerouslySetInnerHTML={this.renderMarkdown(this.props.lists[list_index].items[item_index].content)} /></td>
+                    <td className="col-sm-4 hidden-xs text-muted small"><span className="small">Added { this.props.lists[list_index].items[item_index].added }</span></td>
                     <td className="col-sm-2 col-xs-2 text-muted last"><div className="pull-right"><span onClick={ this.handleDeleteClick } className="text-muted glyphicon glyphicon-remove"></ span></div></td>
                   </tr>
         }
