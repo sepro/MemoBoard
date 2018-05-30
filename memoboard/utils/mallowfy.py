@@ -20,7 +20,6 @@ def mallowfy(s):
 
             if data is not None:
                 result = s.dump(data)
-                print(result)
                 return result, 200
             else:
                 return {'error': 'Not Found'}, 404

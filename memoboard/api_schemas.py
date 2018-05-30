@@ -8,27 +8,25 @@ class ItemSchema(ma.ModelSchema):
     class Meta:
         model = MemoItem
 
-    uri = ma.Method("get_uri", dump_only=True)
-    list_uri = ma.Method("get_list_uri", dump_only=True)
+    uri = ma.URLFor('api.list_item', list_id='<list_id>', item_id='<id>')
+    list_uri = ma.URLFor('api.list', list_id='<list_id>')
 
-    def get_uri(self, item):
-        return url_for('api.list_item', list_id=item.list_id, item_id=item.id)
+    added = ma.Method('get_added', dump_only=True)
 
-    def get_list_uri(self, item):
-        return url_for('api.list', list_id=item.list_id)
+    def get_added(self, item):
+        return str(item.created_humanized)
 
 
 class ListSchema(ma.ModelSchema):
     class Meta:
         model = MemoList
 
-    uri = ma.Method("get_uri", dump_only=True)
-    items_uri = ma.Method("get_items_uri", dump_only=True)
+    uri = ma.URLFor('api.list', list_id='<id>')
+    items_uri = ma.URLFor('api.list_items', list_id='<id>')
 
     items = ma.Nested(ItemSchema, many=True)
 
-    def get_uri(self, list):
-        return url_for('api.list', list_id=list.id)
+    added = ma.Method('get_added', dump_only=True)
 
-    def get_items_uri(self, list):
-        return url_for('api.list_items', list_id=list.id)
+    def get_added(self, list):
+        return str(list.created_humanized)

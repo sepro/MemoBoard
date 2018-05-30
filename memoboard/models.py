@@ -1,5 +1,6 @@
 from memoboard import db
 from datetime import datetime
+import arrow
 
 
 class MemoList(db.Model):
@@ -7,6 +8,11 @@ class MemoList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
     created = db.Column(db.DateTime, default=datetime.utcnow)
+
+    @property
+    def created_humanized(self):
+        age_arrow = arrow.get(self.created)
+        return age_arrow.humanize()
 
     def __repr__(self):
         return '<MemoList %d>' % self.id
@@ -45,6 +51,11 @@ class MemoItem(db.Model):
 
     list_id = db.Column(db.Integer, db.ForeignKey('lists.id'), index=True)
     list = db.relationship('MemoList', backref=db.backref('items', cascade="all, delete-orphan"))
+
+    @property
+    def created_humanized(self):
+        age_arrow = arrow.get(self.created)
+        return age_arrow.humanize()
 
     def __repr__(self):
         return '<MemoItem %d>' % self.id
