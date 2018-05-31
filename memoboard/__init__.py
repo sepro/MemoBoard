@@ -21,7 +21,7 @@ db = SQLAlchemy()
 htmlmin = HTMLMIN()
 ma = Marshmallow()
 compress = Compress()
-
+api = Api()
 
 def create_app(config):
     # Set up app, database and login manager before importing models and controllers
@@ -50,8 +50,6 @@ def create_app(config):
     # Flask-Restful api
     from memoboard.api_resources import MemoListsResource, MemoListResource
     from memoboard.api_resources import MemoListItemsResource, MemoListItemResource
-
-    api = Api()
 
     api_bp = Blueprint('api', __name__)
     api.init_app(api_bp)

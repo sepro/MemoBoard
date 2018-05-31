@@ -1,4 +1,3 @@
-from flask import url_for
 from memoboard import ma
 
 from memoboard.models import MemoItem, MemoList
