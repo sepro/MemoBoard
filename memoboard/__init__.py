@@ -23,6 +23,7 @@ ma = Marshmallow()
 compress = Compress()
 api = Api()
 
+
 def create_app(config):
     # Set up app, database and login manager before importing models and controllers
     # Important for db_create script
@@ -53,11 +54,6 @@ def create_app(config):
 
     api_bp = Blueprint('api', __name__)
     api.init_app(api_bp)
-
-    api.add_resource(MemoListsResource, '/lists', endpoint='lists')
-    api.add_resource(MemoListResource, '/lists/<int:list_id>', endpoint='list')
-    api.add_resource(MemoListItemsResource, '/lists/<int:list_id>/items', endpoint='list_items')
-    api.add_resource(MemoListItemResource, '/lists/<int:list_id>/items/<int:item_id>', endpoint='list_item')
 
     # Register Blueprints
     app.register_blueprint(main)

@@ -7,7 +7,10 @@ from memoboard.api_schemas import ItemSchema, ListSchema
 
 from memoboard.utils.mallowfy import mallowfy
 
+from . import api
 
+
+@api.resource('/lists', endpoint='lists')
 class MemoListsResource(Resource):
     @mallowfy(ListSchema(many=True))
     def get(self):
@@ -22,6 +25,7 @@ class MemoListsResource(Resource):
         return new_list
 
 
+@api.resource('/lists/<int:list_id>', endpoint='list')
 class MemoListResource(Resource):
     @mallowfy(ListSchema())
     def get(self, list_id):
@@ -43,6 +47,7 @@ class MemoListResource(Resource):
             return None
 
 
+@api.resource('/lists/<int:list_id>/items', endpoint='list_items')
 class MemoListItemsResource(Resource):
     @mallowfy(ItemSchema(many=True))
     def get(self, list_id):
@@ -57,6 +62,7 @@ class MemoListItemsResource(Resource):
         return new_item
 
 
+@api.resource('/lists/<int:list_id>/items/<int:item_id>', endpoint='list_item')
 class MemoListItemResource(Resource):
     @mallowfy(ItemSchema())
     def get(self, list_id, item_id):
