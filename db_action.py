@@ -8,7 +8,7 @@ from memoboard import create_app, db
 
 import imp
 
-from flask.ext.script import Manager
+from flask_script import Manager
 
 import os.path
 

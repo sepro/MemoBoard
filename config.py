@@ -5,7 +5,7 @@ Copy this file to config.py and change the settings accordingly
 """
 import os
 import tempfile
-basedir = os.path.abspath(os.path.dirname(__file__))
+basedir = os.getcwd()
 
 # Flask settings, make sure to set the SECRET_KEY and turn DEBUG and TESTING to False for production
 DEBUG = True
