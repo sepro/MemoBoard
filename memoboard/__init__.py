@@ -16,8 +16,10 @@ from flask_marshmallow import Marshmallow
 from flask_htmlmin import HTMLMIN
 from flask_restful import Api
 from flask_compress import Compress
+from flask_migrate import Migrate
 
 db = SQLAlchemy()
+migrate = Migrate()
 htmlmin = HTMLMIN()
 ma = Marshmallow()
 compress = Compress()
@@ -34,6 +36,8 @@ def create_app(config):
 
     db.app = app
     db.init_app(app)
+
+    migrate.init_app(app, db=db, directory=app.config['SQLALCHEMY_MIGRATE_REPO'])
 
     ma.init_app(app)
 

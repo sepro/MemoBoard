@@ -30,10 +30,19 @@ Activate the environment and install packages
 Configure MemoBoard
 
     vim config.py
+    
+Set environmental variable (windows)
+    
+    set FLASK_APP=run.py 
 
-Create the database
+Set environmental variable (linux)
+    
+    export FLASK_APP=run.py 
 
-    python db_action.py create
+Create the database and migration
+
+    # create database
+    flask createdb
     
 **Note:** When running this through a webservice and using SQLite, make sure the user www-data has read/write access to the file.
 
@@ -41,7 +50,7 @@ Run tests and run app
 
     python run_tests.py
     
-    python run.py
+    flask run
     
 Check the web how to configure the webserver of your choice (tested with uwsgi and nginx) to serve memoboard. In case
 a sqlite database is used, make sure the file is readable and writeable by the webserver.

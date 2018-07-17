@@ -1,12 +1,9 @@
 from flask import request
 from flask_restful import Resource
 
-from memoboard.models import MemoList, MemoItem
-
-from memoboard.api_schemas import ItemSchema, ListSchema
-
-from memoboard.utils.mallowfy import mallowfy
-
+from .models import MemoList, MemoItem
+from .api_schemas import ItemSchema, ListSchema
+from .utils.mallowfy import mallowfy
 from . import api
 
 

@@ -109,3 +109,6 @@ $RECYCLE.BIN/
 .idea/.name
 
 node_modules/
+migrations/
+dist/
+build/
