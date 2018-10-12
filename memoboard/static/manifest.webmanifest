@@ -1,7 +1,7 @@
 {
   "name": "MemoBoard",
   "short_name": "MemoBoard",
-  "start_url": ".",
+  "start_url": "../index.html",
   "display": "standalone",
   "background_color": "#5cb85c",
   "theme_color": "aliceblue",
