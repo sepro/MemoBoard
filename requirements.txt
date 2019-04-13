@@ -20,10 +20,10 @@ Flask-WTF==0.14.2
 htmlmin==0.1.12
 humanfriendly==4.15.1
 itsdangerous==0.24
-Jinja2==2.10
+Jinja2==2.10.1
 jsonschema==2.6.0
 Mako==1.0.7
-MarkupSafe==1.0
+MarkupSafe==1.1.1
 marshmallow==3.0.0b9
 marshmallow-sqlalchemy==0.14.0
 mimerender==0.6.0
