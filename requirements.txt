@@ -38,5 +38,5 @@ SQLAlchemy==1.3.3
 sqlalchemy-migrate==0.12.0
 sqlparse==0.2.4
 Tempita==0.5.3.dev0
-Werkzeug==0.14.1
+Werkzeug==0.15.5
 WTForms==2.1
