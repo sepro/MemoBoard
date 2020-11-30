@@ -8,6 +8,7 @@ class MemoList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
     created = db.Column(db.DateTime, default=datetime.utcnow)
+    collapsed = db.Column(db.Boolean)
 
     @property
     def created_humanized(self):
@@ -34,10 +35,11 @@ class MemoList(db.Model):
         db.session.commit()
 
     @staticmethod
-    def update(list_id, new_name):
+    def update(list_id, new_name, collapsed=False):
         list = MemoList.query.get(list_id)
 
         list.name = new_name
+        list.collapsed = collapsed
         db.session.commit()
 
         return list

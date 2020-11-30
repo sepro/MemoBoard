@@ -36,7 +36,7 @@ class MyTest(TestCase):
     def test_api(self):
         from memoboard.models import MemoList, MemoItem
 
-        required_fields_list = ['name', 'id', 'created', 'items', 'items_uri', 'uri']
+        required_fields_list = ['name', 'id', 'created', 'items', 'items_uri', 'uri', 'collapsed']
         required_fields_item = ['content', 'created', 'id', 'list', 'list_uri', 'uri']
         url = url_for('api.lists')
 
@@ -82,7 +82,6 @@ class MyTest(TestCase):
         self.assert200(response)
         data = json.loads(response.data.decode('utf-8'))
 
-        print(data.keys(), required_fields_item)
         self.assertTrue(all([f in data.keys() for f in required_fields_item]))
 
         # Test getting an item

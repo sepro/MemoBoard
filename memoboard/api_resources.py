@@ -17,7 +17,7 @@ class MemoListsResource(Resource):
 
     @mallowfy(ListSchema())
     def post(self):
-        new_list = MemoList.add(name=request.form['name'])
+        new_list = MemoList.add(name=request.form['name'], collapsed=False)
 
         return new_list
 
