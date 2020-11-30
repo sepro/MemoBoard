@@ -19,7 +19,7 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_ECHO = DEBUG
 
 # Minify pages when debug is off
-MINIFY_PAGE = not DEBUG
+MINIFY_HTML = not DEBUG
 
 # Debug settings
 DEBUG_TB_INTERCEPT_REDIRECTS = False

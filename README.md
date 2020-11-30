@@ -22,8 +22,13 @@ Clone the repository
 Set up a virtual environment
     
     cd MemoBoard
-    virtualenv --python=python3 venv
-    
+    python -m venv venv
+
+Activate the environment and install packages (Windows)
+
+    venv\\Scripts\\activate.bat
+    pip install -r requirements.txt
+   
 Activate the environment and install packages
 
     source venv/bin/activate
@@ -32,14 +37,6 @@ Activate the environment and install packages
 Configure MemoBoard
 
     vim config.py
-    
-Set environmental variable (windows)
-    
-    set FLASK_APP=run.py 
-
-Set environmental variable (linux)
-    
-    export FLASK_APP=run.py 
 
 Create the database and migration
 
@@ -69,7 +66,7 @@ Test (using Mocha)
 
 Build ./memoboard/static/js/bundle.js using webpack
 
-    webpack -p
+    npm run-script build
 
 # Acknowledgements
 

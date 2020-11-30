@@ -1,10 +1,11 @@
 {
   "name": "Memoboard",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A memo board based on react and flask",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "mocha --compilers jsx:babel-core/register -r jsdom-global/register ./jsx/tests/**/*.jsx"
+    "test": "mocha --compilers jsx:babel-core/register -r jsdom-global/register ./jsx/tests/**/*.jsx",
+	"build": "webpack -p"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
     "react-dom": "^15.4.1",
     "react-flip-move": "^2.7.1",
     "react-lite": "^0.15.17",
+    "react-modal-bootstrap": "^1.1.1",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0",

@@ -3,7 +3,9 @@ from memoboard import ma
 from memoboard.models import MemoItem, MemoList
 
 
-class ItemSchema(ma.ModelSchema):
+class ItemSchema(ma.SQLAlchemyAutoSchema):
+    include_relationships = True
+
     class Meta:
         model = MemoItem
 
@@ -11,12 +13,18 @@ class ItemSchema(ma.ModelSchema):
     list_uri = ma.URLFor('api.list', list_id='<list_id>')
 
     added = ma.Method('get_added', dump_only=True)
+    list = ma.Method('get_list', dump_only=True)
 
-    def get_added(self, item):
+    @staticmethod
+    def get_added(item):
         return str(item.created_humanized)
 
+    @staticmethod
+    def get_list(item):
+        return item.list_id
 
-class ListSchema(ma.ModelSchema):
+
+class ListSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = MemoList
 
@@ -27,5 +35,6 @@ class ListSchema(ma.ModelSchema):
 
     added = ma.Method('get_added', dump_only=True)
 
-    def get_added(self, list):
+    @staticmethod
+    def get_added(list):
         return str(list.created_humanized)

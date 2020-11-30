@@ -82,6 +82,7 @@ class MyTest(TestCase):
         self.assert200(response)
         data = json.loads(response.data.decode('utf-8'))
 
+        print(data.keys(), required_fields_item)
         self.assertTrue(all([f in data.keys() for f in required_fields_item]))
 
         # Test getting an item
@@ -144,6 +145,6 @@ class MyTest(TestCase):
         config_items = [config.basedir, config.DEBUG, config.TESTING, config.SECRET_KEY,
                         config.DEBUG_TB_INTERCEPT_REDIRECTS, config.SQLALCHEMY_DATABASE_URI,
                         config.SQLALCHEMY_ECHO, config.SQLALCHEMY_MIGRATE_REPO, config.SQLALCHEMY_TRACK_MODIFICATIONS,
-                        config.MINIFY_PAGE]
+                        config.MINIFY_HTML]
 
         self.assertTrue(all([i is not None for i in config_items]))
