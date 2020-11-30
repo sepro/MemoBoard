@@ -30,15 +30,16 @@ class MemoListResource(Resource):
 
         return list
 
-    def delete(self, list_id):
+    @staticmethod
+    def delete(list_id):
         MemoList.delete(list_id)
 
         return {}
 
     @mallowfy(ListSchema())
     def put(self, list_id):
-        if 'name' in request.form.keys():
-            list = MemoList.update(list_id, request.form['name'])
+        if 'name' in request.form.keys() and 'collapsed' in request.form.keys():
+            list = MemoList.update(list_id, request.form['name'], request.form['collapsed'])
             return list
         else:
             return None
@@ -67,7 +68,8 @@ class MemoListItemResource(Resource):
 
         return item
 
-    def delete(self, list_id, item_id):
+    @staticmethod
+    def delete(list_id, item_id):
         MemoItem.delete(item_id, list_id)
 
         return {}

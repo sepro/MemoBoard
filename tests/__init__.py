@@ -64,7 +64,9 @@ class MyTest(TestCase):
         self.assertTrue("error" in data.keys())
 
         # Test updating existing list
-        response = self.client.put(list_url, data=dict(name="New List, New Name"), follow_redirects=True)
+        response = self.client.put(list_url,
+                                   data=dict(name="New List, New Name", collapsed=0),
+                                   follow_redirects=True)
         self.assert200(response)
         data = json.loads(response.data.decode('utf-8'))
 

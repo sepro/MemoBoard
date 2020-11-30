@@ -13,7 +13,7 @@ function lists(state = [], action) {
 
             return [
                 ...state.slice(0,i),
-                { ...state[i], name: action.name },
+                { ...state[i], name: action.name, collapsed: action.collapsed},
                 ...state.slice(i+1)
             ]
 

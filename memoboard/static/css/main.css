@@ -47,3 +47,8 @@ img {
   height: auto;
   display:block
 }
+
+.panel-collapse > .glyphicon {
+ margin-right: 5px;
+ color: #777;
+}

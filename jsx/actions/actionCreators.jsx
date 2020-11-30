@@ -8,11 +8,12 @@ export function add_list(data) {
 }
 
 
-export function update_list(list_index, name) {
+export function update_list(list_index, name, collapsed) {
     return {
         type: 'UPDATE_LIST',
         list_index,
-        name
+        name,
+        collapsed
     }
 }
 
@@ -72,14 +73,15 @@ export function delete_list_remote(list_index, uri) {
     }
 }
 
-export function update_list_remote(list_index, name, uri) {
+export function update_list_remote(list_index, name, collapsed, uri) {
     return (dispatch) => {
         var params = new URLSearchParams();
         params.append('name', name);
+        params.append('collapsed', collapsed ? 1 : 0);
 
         return axios.put(uri, params, {headers: {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}})
             .then((response) => {
-                dispatch(update_list(list_index, name));
+                dispatch(update_list(list_index, name, collapsed));
             })
     }
 }

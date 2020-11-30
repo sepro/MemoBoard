@@ -35,11 +35,12 @@ class MemoList(db.Model):
         db.session.commit()
 
     @staticmethod
-    def update(list_id, new_name, collapsed=False):
+    def update(list_id, new_name, collapsed):
         list = MemoList.query.get(list_id)
 
         list.name = new_name
-        list.collapsed = collapsed
+        list.collapsed = True if int(collapsed) == 1 else False
+
         db.session.commit()
 
         return list

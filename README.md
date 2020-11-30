@@ -68,6 +68,12 @@ Build ./memoboard/static/js/bundle.js using webpack
 
     npm run-script build
 
+# Contribute to Memoboard
+
+Everyone that wishes to contribute to this project is welcome to reach out. Especially developers with JSX and React
+experience are invited so scrutinize and improve my code (this was my first project with that technology and there is
+room for growth and improvement)
+
 # Acknowledgements
 
 This project makes use of several python packages and javascript libraries, without these development would have been much more complicated.

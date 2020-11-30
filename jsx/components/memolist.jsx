@@ -39,11 +39,17 @@ class Memolist extends React.Component{
 
     handleAcceptClick = () => {
         this.setState({edit: false});
-        this.props.update_list_remote(this.props.list_index, ReactDom.findDOMNode(this.refs.listname).value, this.props.lists[this.props.list_index].uri);
+        this.props.update_list_remote(this.props.list_index, ReactDom.findDOMNode(this.refs.listname).value, this.props.lists[this.props.list_index].collapsed, this.props.lists[this.props.list_index].uri);
     }
 
     handleCancelClick = () => {
         this.setState({edit: false});
+    }
+
+    handleCollapseClick = () => {
+        let collapsed = !this.props.lists[this.props.list_index].collapsed;
+        console.log("TEST", collapsed)
+        this.props.update_list_remote(this.props.list_index, this.props.lists[this.props.list_index].name, collapsed, this.props.lists[this.props.list_index].uri);
     }
 
     handleDeleteClick = () => {
@@ -109,6 +115,15 @@ class Memolist extends React.Component{
         return { __html: rawMarkup }
     }
 
+    collapseGlyph = () => {
+        let list_index = this.props.list_index;
+        if (this.props.lists[list_index].collapsed) {
+            return (<span className="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>)
+        } else {
+            return (<span className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>)
+        }
+    }
+
     render() {
       let list_index = this.props.list_index;
       let uri = this.props.lists[list_index].uri;
@@ -160,24 +175,31 @@ class Memolist extends React.Component{
                             </button>
                           </ModalFooter>
                         </Modal>
-
+                         <h4 className="panel-title panel-collapse pull-left" onClick={ this.handleCollapseClick }>{ this.collapseGlyph() } </h4>
                          <h4 className="panel-title" onClick={ this.handleHeaderClick }><span dangerouslySetInnerHTML={this.renderMarkdown( this.props.lists[list_index].name !== '' ? this.props.lists[list_index].name : 'Unnamed list')} /></h4>
                      </div>;
       }
 
-      return (
-          <Panel header={ header }>
-              <Table striped condensed hover fill>
-                <ReactCSSTransitionGroup component="tbody"  transitionName="example" transitionEnterTimeout={300} transitionLeave={false}>
-                  { this.props.lists[list_index].items.map((memoitemData,i ) => {
-                      return <Memoitem key={ memoitemData.id } item_index={ i } { ...this.props } />;
-                  })}
-                </ReactCSSTransitionGroup>
-              </Table>
+      if (this.props.lists[list_index].collapsed) {
+             return (
+              <Panel header={ header }>
+              </Panel>
+          );
+      } else {
+            return (
+              <Panel header={ header }>
+                <Table striped condensed hover fill>
+                    <ReactCSSTransitionGroup component="tbody"  transitionName="example" transitionEnterTimeout={300} transitionLeave={false}>
+                      { this.props.lists[list_index].items.map((memoitemData,i ) => {
+                          return <Memoitem key={ memoitemData.id } item_index={ i } { ...this.props } />;
+                      })}
+                    </ReactCSSTransitionGroup>
+                </Table>
 
-              <Additem uri={ this.props.lists[list_index].items_uri } { ...this.props } />
-          </Panel>
-      );
+                <Additem uri={ this.props.lists[list_index].items_uri } { ...this.props } />
+              </Panel>
+          );
+      }
     }
 }
 

@@ -7,8 +7,8 @@ import os
 basedir = os.getcwd()
 
 # Flask settings, make sure to set the SECRET_KEY and turn DEBUG and TESTING to False for production
-DEBUG = True
-TESTING = True
+DEBUG = False
+TESTING = False
 
 SECRET_KEY = 'change me !'
 
