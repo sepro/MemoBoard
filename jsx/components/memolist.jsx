@@ -92,7 +92,9 @@ class Memolist extends React.Component{
           pdf.text(10, 20, removeMd(this.props.lists[list_index].name));
 
           this.props.lists[list_index].items.forEach( function(item, i) {
-            pdf.text(10, 40+(i*10), removeMd(item.content));
+            let x = 10 + 80*(i % 2)
+            let y = 40+(Math.floor(i/2)*10)
+            pdf.text(x, y, removeMd(item.content));
           })
 
           pdf.save('memolist.pdf');
