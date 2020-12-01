@@ -16,7 +16,7 @@ class Additem extends React.Component{
 
     render() {
       return (
-            <form onSubmit={ this.addItem }>
+            <form onSubmit={ this.addItem }  className="add-item" >
                 <div className="input-group input-group-sm">
                     <input className="form-control input-sm" type="text" name="itemname" ref="itemname" placeholder="Add item"/>
                     <span className="input-group-btn">

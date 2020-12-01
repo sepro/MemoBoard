@@ -52,3 +52,11 @@ img {
  margin-right: 5px;
  color: #777;
 }
+
+.panel-body {
+    padding: 0px;
+}
+
+.add-item {
+    padding: 15px;
+}

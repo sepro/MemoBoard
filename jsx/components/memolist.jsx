@@ -183,20 +183,27 @@ class Memolist extends React.Component{
       if (this.props.lists[list_index].collapsed) {
              return (
               <Panel header={ header }>
+                <Table striped condensed hover fill>
+                  <ReactCSSTransitionGroup component="tbody"  transitionName="example" transitionEnterTimeout={200} transitionLeave={150}>
+                  </ReactCSSTransitionGroup>
+                </Table>
+                <ReactCSSTransitionGroup component="span" transitionName="example" transitionEnterTimeout={200} transitionLeave={150}>
+                </ReactCSSTransitionGroup>
               </Panel>
           );
       } else {
             return (
               <Panel header={ header }>
                 <Table striped condensed hover fill>
-                    <ReactCSSTransitionGroup component="tbody"  transitionName="example" transitionEnterTimeout={300} transitionLeave={false}>
+                    <ReactCSSTransitionGroup component="tbody"  transitionName="example" transitionEnterTimeout={200} transitionLeave={150}>
                       { this.props.lists[list_index].items.map((memoitemData,i ) => {
                           return <Memoitem key={ memoitemData.id } item_index={ i } { ...this.props } />;
                       })}
                     </ReactCSSTransitionGroup>
                 </Table>
-
-                <Additem uri={ this.props.lists[list_index].items_uri } { ...this.props } />
+                <ReactCSSTransitionGroup component="span" transitionName="example" transitionEnterTimeout={200} transitionLeave={150}>
+                <Additem key={ "new_item_" + list_index } uri={ this.props.lists[list_index].items_uri } { ...this.props } />
+                </ReactCSSTransitionGroup>
               </Panel>
           );
       }
