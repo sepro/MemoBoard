@@ -12,7 +12,7 @@ import {ButtonToolbar, DropdownButton, MenuItem} from 'react-bootstrap';
 import Memoitem from './memoitem.jsx';
 import Additem from './additem.jsx';
 import MemoModal from './memomodal.jsx';
-
+import CollapseGlyph from './collapseglyph.jsx'
 
 class Memolist extends React.Component{
     constructor(props) {
@@ -41,7 +41,6 @@ class Memolist extends React.Component{
 
     handleCollapseClick = () => {
         let collapsed = !this.props.lists[this.props.list_index].collapsed;
-        console.log("TEST", collapsed)
         this.props.update_list_remote(this.props.list_index, this.props.lists[this.props.list_index].name, collapsed, this.props.lists[this.props.list_index].uri);
     }
 
@@ -110,15 +109,6 @@ class Memolist extends React.Component{
         return { __html: rawMarkup }
     }
 
-    collapseGlyph = () => {
-        let list_index = this.props.list_index;
-        if (this.props.lists[list_index].collapsed) {
-            return (<span className="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>)
-        } else {
-            return (<span className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>)
-        }
-    }
-
     render() {
       let list_index = this.props.list_index;
       let uri = this.props.lists[list_index].uri;
@@ -154,7 +144,7 @@ class Memolist extends React.Component{
                             </ButtonToolbar>
                          </div>
                          <MemoModal open={this.state.modalIsOpen} close={this.closeModal} delete={this.handleDelete} />
-                         <h4 className="panel-title panel-collapse pull-left" onClick={ this.handleCollapseClick }>{ this.collapseGlyph() } </h4>
+                         <h4 className="panel-title panel-collapse pull-left" onClick={ this.handleCollapseClick }><CollapseGlyph collapsed={this.props.lists[list_index].collapsed} /> </h4>
                          <h4 className="panel-title" onClick={ this.handleHeaderClick }><span dangerouslySetInnerHTML={this.renderMarkdown( this.props.lists[list_index].name !== '' ? this.props.lists[list_index].name : 'Unnamed list')} /></h4>
                      </div>;
       }
