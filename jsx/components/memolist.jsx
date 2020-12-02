@@ -8,17 +8,10 @@ import removeMd from 'remove-markdown';
 import {Row, Col, Panel, Table} from 'react-bootstrap';
 import {FormGroup, InputGroup, FormControl, Button} from 'react-bootstrap';
 import {ButtonToolbar, DropdownButton, MenuItem} from 'react-bootstrap';
-import {
-  Modal,
-  ModalHeader,
-  ModalTitle,
-  ModalClose,
-  ModalBody,
-  ModalFooter
-} from 'react-modal-bootstrap';
 
 import Memoitem from './memoitem.jsx';
 import Additem from './additem.jsx';
+import MemoModal from './memomodal.jsx';
 
 
 class Memolist extends React.Component{
@@ -160,23 +153,7 @@ class Memolist extends React.Component{
                                 </DropdownButton>
                             </ButtonToolbar>
                          </div>
-                        <Modal isOpen={this.state.modalIsOpen} onRequestHide={this.closeModal}>
-                          <ModalHeader>
-                            <ModalClose onClick={this.closeModal}/>
-                            <ModalTitle>Confirm delete</ModalTitle>
-                          </ModalHeader>
-                          <ModalBody>
-                            <p>You are about to delete a list with items. Do you want to proceed ?</p>
-                          </ModalBody>
-                          <ModalFooter>
-                            <button className='btn btn-default' onClick={this.closeModal}>
-                              Cancel
-                            </button>
-                            <button className='btn btn-primary' onClick={this.handleDelete}>
-                              Delete
-                            </button>
-                          </ModalFooter>
-                        </Modal>
+                         <MemoModal open={this.state.modalIsOpen} close={this.closeModal} delete={this.handleDelete} />
                          <h4 className="panel-title panel-collapse pull-left" onClick={ this.handleCollapseClick }>{ this.collapseGlyph() } </h4>
                          <h4 className="panel-title" onClick={ this.handleHeaderClick }><span dangerouslySetInnerHTML={this.renderMarkdown( this.props.lists[list_index].name !== '' ? this.props.lists[list_index].name : 'Unnamed list')} /></h4>
                      </div>;
