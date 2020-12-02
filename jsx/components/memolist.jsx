@@ -17,7 +17,7 @@ import CollapseGlyph from './collapseglyph.jsx'
 class Memolist extends React.Component{
     constructor(props) {
        super(props);
-       this.state = {edit:false, modalIsOpen: false };
+       this.state = {edit:false, modalIsOpen: false, collapsed: this.props.lists[this.props.list_index].collapsed};
     }
 
     componentDidUpdate() {
@@ -40,7 +40,8 @@ class Memolist extends React.Component{
     }
 
     handleCollapseClick = () => {
-        let collapsed = !this.props.lists[this.props.list_index].collapsed;
+        let collapsed = !this.state.collapsed;
+        this.setState({collapsed: collapsed});
         this.props.update_list_remote(this.props.list_index, this.props.lists[this.props.list_index].name, collapsed, this.props.lists[this.props.list_index].uri);
     }
 
@@ -149,7 +150,7 @@ class Memolist extends React.Component{
                      </div>;
       }
 
-      if (this.props.lists[list_index].collapsed) {
+      if (this.state.collapsed) {
              return (
               <Panel header={ header }>
                 <Table striped condensed hover fill>
