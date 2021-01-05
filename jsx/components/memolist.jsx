@@ -145,7 +145,7 @@ class Memolist extends React.Component{
                             </ButtonToolbar>
                          </div>
                          <MemoModal open={this.state.modalIsOpen} close={this.closeModal} delete={this.handleDelete} />
-                         <h4 className="panel-title panel-collapse pull-left" onClick={ this.handleCollapseClick }><CollapseGlyph collapsed={this.props.lists[list_index].collapsed} /> </h4>
+                         <h4 className="panel-title panel-collapse pull-left" onClick={ this.handleCollapseClick }><CollapseGlyph collapsed={this.state.collapsed} /> </h4>
                          <h4 className="panel-title" onClick={ this.handleHeaderClick }><span dangerouslySetInnerHTML={this.renderMarkdown( this.props.lists[list_index].name !== '' ? this.props.lists[list_index].name : 'Unnamed list')} /></h4>
                      </div>;
       }
@@ -154,10 +154,10 @@ class Memolist extends React.Component{
              return (
               <Panel header={ header }>
                 <Table striped condensed hover fill>
-                  <ReactCSSTransitionGroup component="tbody"  transitionName="example" transitionEnterTimeout={200} transitionLeave={150}>
+                  <ReactCSSTransitionGroup component="tbody"  transitionName="example" transitionEnterTimeout={200} transitionLeaveTimeout={150}>
                   </ReactCSSTransitionGroup>
                 </Table>
-                <ReactCSSTransitionGroup component="span" transitionName="example" transitionEnterTimeout={200} transitionLeave={150}>
+                <ReactCSSTransitionGroup component="span" transitionName="example" transitionEnterTimeout={200} transitionLeaveTimeout={150}>
                 </ReactCSSTransitionGroup>
               </Panel>
           );
@@ -165,13 +165,13 @@ class Memolist extends React.Component{
             return (
               <Panel header={ header }>
                 <Table striped condensed hover fill>
-                    <ReactCSSTransitionGroup component="tbody"  transitionName="example" transitionEnterTimeout={200} transitionLeave={150}>
+                    <ReactCSSTransitionGroup component="tbody"  transitionName="example" transitionEnterTimeout={200} transitionLeaveTimeout={150}>
                       { this.props.lists[list_index].items.map((memoitemData,i ) => {
                           return <Memoitem key={ memoitemData.id } item_index={ i } { ...this.props } />;
                       })}
                     </ReactCSSTransitionGroup>
                 </Table>
-                <ReactCSSTransitionGroup component="span" transitionName="example" transitionEnterTimeout={200} transitionLeave={150}>
+                <ReactCSSTransitionGroup component="span" transitionName="example" transitionEnterTimeout={200} transitionLeaveTimeout={150}>
                 <Additem key={ "new_item_" + list_index } uri={ this.props.lists[list_index].items_uri } { ...this.props } />
                 </ReactCSSTransitionGroup>
               </Panel>

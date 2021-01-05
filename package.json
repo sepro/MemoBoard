@@ -1,6 +1,6 @@
 {
   "name": "Memoboard",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "A memo board based on react and flask",
   "main": "webpack.config.js",
   "scripts": {
@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/sepro/MemoBoard#readme",
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "react": "^15.4.1",
     "react-addons-css-transition-group": "^15.3.1",
     "react-addons-test-utils": "^15.4.1",

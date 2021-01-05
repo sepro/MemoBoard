@@ -30,7 +30,8 @@ describe('Memolist component', () => {
     });
 
     it('should render markdown', () => {
-        var test = new Memolist();
+        const { props, output } = setup();
+        var test = new Memolist(props);
 
         expect(test.renderMarkdown("*test*").__html).to.equal('<p><em>test</em></p>\n');
     });
