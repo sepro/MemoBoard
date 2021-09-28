@@ -10,12 +10,12 @@ basedir = os.getcwd()
 DEBUG = False
 TESTING = True
 
-SECRET_KEY = 'change me !'
+SECRET_KEY = "change me !"
 
 # Database settings, database location and path to migration scripts
 # use in memory sqlitedb for testing
-SQLALCHEMY_DATABASE_URI = 'sqlite:///'
-SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'migrations')
+SQLALCHEMY_DATABASE_URI = "sqlite:///"
+SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, "migrations")
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_ECHO = False
 
@@ -24,4 +24,3 @@ MINIFY_HTML = not DEBUG
 
 # Debug settings
 DEBUG_TB_INTERCEPT_REDIRECTS = False
-

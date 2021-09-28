@@ -7,6 +7,7 @@ def mallowfy(s):
     :param s: serializer scheme to apply
     :return: decorated function
     """
+
     def mallowfy_decorator(method):
         """
         applies s (marshmallow serializer) onto output of method
@@ -14,6 +15,7 @@ def mallowfy(s):
         :param method: function from which the output is serialized
         :return:
         """
+
         @wraps(method)
         def mallowfied(*args, **kw):
             data = method(*args, **kw)
@@ -22,7 +24,8 @@ def mallowfy(s):
                 result = s.dump(data)
                 return result, 200
             else:
-                return {'error': 'Not Found'}, 404
+                return {"error": "Not Found"}, 404
 
         return mallowfied
+
     return mallowfy_decorator

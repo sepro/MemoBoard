@@ -37,7 +37,7 @@ def create_app(config):
     db.app = app
     db.init_app(app)
 
-    migrate.init_app(app, db=db, directory=app.config['SQLALCHEMY_MIGRATE_REPO'])
+    migrate.init_app(app, db=db, directory=app.config["SQLALCHEMY_MIGRATE_REPO"])
 
     ma.init_app(app)
 
@@ -56,11 +56,11 @@ def create_app(config):
     from memoboard.api_resources import MemoListsResource, MemoListResource
     from memoboard.api_resources import MemoListItemsResource, MemoListItemResource
 
-    api_bp = Blueprint('api', __name__)
+    api_bp = Blueprint("api", __name__)
     api.init_app(api_bp)
 
     # Register Blueprints
     app.register_blueprint(main)
-    app.register_blueprint(api_bp, url_prefix='/api')
+    app.register_blueprint(api_bp, url_prefix="/api")
 
     return app

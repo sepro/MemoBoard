@@ -9,11 +9,11 @@ class ItemSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = MemoItem
 
-    uri = ma.URLFor('api.list_item', list_id='<list_id>', item_id='<id>')
-    list_uri = ma.URLFor('api.list', list_id='<list_id>')
+    uri = ma.URLFor("api.list_item", list_id="<list_id>", item_id="<id>")
+    list_uri = ma.URLFor("api.list", list_id="<list_id>")
 
-    added = ma.Method('get_added', dump_only=True)
-    list = ma.Method('get_list', dump_only=True)
+    added = ma.Method("get_added", dump_only=True)
+    list = ma.Method("get_list", dump_only=True)
 
     @staticmethod
     def get_added(item):
@@ -28,12 +28,12 @@ class ListSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = MemoList
 
-    uri = ma.URLFor('api.list', list_id='<id>')
-    items_uri = ma.URLFor('api.list_items', list_id='<id>')
+    uri = ma.URLFor("api.list", list_id="<id>")
+    items_uri = ma.URLFor("api.list_items", list_id="<id>")
 
     items = ma.Nested(ItemSchema, many=True)
 
-    added = ma.Method('get_added', dump_only=True)
+    added = ma.Method("get_added", dump_only=True)
 
     @staticmethod
     def get_added(list):

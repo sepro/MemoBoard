@@ -4,7 +4,7 @@ import arrow
 
 
 class MemoList(db.Model):
-    __tablename__ = 'lists'
+    __tablename__ = "lists"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
     created = db.Column(db.DateTime, default=datetime.utcnow)
@@ -16,7 +16,7 @@ class MemoList(db.Model):
         return age_arrow.humanize()
 
     def __repr__(self):
-        return '<MemoList %d>' % self.id
+        return "<MemoList %d>" % self.id
 
     @staticmethod
     def add(*args, **kwargs):
@@ -47,13 +47,15 @@ class MemoList(db.Model):
 
 
 class MemoItem(db.Model):
-    __tablename__ = 'items'
+    __tablename__ = "items"
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text)
     created = db.Column(db.DateTime, default=datetime.utcnow)
 
-    list_id = db.Column(db.Integer, db.ForeignKey('lists.id'), index=True)
-    list = db.relationship('MemoList', backref=db.backref('items', cascade="all, delete-orphan"))
+    list_id = db.Column(db.Integer, db.ForeignKey("lists.id"), index=True)
+    list = db.relationship(
+        "MemoList", backref=db.backref("items", cascade="all, delete-orphan")
+    )
 
     @property
     def created_humanized(self):
@@ -61,7 +63,7 @@ class MemoItem(db.Model):
         return age_arrow.humanize()
 
     def __repr__(self):
-        return '<MemoItem %d>' % self.id
+        return "<MemoItem %d>" % self.id
 
     @staticmethod
     def add(*args, **kwargs):
