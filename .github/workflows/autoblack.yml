@@ -1,7 +1,7 @@
 
 # GitHub Action that uses Black to reformat the Python code in an incoming push request.
 
-name: autoblack_push
+name: autoblack
 on: [push, pull_request]
 jobs:
   build:

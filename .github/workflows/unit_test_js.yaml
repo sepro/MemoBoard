@@ -1,6 +1,6 @@
 # GitHub Action that runs unittests on javascript portion of the code
 
-name: autobuild
+name: unittest js
 on: [push, pull_request]
 jobs:
   build:
