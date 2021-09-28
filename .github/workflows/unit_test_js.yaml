@@ -1,0 +1,15 @@
+# GitHub Action that runs unittests on javascript portion of the code
+
+name: autobuild
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v2
+          with:
+            node-version: '12'
+      - name: Install dependencies
+        run: npm install
+      - name: Unit test
+        run: npm test

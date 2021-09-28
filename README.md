@@ -1,5 +1,4 @@
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![Build Status](https://travis-ci.com/sepro/MemoBoard.svg?branch=master)](https://travis-ci.com/sepro/MemoBoard)
 [![codecov.io](https://codecov.io/github/sepro/MemoBoard/coverage.svg?precision=1)](https://codecov.io/github/sepro/MemoBoard/)
 
 # MemoBoard
