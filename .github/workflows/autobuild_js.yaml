@@ -1,0 +1,32 @@
+# GitHub Action that runs unittests on javascript portion of the code
+
+name: autobuild js
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:  # https://github.com/stefanzweifel/git-auto-commit-action#checkout-the-correct-branch
+            ref: ${{ github.head_ref }}
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+      - name: Install dependencies
+        run: npm install
+      - name: Build new version
+        run: npm run-script build
+      - name: Verify Changed files
+        uses: tj-actions/verify-changed-files@v7.2
+        id: verify-changed-files
+        with:
+          files: |
+             memoboard/static/js/bundle.js
+      - name: Run step only when files change.
+        if: steps.verify-changed-files.outputs.files_changed == 'true'
+        run: |
+          echo "Changed files: ${{ steps.verify_changed_files.outputs.changed_files }}"
+          git config --global user.name autobuild
+          git config --global user.email '${GITHUB_ACTOR}@users.noreply.github.com'
+          git commit -am "Automatically build bundle.js"
+          git push  # --force origin HEAD:$GITHUB_REF
