@@ -4,7 +4,7 @@
   "description": "A memo board based on react and flask",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "mocha --compilers jsx:babel-core/register -r jsdom-global/register ./jsx/tests/**/*.jsx",
+    "test": "mocha --compilers jsx:babel-core/register -r jsdom-global/register ./jsx/tests/**/*.jsx ./jsx/tests/*.jsx",
     "build": "webpack -p"
   },
   "repository": {
