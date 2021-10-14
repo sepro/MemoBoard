@@ -2,7 +2,7 @@
 # GitHub Action that uses Black to reformat the Python code in an incoming push request.
 
 name: autoblack
-on: [push, pull_request]
+on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,4 +24,4 @@ jobs:
           git config --global user.name autoblack_push
           git config --global user.email '${GITHUB_ACTOR}@users.noreply.github.com'
           git commit -am "fixup! Format Python code with psf/black push"
-          git push  # --force origin HEAD:$GITHUB_REF
+          git push
