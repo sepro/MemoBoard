@@ -1,4 +1,3 @@
-Is
 # GitHub Action that uses Black to reformat the Python code in an incoming push request.
 
 name: unittest python + codecov
