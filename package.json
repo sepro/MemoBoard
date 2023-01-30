@@ -46,7 +46,7 @@
     "jsdom": "^9.4.2",
     "jsdom-global": "^2.1.0",
     "json-loader": "^0.5.7",
-    "mocha": "^3.0.2",
+    "mocha": "^10.2.0",
     "sinon": "^1.17.5",
     "webpack": "^1.13.1"
   }
