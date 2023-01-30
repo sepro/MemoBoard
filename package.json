@@ -43,7 +43,7 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
     "chai": "^3.5.0",
-    "jsdom": "^9.4.2",
+    "jsdom": "^16.5.0",
     "jsdom-global": "^2.1.0",
     "json-loader": "^0.5.7",
     "mocha": "^3.0.2",
